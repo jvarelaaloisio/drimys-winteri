@@ -2,12 +2,12 @@
 {
 	public class BaseController
 	{
-		private readonly BaseModel _model;
-		private readonly BaseView _view;
-		public BaseController(BaseModel model, BaseView view)
+		protected readonly BaseModel Model;
+		protected readonly IView View;
+		public BaseController(BaseModel model, IView view)
 		{
-			_model = model;
-			_view = view;
+			Model = model;
+			View = view;
 		}
 	}
 }

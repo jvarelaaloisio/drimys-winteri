@@ -2,7 +2,7 @@
 {
 	public class BaseModel
 	{
-		private readonly BaseView _view;
-		public BaseModel(BaseView view) => _view = view;
+		protected readonly IView View;
+		public BaseModel(IView view) => View = view;
 	}
 }

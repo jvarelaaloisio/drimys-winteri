@@ -1,0 +1,16 @@
+{
+    "name": "DrimysTeam.Drimys.Characters",
+    "references": [
+        "GUID:2da65d7ec45682a49991d4fc7e6f91f6",
+        "GUID:eb1ad2ad70728b24ca831de67d799d28"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
