@@ -126,7 +126,7 @@ namespace Characters
 
 			//Cambiar por Throwable
 			var throwable = Object.Instantiate(_throwablePrefab, _hand.position, _hand.rotation);
-			throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
+			//throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
 			onThrowed();
 		}
 	}
