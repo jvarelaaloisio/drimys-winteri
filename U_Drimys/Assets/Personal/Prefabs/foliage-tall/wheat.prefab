@@ -120,6 +120,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: wheat_base
       objectReference: {fileID: 0}
+    - target: {fileID: 679650850075691486, guid: 33010442b3078b1499d265d4dc1a4bf3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7513463221645976178, guid: 33010442b3078b1499d265d4dc1a4bf3,
         type: 3}
       propertyPath: m_LocalPosition.x

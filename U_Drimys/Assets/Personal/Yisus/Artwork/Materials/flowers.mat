@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassAtlas:
-        m_Texture: {fileID: 2800000, guid: 1e49bea01a64e7a4ebeadb27dc4f52ac, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7b2e72f2c7346714bb919a43630e918e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassAtlas1:
