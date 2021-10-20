@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassAtlas:
-        m_Texture: {fileID: 2800000, guid: 694f13197bc50004ebae30c953c52335, type: 3}
+        m_Texture: {fileID: 2800000, guid: a94c433b4af76994cb7d7b5ceb0ebb47, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -73,6 +73,7 @@ Material:
     - _Glossiness: 1
     - _GlossyReflections: 1
     - _MaxMask: 1
+    - _MaxOpacityMask: 1.65
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1

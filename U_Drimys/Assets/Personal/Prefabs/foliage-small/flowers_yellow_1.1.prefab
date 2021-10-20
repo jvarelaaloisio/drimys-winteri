@@ -120,6 +120,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: flower_yellow
       objectReference: {fileID: 0}
+    - target: {fileID: 2036064511728456633, guid: b007c2459cad4274a8f26f3eb85e7d51,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8964578438977383868, guid: b007c2459cad4274a8f26f3eb85e7d51,
         type: 3}
       propertyPath: m_LocalPosition.x
