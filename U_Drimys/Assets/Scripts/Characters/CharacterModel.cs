@@ -5,7 +5,6 @@ using Core.Extensions;
 using JetBrains.Annotations;
 using MVC;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Characters
 {
@@ -58,7 +57,7 @@ namespace Characters
 
 		public CharacterModel(IView view, float speed, float turnSpeed) : base(view)
 		{
-			this.transform = View.Transform;
+			transform = View.Transform;
 			Speed = speed;
 			TurnSpeed = turnSpeed;
 			Flags = new CharacterFlags();
@@ -68,8 +67,8 @@ namespace Characters
 		{
 			Vector3 movementDirection = direction.HorizontalPlaneToVector3();
 			float rotationAngle = Vector3.Angle(View.Transform.rotation.eulerAngles, movementDirection);
-			View.Transform.Rotate(new Vector3(0, rotationAngle * TurnSpeed, 0));
-			View.SetVelocity(movementDirection.ReplaceY(View.GetVelocity().y) * processSpeed(Speed));
+			transform.Rotate(new Vector3(0, rotationAngle * TurnSpeed, 0));
+			View.Velocity = movementDirection.ReplaceY(View.Velocity.y) * processSpeed(Speed);
 		}
 
 		public IEnumerator Attack(IEnumerator<Transform> behaviour,
@@ -83,51 +82,6 @@ namespace Characters
 		{
 			public bool IsAiming;
 			public bool IsStunned;
-
-			public CharacterFlags(bool isAiming, bool isStunned)
-			{
-				IsAiming = isAiming;
-				IsStunned = isStunned;
-			}
-		}
-	}
-
-	public class ThrowerModel : CharacterModel
-	{
-		#region Events
-
-		public event Action onThrowing = delegate { }; 
-		public event Action onThrowed = delegate { }; 
-
-		#endregion
-		
-		//Cambiar por Throwable
-		private readonly GameObject _throwablePrefab;
-		private readonly Transform _hand;
-		
-		public ThrowerModel(IView view,
-							float speed,
-							float turnSpeed,
-							GameObject throwablePrefab,
-							Transform hand)
-			: base(view, speed, turnSpeed)
-		{
-			_throwablePrefab = throwablePrefab;
-			_hand = hand;
-		}
-		
-		private IEnumerator Throw(Transform target,
-								float delay)
-		{
-			onThrowing();
-			yield return new WaitForSeconds(delay);
-			while (Flags.IsAiming)
-				yield return new WaitForSeconds(.1f);
-
-			//Cambiar por Throwable
-			var throwable = Object.Instantiate(_throwablePrefab, _hand.position, _hand.rotation);
-			//throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
-			onThrowed();
 		}
 	}
 }

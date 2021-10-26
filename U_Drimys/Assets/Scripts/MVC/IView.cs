@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace MVC
 {
@@ -6,9 +7,14 @@ namespace MVC
 	{
 		Transform Transform { get; }
 		BaseController Controller { set; }
-		void SetVelocity(Vector3 newVelocity);
-		Vector3 GetVelocity();
-		void AddForce(Vector3 force, ForceMode forceMode);
+		Vector3 Velocity { get; set; }
+		void Jump();
 		void Die(float time = 0);
+		Coroutine StartCoroutine(IEnumerator routine);
+		Coroutine StartCoroutine(string methodName);
+		Coroutine StartCoroutine(string methodName, object value);
+		void StopCoroutine(IEnumerator routine);
+		void StopCoroutine(Coroutine routine);
+		void StopCoroutine(string methodName);
 	}
 }
