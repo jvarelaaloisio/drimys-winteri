@@ -6,11 +6,8 @@ namespace Player
 	[RequireComponent(typeof(Rigidbody))]
 	public class PlayerTestView : MonoBehaviour, IView
 	{
-		private PhysicsFlags _flags;
+		private PhysicalStatus _physicalStatus;
 		private Rigidbody _rigidbody;
-
-		[SerializeField]
-		private float jumpForce;
 
 		public Transform Transform => transform;
 		public BaseController Controller { get; set; }
@@ -18,12 +15,12 @@ namespace Player
 		public Vector3 Velocity
 		{
 			get => _rigidbody.velocity;
-			set => _flags.MovementVector = value;
+			set => _physicalStatus.MovementVector = value;
 		}
 
 		private void Awake()
 		{
-			_flags = new PhysicsFlags()
+			_physicalStatus = new PhysicalStatus()
 					{
 						ShouldJump = false,
 						MovementVector = Vector3.zero
@@ -31,9 +28,10 @@ namespace Player
 			_rigidbody = GetComponent<Rigidbody>();
 		}
 
-		public void Jump()
+		public void Jump(float jumpForce)
 		{
-			_flags.ShouldJump = true;
+			_physicalStatus.ShouldJump = true;
+			_physicalStatus.NextJumpForce = jumpForce;
 		}
 
 		public void Die(float time = 0)
@@ -43,14 +41,15 @@ namespace Player
 
 		private void FixedUpdate()
 		{
-			_rigidbody.velocity = _flags.MovementVector;
-			if (_flags.ShouldJump)
-				_rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+			_rigidbody.velocity = _physicalStatus.MovementVector;
+			if (_physicalStatus.ShouldJump)
+				_rigidbody.AddForce(Vector3.up * _physicalStatus.NextJumpForce, ForceMode.Impulse);
 		}
 
-		private struct PhysicsFlags
+		private struct PhysicalStatus
 		{
 			public bool ShouldJump;
+			public float NextJumpForce;
 			public Vector3 MovementVector;
 		}
 	}

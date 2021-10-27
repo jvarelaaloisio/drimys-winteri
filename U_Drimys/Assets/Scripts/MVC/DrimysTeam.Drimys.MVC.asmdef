@@ -1,3 +1,15 @@
-﻿{
-	"name": "DrimysTeam.Drimys.MVC"
+{
+    "name": "DrimysTeam.Drimys.MVC",
+    "references": [
+        "GUID:8f906b125f01afa478beb61975b2ac12"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -8,7 +8,7 @@ namespace MVC
 		Transform Transform { get; }
 		BaseController Controller { set; }
 		Vector3 Velocity { get; set; }
-		void Jump();
+		void Jump(float jumpForce);
 		void Die(float time = 0);
 		Coroutine StartCoroutine(IEnumerator routine);
 		Coroutine StartCoroutine(string methodName);

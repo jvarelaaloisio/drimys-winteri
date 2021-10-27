@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Interactables.Throwables;
+using Core.Interactions.Throwables;
 using MVC;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -20,11 +20,10 @@ namespace Characters
 		protected readonly Transform Hand;
 		
 		public ThrowerModel(IView view,
-							float speed,
-							float turnSpeed,
+							CharacterProperties properties,
 							Throwable throwablePrefab,
 							Transform hand)
-			: base(view, speed, turnSpeed)
+			: base(view, properties)
 		{
 			ThrowablePrefab = throwablePrefab;
 			Hand = hand;

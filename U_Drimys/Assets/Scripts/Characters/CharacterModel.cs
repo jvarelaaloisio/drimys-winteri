@@ -10,6 +10,19 @@ namespace Characters
 {
 	public class CharacterModel : BaseModel
 	{
+		protected Transform transform;
+
+		public CharacterFlags Flags;
+		public bool IsAiming;
+		public Func<float, float> ProcessSpeed = f => f;
+		public CharacterModel(IView view, CharacterProperties properties) : base(view)
+		{
+			Properties = properties;
+			transform = View.Transform;
+			Flags = new CharacterFlags();
+			//TODO:Add FSM setup
+		}
+
 		#region Events
 
 		/// <summary>
@@ -48,28 +61,19 @@ namespace Characters
 
 		#endregion
 
-		protected Transform transform;
-		
-		public CharacterFlags Flags;
-		public bool IsAiming;
-		public float Speed { get; set; }
-		public float TurnSpeed { get; set; }
+		public CharacterProperties Properties { get; }
 
-		public CharacterModel(IView view, float speed, float turnSpeed) : base(view)
-		{
-			transform = View.Transform;
-			Speed = speed;
-			TurnSpeed = turnSpeed;
-			Flags = new CharacterFlags();
-		}
-
-		public void Move(Vector2 direction, Func<float, float> processSpeed)
+		//TODO:Let states handle movement
+		public void Move(Vector2 direction)
 		{
 			Vector3 movementDirection = direction.HorizontalPlaneToVector3();
 			float rotationAngle = Vector3.Angle(View.Transform.rotation.eulerAngles, movementDirection);
-			transform.Rotate(new Vector3(0, rotationAngle * TurnSpeed, 0));
-			View.Velocity = movementDirection.ReplaceY(View.Velocity.y) * processSpeed(Speed);
+			transform.Rotate(new Vector3(0, rotationAngle * Properties.TurnSpeed, 0));
+			View.Velocity = movementDirection.ReplaceY(View.Velocity.y) * ProcessSpeed(Properties.Speed);
 		}
+
+		//TODO:Check if currentState is not Jump
+		public void Jump() => View.Jump(Properties.JumpForce);
 
 		public IEnumerator Attack(IEnumerator<Transform> behaviour,
 								[CanBeNull] Transform target)
@@ -78,10 +82,30 @@ namespace Characters
 			yield return behaviour;
 			onAttacked(target);
 		}
+
 		public struct CharacterFlags
 		{
 			public bool IsAiming;
 			public bool IsStunned;
 		}
+	}
+
+	[CreateAssetMenu(menuName = "Characters/Properties", fileName = "CharacterProperties", order = 0)]
+	public class CharacterProperties : ScriptableObject
+	{
+		[SerializeField]
+		private float jumpForce;
+
+		[SerializeField]
+		private float speed;
+
+		[SerializeField]
+		private float turnSpeed;
+
+		public float JumpForce => jumpForce;
+
+		public float Speed => speed;
+
+		public float TurnSpeed => turnSpeed;
 	}
 }

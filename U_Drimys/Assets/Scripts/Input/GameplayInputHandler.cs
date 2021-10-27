@@ -1,35 +1,53 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Characters;
-using Input;
+﻿using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameplayInputHandler : MonoBehaviour
+namespace Input
 {
-	[SerializeField]
-	private InputActionAsset input;
-
-	[SerializeField]
-	private string actionMapName;
-
-	[SerializeField]
-	private string jumpAction;
-
-	//TODO:Create character controller
-
-	private void Awake()
+	public class GameplayInputHandler : MonoBehaviour
 	{
-		var actionMap = input.FindActionMap(actionMapName);
-		actionMap.FindAction(jumpAction).performed += HandleJump;
-	}
+		[SerializeField]
+		private InputActionAsset input;
 
-	//TODO:Create controller setup
-	// public void SetupController()
+		[SerializeField]
+		private string actionMapName;
 
-	private void HandleJump(InputAction.CallbackContext context)
-	{
-		//TODO:Call Jump in controller
+		[SerializeField]
+		private string jumpActionName;
+
+		[SerializeField]
+		private string movementActionName;
+
+		private InputAction _movementInput;
+		private Vector2 _lastMovementInput;
+
+		private PlayerController _controller;
+		private InputActionMap _actionMap;
+
+		//TODO:Add Camera Events
+		public void SetupController(PlayerController controller)
+		{
+			_controller = controller;
+			_actionMap = input.FindActionMap(actionMapName);
+			_movementInput = _actionMap.FindAction(movementActionName);
+			_actionMap.FindAction(jumpActionName).performed += HandleJump;
+		}
+
+		private void Update()
+		{
+			ReadMovement();
+		}
+
+		private void HandleJump(InputAction.CallbackContext context)
+			=> _controller.Jump();
+
+		private void ReadMovement()
+		{
+			var value = _movementInput.ReadValue<Vector2>();
+			if (value.Equals(_lastMovementInput))
+				return;
+			_lastMovementInput = value;
+			_controller.Move(value);
+		}
 	}
 }
