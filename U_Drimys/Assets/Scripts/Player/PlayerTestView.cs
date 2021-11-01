@@ -1,5 +1,5 @@
-﻿using System;
-using Characters;
+﻿using Characters;
+using Events.UnityEvents;
 using MVC;
 using UnityEngine;
 
@@ -8,13 +8,16 @@ namespace Player
 	[RequireComponent(typeof(Rigidbody))]
 	public class PlayerTestView : MonoBehaviour, IView
 	{
-		private CharacterModel _model;
-		private BaseController _controller;
-		
 		[SerializeField]
 		private CharacterProperties properties;
 
+		private CharacterModel _model;
+		private BaseController _controller;
+
+		public Vector2UnityEvent onMove;
+		
 		public Transform Transform => transform;
+		
 		public Rigidbody Rigidbody { get; private set; }
 
 		public BaseController Controller { get; set; }
@@ -31,6 +34,7 @@ namespace Player
 			_controller = controller;
 			_model = new CharacterModel(this,
 										properties);
+			_model.onMove += onMove.Invoke;
 		}
 
 		public void Die(float time = 0)

@@ -8,36 +8,34 @@ namespace Characters.States
 	public class IdleRun<T> : CharacterState<T>
 	{
 		protected readonly Action<IEnumerator> StartCoroutine;
+		protected readonly Action<string> StopCoroutine;
 		protected readonly CharacterProperties CharacterProperties;
 		protected Vector3 MovementDirection;
 		protected readonly Transform transform;
 
 		public IdleRun(CharacterModel model) : base(model)
 		{
-			StartCoroutine = enumerator => model.View.StartCoroutine(enumerator);
+			StartCoroutine = c => model.View.StartCoroutine(c);
+			StopCoroutine = model.View.StopCoroutine;
 			CharacterProperties = Model.Properties;
 			transform = model.transform;
 		}
 
 		public override string GetName() => "Idle";
 
-		public override void HandleMoveInput(Vector2 direction)
+		public override void MoveTowards(Vector2 direction)
 		{
 			MovementDirection = direction.HorizontalPlaneToVector3();
+			StopCoroutine(nameof(CharacterHelper.MoveHorizontally));
 			StartCoroutine(CharacterHelper.MoveHorizontally(Model.rigidbody,
-															MovementDirection,
-															CharacterProperties.Speed,
-															CharacterProperties.MaxSpeed)
-						);
+													MovementDirection,
+													CharacterProperties.Speed,
+													CharacterProperties.MaxSpeed)
+												);
 		}
 
 		public override void Update(float deltaTime)
 		{
-			// float rotationAngle = Vector3.Angle(transform.rotation.eulerAngles, MovementDirection);
-			// transform.Rotate(Vector3.up, rotationAngle * CharacterProperties.TurnSpeed * deltaTime);
-			Debug.DrawRay(transform.position,
-						MovementDirection,
-						Color.red);
 			Debug.DrawRay(transform.position,
 						Model.rigidbody.velocity,
 						Color.blue);

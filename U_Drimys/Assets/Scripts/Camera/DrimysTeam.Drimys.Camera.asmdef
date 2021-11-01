@@ -1,11 +1,8 @@
 {
-    "name": "DrimysTeam.Drimys.Player",
+    "name": "DrimysTeam.Drimys.Camera",
     "references": [
         "GUID:2da65d7ec45682a49991d4fc7e6f91f6",
-        "GUID:448d1abb7316b0b448d8bfa72ebdfb5e",
-        "GUID:eb1ad2ad70728b24ca831de67d799d28",
-        "GUID:ce4ae6fe238879f448b9987d3c1b8c52",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:eb1ad2ad70728b24ca831de67d799d28"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

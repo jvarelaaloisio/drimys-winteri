@@ -394,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 1404535534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.21, y: -1.008, z: -44.634}
-  m_LocalScale: {x: 25, y: 2.2212026, z: 25}
+  m_LocalScale: {x: 50, y: 2.2212026, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -510,10 +510,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c56b3a1b1146384ba48dd9c101c0f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onJumpInput:
+    m_PersistentCalls:
+      m_Calls: []
+  onMoveInput:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1865738660}
+        m_MethodName: HandlePlayerMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onCameraInput:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1865738660}
+        m_MethodName: HandleMouseMovement
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   input: {fileID: -944628639613478452, guid: d51ebe9cc347faa45b4a3b572d4a247c, type: 3}
   actionMapName: Player
   jumpActionName: Jump
   movementActionName: Movement
+  cameraActionName: Camera
 --- !u!114 &1505918253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,6 +559,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 9ae0c910466bc854f8e37cf2c385480c, type: 2}
+  onMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1505918254
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -655,8 +690,7 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.38268274, z: -0, w: 0.9238798}
   m_LocalPosition: {x: 23.163216, y: 1, z: -46.433212}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1865738659}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -669,6 +703,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1865738659}
+  - component: {fileID: 1865738660}
   - component: {fileID: 1865738658}
   - component: {fileID: 1865738657}
   m_Layer: 0
@@ -736,10 +771,28 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865738656}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: -5}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 19.627687, y: 2.5, z: -49.96875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1843357349}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!114 &1865738660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865738656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 545378e59b5dcb7469bd340deabb8a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetFromPlayer: {x: 2, y: 1.5, z: -5}
+  player: {fileID: 1505918251}
+  turnSpeed: {x: 100, y: 0.5}
+  minimumAngle: -45
+  maximumAngle: 55
+  isInvertedVer: 1

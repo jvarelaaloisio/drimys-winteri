@@ -11,18 +11,13 @@ namespace Characters
 {
 	public class CharacterModel : BaseModel
 	{
-		public IView View { get; }
+		public new IView View { get; }
 		protected readonly FSM<string> StateMachine;
 		private const string JumpState = "Jump";
 		private const string IdleState = "Idle";
 
 		public CharacterFlags Flags;
 		public bool IsAiming;
-
-		/// <summary>
-		/// Method to process speed in case the character needs an acceleration/deceleration effect
-		/// </summary>
-		public Func<float, float> ProcessSpeed = f => f;
 
 		private IdleRun<string> _idleRun;
 		private Jump<string> _jump;
@@ -64,13 +59,13 @@ namespace Characters
 		/// Event risen when the character moves.
 		/// Vector3 is direction;
 		/// </summary>
-		public event Action<Vector3> onMove = delegate { };
+		public event Action<Vector2> onMove = delegate { };
 
 		/// <summary>
 		/// Event risen when the character stops.
 		/// Vector3 is direction;
 		/// </summary>
-		public event Action<Vector3> onStop = delegate { };
+		public event Action onStop = delegate { };
 
 		/// <summary>
 		/// Event risen when the character jumps.
@@ -102,9 +97,11 @@ namespace Characters
 		public void Update(float deltaTime)
 			=> StateMachine.Update(deltaTime);
 
-		public void HandleMoveInput(Vector2 direction)
+		public void MoveTowards(Vector2 direction)
 		{
-			((CharacterState<string>)StateMachine.CurrentState).HandleMoveInput(direction);
+			((CharacterState<string>)StateMachine.CurrentState).MoveTowards(direction);
+			if (direction.magnitude > 0)
+				onMove(direction);
 		}
 
 		public void Jump()
