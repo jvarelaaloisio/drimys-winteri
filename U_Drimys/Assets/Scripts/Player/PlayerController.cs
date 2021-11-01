@@ -10,6 +10,7 @@ namespace Player
 		public PlayerController(CharacterModel model, IView view)
 			: base(model, view)
 		{
+			Model = model;
 		}
 
 		public void Jump()
@@ -17,7 +18,7 @@ namespace Player
 			Model.Jump();
 		}
 
-		public void Move(Vector2 input) => Model.Move(input);
+		public void Move(Vector2 input) => Model.HandleMoveInput(input);
 
 		public void StartAim()
 		{

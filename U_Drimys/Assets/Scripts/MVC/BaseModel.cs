@@ -7,15 +7,9 @@ namespace MVC
 		public BaseModel(IView view)
 		{
 			View = view;
-			StateMachine = FSM<string>.Builder.BuildAnFSM(view.Transform.name).Build();
+			//TODO:Arreglar esto
 		}
 
-		protected readonly IView View;
-		protected readonly FSM<string> StateMachine;
-
-		public void Update(float deltaTime)
-		{
-			StateMachine.Update(deltaTime);
-		}
+		public IView View { get; }
 	}
 }

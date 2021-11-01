@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace IA.FSM
 {
 	/// <summary>
 	/// State used by the Finite State Machine (FSM) Class
 	/// </summary>
-	public abstract class State
+	public abstract class State<T>
 	{
+		private readonly Dictionary<T, State<T>> _transitions = new Dictionary<T, State<T>>();
+		public static implicit operator bool(State<T> state) => state != null;
+
 		/// <summary>
 		/// Called once when the FSM enters the State
 		/// </summary>
@@ -21,6 +26,8 @@ namespace IA.FSM
 		/// Called once when the FSM exits the State
 		/// </summary>
 		public event Action OnSleep = delegate { };
+
+		public abstract string GetName();
 
 		/// <summary>
 		/// Method called once when entering this state and after exiting the last one.
@@ -42,5 +49,20 @@ namespace IA.FSM
 		/// </summary>
 		public virtual void Sleep()
 			=> OnSleep();
+
+		public void AddTransition(T key, State<T> transition)
+		{
+			if (!_transitions.ContainsKey(key))
+				_transitions.Add(key, transition);
+		}
+
+		[CanBeNull]
+		public State<T> GetTransition(T key) =>
+			_transitions.TryGetValue(key, out var transition)
+				? transition
+				: null;
+
+		public bool TryGetTransition(T key, out State<T> transition)
+			=> _transitions.TryGetValue(key, out transition);
 	}
 }

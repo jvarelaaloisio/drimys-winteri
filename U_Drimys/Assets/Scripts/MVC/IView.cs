@@ -6,9 +6,9 @@ namespace MVC
 	public interface IView
 	{
 		Transform Transform { get; }
-		BaseController Controller { set; }
-		Vector3 Velocity { get; set; }
-		void Jump(float jumpForce);
+		Rigidbody Rigidbody { get; }
+		BaseModel Model { get; }
+		void Setup(BaseController controller);
 		void Die(float time = 0);
 		Coroutine StartCoroutine(IEnumerator routine);
 		Coroutine StartCoroutine(string methodName);

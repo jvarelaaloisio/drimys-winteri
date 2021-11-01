@@ -1,4 +1,6 @@
-﻿using MVC;
+﻿using System;
+using Characters;
+using MVC;
 using UnityEngine;
 
 namespace Player
@@ -6,32 +8,29 @@ namespace Player
 	[RequireComponent(typeof(Rigidbody))]
 	public class PlayerTestView : MonoBehaviour, IView
 	{
-		private PhysicalStatus _physicalStatus;
-		private Rigidbody _rigidbody;
+		private CharacterModel _model;
+		private BaseController _controller;
+		
+		[SerializeField]
+		private CharacterProperties properties;
 
 		public Transform Transform => transform;
+		public Rigidbody Rigidbody { get; private set; }
+
 		public BaseController Controller { get; set; }
 
-		public Vector3 Velocity
-		{
-			get => _rigidbody.velocity;
-			set => _physicalStatus.MovementVector = value;
-		}
+		public BaseModel Model => _model;
 
 		private void Awake()
 		{
-			_physicalStatus = new PhysicalStatus()
-					{
-						ShouldJump = false,
-						MovementVector = Vector3.zero
-					};
-			_rigidbody = GetComponent<Rigidbody>();
+			Rigidbody = GetComponent<Rigidbody>();
 		}
 
-		public void Jump(float jumpForce)
+		public void Setup(BaseController controller)
 		{
-			_physicalStatus.ShouldJump = true;
-			_physicalStatus.NextJumpForce = jumpForce;
+			_controller = controller;
+			_model = new CharacterModel(this,
+										properties);
 		}
 
 		public void Die(float time = 0)
@@ -39,18 +38,19 @@ namespace Player
 			Destroy(gameObject, time);
 		}
 
-		private void FixedUpdate()
+		private void Update()
 		{
-			_rigidbody.velocity = _physicalStatus.MovementVector;
-			if (_physicalStatus.ShouldJump)
-				_rigidbody.AddForce(Vector3.up * _physicalStatus.NextJumpForce, ForceMode.Impulse);
+			_model.Update(Time.deltaTime);
 		}
 
-		private struct PhysicalStatus
+		private void OnCollisionEnter(Collision other)
 		{
-			public bool ShouldJump;
-			public float NextJumpForce;
-			public Vector3 MovementVector;
+			_model.Land();
+		}
+
+		private void OnCollisionExit(Collision other)
+		{
+			
 		}
 	}
 }

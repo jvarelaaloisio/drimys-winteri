@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IA.FSM
@@ -10,30 +9,28 @@ namespace IA.FSM
 	/// <typeparam name="T">The key Type to access the different states</typeparam>
 	public class FSM<T>
 	{
-		private readonly Dictionary<T, State> _states = new Dictionary<T, State>();
-
 		private readonly string _tag;
 		private bool _isLoggingTransitions = false;
 
-		private FSM(string ownerTag = "")
-			=> _tag = ownerTag != "" ? $"<b>{ownerTag} (FSM)</b>" : "<b>FSM</b>";
+		private FSM(State<T> initialState,
+					string ownerTag = "")
+		{
+			CurrentState = initialState;
+			CurrentState.Awake();
+			_tag = ownerTag != "" ? $"<b>{ownerTag} (FSM)</b>" : "<b>FSM</b>";
+		}
 
 		private ILogger _logger;
-		
+
 		/// <summary>
 		/// Event triggered when the state changes. First state is the last and second is the new one.
 		/// </summary>
-		public event Action<State, State> OnTransition = delegate { };
-
-		/// <summary>
-		/// Event triggered when a new state is added to the Dictionary.
-		/// </summary>
-		public event Action<State> OnAddedState = delegate { };
+		public event Action<State<T>, State<T>> OnTransition = delegate { };
 
 		/// <summary>
 		/// Current state running in the FSM
 		/// </summary>
-		public State CurrentState { get; private set; }
+		public State<T> CurrentState { get; private set; }
 
 		/// <summary>
 		/// Change the current state to another one in the dictionary.
@@ -41,39 +38,23 @@ namespace IA.FSM
 		/// <param name="key">Key for the next state</param>
 		public void TransitionTo(T key)
 		{
-			if (!_states.ContainsKey(key))
+			if (!CurrentState.TryGetTransition(key, out var transition))
 			{
-				_logger.LogError(_tag, $"key not found -> {key}");
+				if (_isLoggingTransitions)
+					_logger.Log(_tag, $"Key not found -> {key}");
 				return;
 			}
 
-			if (_states[key] == CurrentState)
+			if (transition == CurrentState)
 				return;
 			CurrentState?.Sleep();
 
 			if (_isLoggingTransitions)
-				_logger.Log(_tag, $"changed state: {CurrentState} -> {_states[key]}");
+				_logger.Log(_tag, $"changed state: {CurrentState.GetName()} -> {transition.GetName()}");
 
-			CurrentState = _states[key];
+			CurrentState = transition;
 			CurrentState.Awake();
-			OnTransition(CurrentState, _states[key]);
-		}
-
-		/// <summary>
-		/// Add a state to the Dictionary.
-		/// </summary>
-		/// <param name="key">Key to access the state</param>
-		/// <param name="state">The state object</param>
-		public void AddState(T key, State state)
-		{
-			if (_states.ContainsKey(key))
-			{
-				_logger.LogError("FSM", $"duplicated key -> {key}");
-				return;
-			}
-
-			_states.Add(key, state);
-			OnAddedState(state);
+			OnTransition(CurrentState, transition);
 		}
 
 		/// <summary>
@@ -82,51 +63,56 @@ namespace IA.FSM
 		public void Update(float deltaTime)
 			=> CurrentState.Update(deltaTime);
 
+		public static Builder Build(State<T> initialState,
+									string ownerTag = "")
+			=> new Builder(initialState,
+							ownerTag);
+
+		public static Builder Build(FSM<T> fsm)
+			=> new Builder(fsm);
+
 		public class Builder
 		{
-			private readonly FSM<T> fsm;
+			private readonly FSM<T> _fsm;
 
-			private Builder(string ownerTag = "")
-				=> fsm = new FSM<T>(ownerTag);
-			
-			private Builder(FSM<T> fsm)
-				=> this.fsm = fsm;
+			internal Builder(State<T> initialState,
+							string ownerTag = "")
+				=> _fsm = new FSM<T>(initialState,
+									ownerTag);
 
-			public static Builder BuildAnFSM(string ownerTag = "", FSM<T> fsm = null)
-				=> new Builder(ownerTag);
+			internal Builder(FSM<T> fsm)
+				=> _fsm = fsm;
 
-			public FSM<T> Build()
-				=> fsm;
+			public FSM<T> Done()
+				=> _fsm;
 
 			public Builder WithThisLogger(ILogger logger)
 			{
-				fsm._logger = logger;
+				_fsm._logger = logger;
 				return this;
 			}
 
 			public Builder ThatLogsTransitions(bool value = true)
 			{
 				if (value)
-					fsm._logger.Log(fsm._tag, "Now this FSM logs transitions");
-				fsm._isLoggingTransitions = value;
+				{
+					if (_fsm._logger == null)
+					{
+						throw new
+							ArgumentException("FSM should have a logger set." +
+											" Please use the method <b>WithThisLogger(<i>Logger</i>)</b> before calling this one");
+					}
+
+					_fsm._logger.Log(_fsm._tag, "Now this FSM logs transitions");
+				}
+
+				_fsm._isLoggingTransitions = value;
 				return this;
 			}
 
-			public Builder WithThisState(T key, State state)
+			public Builder ThatTriggersOnTransition(Action<State<T>, State<T>> eventHandler)
 			{
-				fsm.AddState(key, state);
-				return this;
-			}
-
-			public Builder ThatTriggersOnStateAddition(Action<State> eventHandler)
-			{
-				fsm.OnAddedState += eventHandler;
-				return this;
-			}
-
-			public Builder ThatTriggersOnTransition(Action<State, State> eventHandler)
-			{
-				fsm.OnTransition += eventHandler;
+				_fsm.OnTransition += eventHandler;
 				return this;
 			}
 		}
