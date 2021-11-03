@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AmbientOcclusion:
+        m_Texture: {fileID: 2800000, guid: 8ade0a093b382f64cb6f6705b3c50bd1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AraucariaambientOcclusion:
         m_Texture: {fileID: 941290184849392403, guid: 8ccb03dd51da0614d9d8fb8da9c654ff,
           type: 3}
