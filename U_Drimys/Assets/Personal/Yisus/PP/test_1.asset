@@ -18,16 +18,16 @@ MonoBehaviour:
     value: 1
   filtering:
     overrideState: 1
-    value: {x: 50, y: 95}
+    value: {x: 76.20544, y: 99}
   minLuminance:
-    overrideState: 1
-    value: -0.6
+    overrideState: 0
+    value: -9
   maxLuminance:
     overrideState: 0
     value: 9
   keyValue:
-    overrideState: 1
-    value: 1
+    overrideState: 0
+    value: 0.96
   eyeAdaptation:
     overrideState: 1
     value: 0
@@ -1369,10 +1369,10 @@ MonoBehaviour:
     value: 30
   aperture:
     overrideState: 1
-    value: 16
+    value: 4.4
   focalLength:
     overrideState: 1
-    value: 218
+    value: 126
   kernelSize:
     overrideState: 1
     value: 1
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
@@ -1397,10 +1397,10 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 4
+    value: 1
   color:
     overrideState: 1
-    value: {r: 0, g: 0, b: 0, a: 1}
+    value: {r: 0.1512994, g: 0.23365386, b: 0.3773585, a: 1}
   ambientOnly:
     overrideState: 1
     value: 1
@@ -1455,13 +1455,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 1
+    value: 1.5
   threshold:
     overrideState: 1
     value: 1
