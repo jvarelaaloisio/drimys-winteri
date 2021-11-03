@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace IA.FSM
 {
@@ -55,12 +54,6 @@ namespace IA.FSM
 			if (!_transitions.ContainsKey(key))
 				_transitions.Add(key, transition);
 		}
-
-		[CanBeNull]
-		public State<T> GetTransition(T key) =>
-			_transitions.TryGetValue(key, out var transition)
-				? transition
-				: null;
 
 		public bool TryGetTransition(T key, out State<T> transition)
 			=> _transitions.TryGetValue(key, out transition);

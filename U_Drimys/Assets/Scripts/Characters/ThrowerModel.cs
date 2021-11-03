@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Core.Helpers;
 using Core.Interactions.Throwables;
 using MVC;
 using UnityEngine;
@@ -9,28 +10,33 @@ namespace Characters
 {
 	public class ThrowerModel : CharacterModel
 	{
-		#region Events
-
-		public event Action onThrowing = delegate { }; 
-		public event Action onThrowed = delegate { }; 
-
-		#endregion
-		
 		protected readonly Throwable ThrowablePrefab;
 		protected readonly Transform Hand;
-		
-		public ThrowerModel(IView view,
+
+		public ThrowerModel(Transform transform,
+							Rigidbody rigidbody,
 							CharacterProperties properties,
 							Throwable throwablePrefab,
-							Transform hand)
-			: base(view, properties)
+							Transform hand,
+							ICoroutineRunner coroutineRunner)
+			: base(transform,
+					rigidbody,
+					properties,
+					coroutineRunner)
 		{
 			ThrowablePrefab = throwablePrefab;
 			Hand = hand;
 		}
 
+		#region Events
+
+		public event Action onThrowing = delegate { };
+		public event Action onThrowed = delegate { };
+
+		#endregion
+		
 		protected IEnumerator Throw(Transform target,
-								float delay)
+									float delay)
 		{
 			onThrowing();
 			yield return new WaitForSeconds(delay);

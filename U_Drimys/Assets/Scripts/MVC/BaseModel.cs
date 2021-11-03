@@ -1,15 +1,23 @@
-﻿using IA.FSM;
+﻿using Core.Helpers;
+using IA.FSM;
+using UnityEngine;
 
 namespace MVC
 {
 	public class BaseModel
 	{
-		public BaseModel(IView view)
-		{
-			View = view;
-			//TODO:Arreglar esto
-		}
+		/// <summary>
+		/// Build in the constructor
+		/// </summary>
+		protected FSM<string> StateMachine;
+		protected readonly ICoroutineRunner CoroutineRunner;
 
-		public IView View { get; }
+		public BaseModel(Transform transform,
+						ICoroutineRunner coroutineRunner)
+		{
+			this.transform = transform;
+			CoroutineRunner = coroutineRunner;
+		}
+		public Transform transform { get; }
 	}
 }

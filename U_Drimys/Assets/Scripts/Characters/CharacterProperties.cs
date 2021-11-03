@@ -2,7 +2,7 @@
 
 namespace Characters
 {
-	[CreateAssetMenu(menuName = "Characters/Properties", fileName = "CharacterProperties", order = 0)]
+	[CreateAssetMenu(menuName = "Properties/Character", fileName = "CharacterProperties", order = 0)]
 	public class CharacterProperties : ScriptableObject
 	{
 		[SerializeField]
@@ -17,12 +17,17 @@ namespace Characters
 		[SerializeField]
 		private float turnSpeed;
 
+		[SerializeField]
+		private LayerMask floorLayer;
+
+		[SerializeField]
+		private float maxSlopeAngle;
+
 		public float JumpForce => jumpForce;
-
 		public float Speed => speed;
-		
 		public float MaxSpeed => maxSpeed;
-
 		public float TurnSpeed => turnSpeed;
+		public LayerMask FloorLayer => floorLayer;
+		public float MaxSlopeAngle => maxSlopeAngle;
 	}
 }

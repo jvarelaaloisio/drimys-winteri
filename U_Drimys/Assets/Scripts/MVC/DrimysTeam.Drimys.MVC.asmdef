@@ -1,6 +1,7 @@
 {
     "name": "DrimysTeam.Drimys.MVC",
     "references": [
+        "GUID:2da65d7ec45682a49991d4fc7e6f91f6",
         "GUID:8f906b125f01afa478beb61975b2ac12"
     ],
     "includePlatforms": [],

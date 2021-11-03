@@ -39,11 +39,7 @@ namespace IA.FSM
 		public void TransitionTo(T key)
 		{
 			if (!CurrentState.TryGetTransition(key, out var transition))
-			{
-				if (_isLoggingTransitions)
-					_logger.Log(_tag, $"Key not found -> {key}");
 				return;
-			}
 
 			if (transition == CurrentState)
 				return;

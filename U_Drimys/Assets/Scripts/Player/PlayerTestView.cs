@@ -1,12 +1,15 @@
-﻿using Characters;
+﻿using System;
+using Characters;
+using Core.Helpers;
 using Events.UnityEvents;
 using MVC;
 using UnityEngine;
 
 namespace Player
 {
+	[Obsolete("Remove this class when possible")]
 	[RequireComponent(typeof(Rigidbody))]
-	public class PlayerTestView : MonoBehaviour, IView
+	public class PlayerTestView : MonoBehaviour, IView, ICoroutineRunner
 	{
 		[SerializeField]
 		private CharacterProperties properties;
@@ -32,8 +35,6 @@ namespace Player
 		public void Setup(BaseController controller)
 		{
 			_controller = controller;
-			_model = new CharacterModel(this,
-										properties);
 			_model.onMove += onMove.Invoke;
 		}
 

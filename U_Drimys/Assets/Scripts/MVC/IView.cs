@@ -1,20 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MVC
 {
+	[Obsolete("This Interface should be removed once the model stops using it")]
 	public interface IView
 	{
 		Transform Transform { get; }
 		Rigidbody Rigidbody { get; }
 		BaseModel Model { get; }
 		void Setup(BaseController controller);
-		void Die(float time = 0);
-		Coroutine StartCoroutine(IEnumerator routine);
-		Coroutine StartCoroutine(string methodName);
-		Coroutine StartCoroutine(string methodName, object value);
-		void StopCoroutine(IEnumerator routine);
-		void StopCoroutine(Coroutine routine);
-		void StopCoroutine(string methodName);
 	}
 }

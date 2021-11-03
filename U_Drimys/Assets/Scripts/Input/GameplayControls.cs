@@ -43,6 +43,14 @@ namespace Input
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Lock"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2fcc892-092c-4472-a507-a5813a7fab04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -155,6 +163,17 @@ namespace Input
                     ""action"": ""Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cd21f24-5552-4d2a-9ddd-9e6b1d71247a"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Lock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -188,6 +207,7 @@ namespace Input
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
             m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+            m_Player_Lock = m_Player.FindAction("Lock", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -240,6 +260,7 @@ namespace Input
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Movement;
         private readonly InputAction m_Player_Camera;
+        private readonly InputAction m_Player_Lock;
         public struct PlayerActions
         {
             private @GameplayControls m_Wrapper;
@@ -247,6 +268,7 @@ namespace Input
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Movement => m_Wrapper.m_Player_Movement;
             public InputAction @Camera => m_Wrapper.m_Player_Camera;
+            public InputAction @Lock => m_Wrapper.m_Player_Lock;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -265,6 +287,9 @@ namespace Input
                     @Camera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                     @Camera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                     @Camera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
+                    @Lock.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLock;
+                    @Lock.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLock;
+                    @Lock.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLock;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -278,6 +303,9 @@ namespace Input
                     @Camera.started += instance.OnCamera;
                     @Camera.performed += instance.OnCamera;
                     @Camera.canceled += instance.OnCamera;
+                    @Lock.started += instance.OnLock;
+                    @Lock.performed += instance.OnLock;
+                    @Lock.canceled += instance.OnLock;
                 }
             }
         }
@@ -296,6 +324,7 @@ namespace Input
             void OnJump(InputAction.CallbackContext context);
             void OnMovement(InputAction.CallbackContext context);
             void OnCamera(InputAction.CallbackContext context);
+            void OnLock(InputAction.CallbackContext context);
         }
     }
 }
