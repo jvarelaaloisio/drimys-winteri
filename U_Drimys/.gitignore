@@ -67,6 +67,7 @@ sysinfo.txt
 [Oo]bj/
 _UpgradeReport_Files/
 [Pp]ackages/
+!/[Pp]ackages/manifest.json
 
 Thumbs.db
 Desktop.ini
