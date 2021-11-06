@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -9,6 +10,10 @@ namespace Player
 	{
 		public UnityEvent onJumpInput;
 		public UnityEvent onLockInput;
+		[FormerlySerializedAs("onAim")]
+		public UnityEvent onAimInput;
+		[FormerlySerializedAs("onShoot")]
+		public UnityEvent onShootInput;
 		public Vector2UnityEvent onMoveInput;
 		public Vector2UnityEvent onCameraInput;
 
@@ -19,16 +24,19 @@ namespace Player
 		private string actionMapName;
 
 		[SerializeField]
-		private string jumpActionName;
+		private string jumpActionName = "Jump";
 		
 		[SerializeField]
-		private string lockActionName;
+		private string lockActionName = "Lock";
+		
+		[SerializeField]
+		private string shootActionName = "Shoot";
 
 		[SerializeField]
-		private string movementActionName;
+		private string movementActionName = "Movement";
 		
 		[SerializeField]
-		private string cameraActionName;
+		private string cameraActionName = "Camera";
 
 
 		private InputActionMap _actionMap;
@@ -40,6 +48,8 @@ namespace Player
 			_movementInput = _actionMap.FindAction(movementActionName);
 			_actionMap.FindAction(jumpActionName).performed += HandleJump;
 			_actionMap.FindAction(lockActionName).performed += HandleLock;
+			_actionMap.FindAction(shootActionName).started += _ => onAimInput.Invoke();
+			_actionMap.FindAction(shootActionName).canceled += _ => onShootInput.Invoke();
 			_actionMap.FindAction(cameraActionName).started += HandleCamera;
 			_actionMap.FindAction(cameraActionName).performed += HandleCamera;
 			_actionMap.FindAction(cameraActionName).canceled += HandleCamera;

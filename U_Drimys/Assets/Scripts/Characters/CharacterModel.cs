@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Characters.States;
 using Core.Helpers;
@@ -16,12 +15,9 @@ namespace Characters
 	{
 		private const string JumpState = "Jump";
 		private const string IdleState = "Idle";
-		private const string LockJumpState = "LockedJump";
-		public CharacterFlags Flags;
-		private LockTarget lockTarget;
-
-		private IdleRun<string> _idleRun;
-		private Jump<string> _jump;
+		private const string FallState = "Fall";
+		public StateFlags Flags;
+		private LockTarget _lockTarget;
 
 		public CharacterModel(Transform transform,
 							Rigidbody rigidbody,
@@ -33,21 +29,33 @@ namespace Characters
 		{
 			Properties = properties;
 			this.rigidbody = rigidbody;
-			Flags = new CharacterFlags();
-			_jump = new Jump<string>(this, coroutineRunner);
-			_jump.OnAwake += RaiseOnJump;
-			_jump.OnSleep += RaiseOnLand;
-			
-			_idleRun = new IdleRun<string>(this, coroutineRunner);
+			Flags = new StateFlags();
+			var jump = new Jump<string>(this, coroutineRunner);
+			jump.OnAwake += HandleJump;
 
-			_jump.AddTransition(IdleState, _idleRun);
-			_idleRun.AddTransition(JumpState, _jump);
+			var idleRun = new IdleRun<string>(this, coroutineRunner);
+			var fall = new Fall<string>(this, coroutineRunner);
+			jump.OnAwake += HandleFall;
+			fall.OnSleep += HandleLanding;
+
+			jump.AddTransition(IdleState, idleRun);
+			jump.AddTransition(FallState, fall);
+
+			idleRun.AddTransition(JumpState, jump);
+			idleRun.AddTransition(FallState, fall);
+
+			fall.AddTransition(IdleState, idleRun);
 
 			StateMachine = FSM<string>
-							.Build(_idleRun, nameof(transform.gameObject))
+							.Build(idleRun, nameof(transform.gameObject))
 							.WithThisLogger(Debug.unityLogger)
 							.ThatLogsTransitions(shouldLogFsmTransitions)
 							.Done();
+		}
+
+		private void HandleFall()
+		{
+			onFall();
 		}
 
 		#region Events
@@ -56,12 +64,14 @@ namespace Characters
 		/// Event risen when the attack starts.
 		/// Transform can be null
 		/// </summary>
+		[CanBeNull]
 		public event Action<Transform> onAttacking = delegate { };
 
 		/// <summary>
 		/// Event risen when the attack ends.
 		/// Transform can be null
 		/// </summary>
+		[CanBeNull]
 		public event Action<Transform> onAttacked = delegate { };
 
 		/// <summary>
@@ -80,6 +90,11 @@ namespace Characters
 		/// Event risen when the character jumps.
 		/// </summary>
 		public event Action onJump = delegate { };
+
+		/// <summary>
+		/// Event risen when the character starts falling.
+		/// </summary>
+		public event Action onFall = delegate { };
 
 		/// <summary>
 		/// Event risen when the character lands.
@@ -109,19 +124,29 @@ namespace Characters
 		#endregion
 
 		public Transform LockTargetTransform { get; private set; }
-		
+
 		public Rigidbody rigidbody { get; }
 
 		public CharacterProperties Properties { get; }
 
 		public void Update(float deltaTime)
-			=> StateMachine.Update(deltaTime);
+		{
+			StateMachine.Update(deltaTime);
+			StateMachine.TransitionTo(CharacterHelper
+										.IsGrounded(transform.position
+													+ Vector3.down * Properties.GroundDistanceCheck,
+													Properties)
+										? IdleState
+										: FallState);
+		}
 
 		public void MoveTowards(Vector2 direction)
 		{
 			((CharacterState<string>)StateMachine.CurrentState).MoveTowards(direction);
-			if (direction.magnitude > 0)
-				onMove(direction);
+			bool willMove = direction.magnitude > 0;
+			if (Flags.IsMoving && !willMove)
+				onStop();
+			Flags.IsMoving = willMove;
 		}
 
 		public void Jump()
@@ -138,7 +163,7 @@ namespace Characters
 		{
 		}
 
-		public IEnumerator Attack(IEnumerator<Transform> behaviour,
+		public IEnumerator Attack(IEnumerator behaviour,
 								[CanBeNull] Transform target)
 		{
 			onAttacking(target);
@@ -154,37 +179,37 @@ namespace Characters
 				onUnlock();
 				return;
 			}
-			
-			lockTarget = GameObject.FindObjectsOfType<LockTarget>()
+
+			_lockTarget = GameObject.FindObjectsOfType<LockTarget>()
 									.OrderBy(candidate => Vector3.Distance(
 																			transform.position,
 																			candidate.transform.position))
 									.First(candidate => candidate.CompareTag(targetTag));
-			LockTargetTransform = lockTarget.transform;
-			lockTarget.onDisabling.AddListener(HandleTargetDisables);
+			LockTargetTransform = _lockTarget.transform;
+			_lockTarget.onDisabling.AddListener(HandleTargetDisables);
 			onLock(LockTargetTransform);
 		}
 
 		private void HandleTargetDisables()
 		{
 			Flags.IsLocked = false;
-			lockTarget = null;
+			_lockTarget = null;
 			LockTargetTransform = null;
 		}
 
-		private void RaiseOnJump()
+		private void HandleJump()
 		{
 			onJump();
 		}
 
-		private void RaiseOnLand()
+		private void HandleLanding()
 		{
 			onLand();
 		}
 
-		public struct CharacterFlags
+		public struct StateFlags
 		{
-			public bool IsAiming;
+			public bool IsMoving;
 			public bool IsStunned;
 			public bool IsLocked;
 		}

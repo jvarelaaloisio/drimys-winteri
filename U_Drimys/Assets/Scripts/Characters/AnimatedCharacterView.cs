@@ -9,54 +9,57 @@ namespace Characters
 		protected Animator animator;
 
 		[SerializeField]
-		private string jumping = "Jumping";
+		private string jumpingParameter = "Jumping";
 
 		[SerializeField]
-		private string velocity = "Velocity";
+		private string velocityParameter = "Velocity";
+		[SerializeField]
+		private string stopParameter = "Stop";
+		[SerializeField]
+		private string attackParameter = "Attack";
 
-		private int _jumpingParameter;
-		private int _velocityParameter;
-		private int _velocityXParameter;
-		private int _velocityZParameter;
+		private int _jumpingHash;
+		private int _velocityHash;
+		private int _velocityXHash;
+		private int _velocityZHash;
 
 		protected override void Awake()
 		{
-			_jumpingParameter = Animator.StringToHash(jumping);
-			_velocityParameter = Animator.StringToHash(velocity);
-			_velocityXParameter = Animator.StringToHash(velocity + "X");
-			_velocityZParameter = Animator.StringToHash(velocity + "Z");
+			_jumpingHash = Animator.StringToHash(jumpingParameter);
+			_velocityHash = Animator.StringToHash(velocityParameter);
+			_velocityXHash = Animator.StringToHash(velocityParameter + "X");
+			_velocityZHash = Animator.StringToHash(velocityParameter + "Z");
 			base.Awake();
 
 			Rigidbody = GetComponent<Rigidbody>();
 
 			Model.onJump += () => SetJumping(true);
 			Model.onLand += () => SetJumping(false);
+			Model.onStop += () => animator.SetTrigger( stopParameter);
+			Model.onAttacking += _ => animator.SetTrigger(attackParameter);
 		}
 
 		protected override void Update()
 		{
 			base.Update();
-			Vector3 velocity = Rigidbody.velocity.IgnoreY() / properties.MaxSpeed;
-			animator.SetFloat(_velocityParameter, velocity.magnitude);
+			Vector3 velocity = Rigidbody.velocity.IgnoreY() / characterProperties.MaxSpeed;
+			animator.SetFloat(_velocityHash, velocity.magnitude);
 			if (Model.Flags.IsLocked)
 			{
 				velocity = transform.InverseTransformDirection(velocity);
-				animator.SetFloat(_velocityXParameter, velocity.x);
-				animator.SetFloat(_velocityZParameter, velocity.z);
+				animator.SetFloat(_velocityXHash, velocity.x);
+				animator.SetFloat(_velocityZHash, velocity.z);
 			}
 			else
 			{
-				animator.SetFloat(_velocityXParameter, 0);
-				animator.SetFloat(_velocityZParameter, velocity.magnitude);
+				animator.SetFloat(_velocityXHash, 0);
+				animator.SetFloat(_velocityZHash, velocity.magnitude);
 			}
-			//TODO:Add these booleans
-			//Also "IsAimPressed" can be the same as "Attacking" in the caraya.
-			// animator.SetBool("Aiming", player.IsAimPressed);
 		}
 
 		private void SetJumping(bool value)
 		{
-			animator.SetBool(_jumpingParameter, value);
+			animator.SetBool(_jumpingHash, value);
 		}
 	}
 }

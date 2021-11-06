@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Characters.States
 {
-	public class Jump<T> : IdleRun<T>
+	public class Jump<T> : Fall<T>
 	{
 		public Jump(CharacterModel model,
 					ICoroutineRunner coroutineRunner)
 			: base(model,
-					coroutineRunner) { }
+					coroutineRunner)
+		{}
 
 		public override string GetName() => "Jump";
 

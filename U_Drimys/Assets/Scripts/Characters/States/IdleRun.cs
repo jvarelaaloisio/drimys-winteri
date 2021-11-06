@@ -9,8 +9,16 @@ namespace Characters.States
 		protected readonly CharacterProperties CharacterProperties;
 		protected Vector3 MovementDirection;
 		protected readonly Transform transform;
+		protected float Speed;
+		protected float MaxSpeed;
 		private bool canMove;
 
+		/*TODO:CharacterProperties can be avoided
+		 Implement when the characterHelper is received in constructor.
+		 If then, speed, maxSpeed and turnSpeed could be either received via constructor
+		 or could be contained in a series of characterHelper instances that would contain said data.
+		 It depends on the impl of LUTs and such.
+		*/
 		public IdleRun(CharacterModel model,
 						ICoroutineRunner coroutineRunner)
 			: base(model,
@@ -19,6 +27,8 @@ namespace Characters.States
 			canMove = true;
 			CharacterProperties = Model.Properties;
 			transform = model.transform;
+			Speed = CharacterProperties.GroundSpeed;
+			MaxSpeed = CharacterProperties.MaxSpeed;
 		}
 
 		public override string GetName() => "Idle";
@@ -31,7 +41,9 @@ namespace Characters.States
 			canMove = false;
 			CoroutineRunner.StartCoroutine(CharacterHelper.MoveHorizontally(Model,
 																			MovementDirection,
-																			() => canMove = true)
+																			() => canMove = true,
+																			Speed,
+																			MaxSpeed)
 										);
 		}
 

@@ -13,34 +13,13 @@ MonoBehaviour:
   m_Name: CharacterProperties
   m_EditorClassIdentifier: 
   jumpForce: 7
-  speed: 45
+  groundSpeed: 45
+  airSpeed: 15
   maxSpeed: 5
   turnSpeed: 5
+  groundDistanceCheck: 1
+  groundedCheckSphereRadius: 0.2
+  maxSlopeAngle: 90
   floorLayer:
     serializedVersion: 2
     m_Bits: 1
-  maxSlopeAngle: 45
-  slopeSpeedMultiplicationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -0.011809057
-      outSlope: -0.011809057
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.32307693
-    - serializedVersion: 3
-      time: 1
-      value: 0.05
-      inSlope: -126.97139
-      outSlope: -126.97139
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.0038461685
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4

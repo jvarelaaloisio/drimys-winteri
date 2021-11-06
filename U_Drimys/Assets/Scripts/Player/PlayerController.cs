@@ -8,10 +8,10 @@ namespace Player
 {
 	public class PlayerController : BaseController
 	{
-		protected new readonly CharacterModel Model;
+		protected new readonly ThrowerModel Model;
 		private readonly Transform _mainCameraTransform;
 
-		public PlayerController(CharacterModel model)
+		public PlayerController(ThrowerModel model)
 			: base(model)
 		{
 			Model = model;
@@ -36,12 +36,12 @@ namespace Player
 
 		public void StartAim()
 		{
-			throw new NotImplementedException();
+			Model.Aim(Model.LockTargetTransform);
 		}
 
 		public void Shoot()
 		{
-			throw new NotImplementedException();
+			Model.Throw();
 		}
 
 		public void Melee()

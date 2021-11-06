@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
-	public class PlayerView : AnimatedCharacterView
+	public class PlayerView : ThrowerView
 	{
 		[SerializeField]
 		private GameplayInputHandler inputHandler;
@@ -15,6 +15,8 @@ namespace Player
 			Controller = new PlayerController(Model);
 			inputHandler.onJumpInput.AddListener(Controller.Jump);
 			inputHandler.onLockInput.AddListener(Controller.Lock);
+			inputHandler.onAimInput.AddListener(() => Controller.StartAim());
+			inputHandler.onShootInput.AddListener(Controller.Shoot);
 			inputHandler.onMoveInput.AddListener(HandleMove);
 		}
 
