@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using Core.Interactions.Throwables;
 using UnityEngine;
 
@@ -7,10 +6,6 @@ namespace Characters
 {
 	public class ThrowerView : AnimatedCharacterView
 	{
-		protected new ThrowerModel Model;
-
-		protected ThrowerProperties ThrowerProperties;
-
 		[SerializeField]
 		private string aimingParameter = "Aiming";
 
@@ -20,15 +15,8 @@ namespace Characters
 		[SerializeField]
 		private Transform hand;
 
-		[SerializeField]
-		private int upperBodyLayer = 2;
-
-		[SerializeField]
-		private float layerWeightTransitionDuration = 1;
-
-		[SerializeField]
-		[Range(1, 60)]
-		private float layerWeightRefreshFrequency = 20;
+		protected new ThrowerModel Model;
+		protected ThrowerProperties ThrowerProperties;
 
 		protected override void Awake()
 		{
@@ -59,20 +47,10 @@ namespace Characters
 		private void SetAiming(bool value)
 		{
 			animator.SetBool(aimingParameter, value);
-		}
-		
-		private IEnumerator SmoothLayerWeightTransition(int layer, float newWeight, float duration)
-		{
-			float oldWeight = animator.GetLayerWeight(layer);
-			float layerWeightRefreshPeriod = 1 / layerWeightRefreshFrequency;
-			var waitTillNextPeriod = new WaitForSeconds(layerWeightRefreshPeriod);
-			for (float i = 0; i < duration; i += layerWeightRefreshPeriod)
-			{
-				animator.SetLayerWeight(layer, Mathf.Lerp(oldWeight, newWeight, i / duration));
-				yield return waitTillNextPeriod;
-			}
-
-			animator.SetLayerWeight(layer, newWeight);
+			if(value)
+				TurnOnUpperBodyAnimatorLayer();
+			else
+				TurnOffUpperBodyAnimatorLayer();
 		}
 	}
 }

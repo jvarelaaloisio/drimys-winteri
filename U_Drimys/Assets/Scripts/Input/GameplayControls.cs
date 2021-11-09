@@ -59,6 +59,14 @@ namespace Input
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""46b2cd4d-d601-4924-9055-85971b6e003e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -186,11 +194,22 @@ namespace Input
                 {
                     ""name"": """",
                     ""id"": ""68210383-2bc5-48b7-90b6-2484f4174006"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ecb4b3f-5698-4959-865e-a3694473b88f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Melee"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -228,6 +247,7 @@ namespace Input
             m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
             m_Player_Lock = m_Player.FindAction("Lock", throwIfNotFound: true);
             m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+            m_Player_Melee = m_Player.FindAction("Melee", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -282,6 +302,7 @@ namespace Input
         private readonly InputAction m_Player_Camera;
         private readonly InputAction m_Player_Lock;
         private readonly InputAction m_Player_Shoot;
+        private readonly InputAction m_Player_Melee;
         public struct PlayerActions
         {
             private @GameplayControls m_Wrapper;
@@ -291,6 +312,7 @@ namespace Input
             public InputAction @Camera => m_Wrapper.m_Player_Camera;
             public InputAction @Lock => m_Wrapper.m_Player_Lock;
             public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+            public InputAction @Melee => m_Wrapper.m_Player_Melee;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -315,6 +337,9 @@ namespace Input
                     @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                     @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                     @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                    @Melee.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMelee;
+                    @Melee.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMelee;
+                    @Melee.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMelee;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -334,6 +359,9 @@ namespace Input
                     @Shoot.started += instance.OnShoot;
                     @Shoot.performed += instance.OnShoot;
                     @Shoot.canceled += instance.OnShoot;
+                    @Melee.started += instance.OnMelee;
+                    @Melee.performed += instance.OnMelee;
+                    @Melee.canceled += instance.OnMelee;
                 }
             }
         }
@@ -354,6 +382,7 @@ namespace Input
             void OnCamera(InputAction.CallbackContext context);
             void OnLock(InputAction.CallbackContext context);
             void OnShoot(InputAction.CallbackContext context);
+            void OnMelee(InputAction.CallbackContext context);
         }
     }
 }

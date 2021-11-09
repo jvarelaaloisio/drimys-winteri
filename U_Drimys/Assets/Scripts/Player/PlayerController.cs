@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Collections;
 using Characters;
 using Core.Extensions;
+using Core.Interactions.Throwables;
 using MVC;
 using UnityEngine;
 
@@ -25,8 +26,9 @@ namespace Player
 
 		public void Move(Vector2 input)
 		{
-			var processedDirection
-				= _mainCameraTransform.TransformDirection(input.HorizontalPlaneToVector3());
+			//BUG:Character walks in an angle instead of forward bc it's taking the camera forward directly.
+			//Maybe there could be a validation with the dot product between the char's forward and the camera's forward
+			var processedDirection = _mainCameraTransform.TransformDirection(input.HorizontalPlaneToVector3());
 			processedDirection.y = 0;
 			processedDirection.Normalize();
 
@@ -41,17 +43,27 @@ namespace Player
 
 		public void Shoot()
 		{
-			Model.Throw();
+			Model.ReleaseAimAndThrow();
 		}
 
-		public void Melee()
+		public void Melee(float meleeDuration, float effectSpawnDelay, Throwable meleeEffect,
+						Transform effectSpawnPoint)
 		{
-			throw new NotImplementedException();
+			Model.ThrowAttack(null,
+							effectSpawnPoint,
+							effectSpawnDelay,
+							meleeDuration,
+							meleeEffect);
 		}
 
 		public void Lock()
 		{
 			Model.TryLock("Enemy");
+		}
+
+		private IEnumerator Attack(float waitTime)
+		{
+			yield return new WaitForSeconds(waitTime);
 		}
 	}
 }

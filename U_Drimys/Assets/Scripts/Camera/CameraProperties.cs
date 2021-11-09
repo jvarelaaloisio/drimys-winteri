@@ -42,6 +42,9 @@ namespace Camera
 		[SerializeField]
 		private bool isInvertedPitch;
 
+		[SerializeField]
+		private float yawFollowDelay;
+
 		public Vector3 OffsetFromPlayer => offsetFromPlayer;
 
 		public Vector2 InputTurnSpeed => inputTurnSpeed;
@@ -63,5 +66,6 @@ namespace Camera
 		public bool IsInvertedPitch => isInvertedPitch;
 
 		public float LockDuration => lockDuration;
+		public float YawFollowDelay => yawFollowDelay;
 	}
 }

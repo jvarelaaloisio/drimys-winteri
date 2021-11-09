@@ -10,6 +10,13 @@ namespace Characters
 	[RequireComponent(typeof(Rigidbody))]
 	public class CharacterView : MonoBehaviour, ICoroutineRunner
 	{
+		public UnityEvent onJump;
+		public UnityEvent onLand;
+		public TransformUnityEvent onLock;
+		public UnityEvent onUnlock;
+		public TransformUnityEvent onAttacking;
+		public TransformUnityEvent onAttacked;
+
 		[SerializeField]
 		protected CharacterProperties characterProperties;
 
@@ -19,12 +26,8 @@ namespace Characters
 		protected BaseController Controller;
 		protected Rigidbody Rigidbody;
 
-		public UnityEvent onJump;
-		public UnityEvent onLand;
-		public TransformUnityEvent onLock;
-		public UnityEvent onUnlock;
-
 		protected CharacterModel Model;
+		
 		protected virtual void Awake()
 		{
 			Rigidbody = GetComponent<Rigidbody>();
@@ -33,6 +36,8 @@ namespace Characters
 			Model.onLand += onLand.Invoke;
 			Model.onLock += onLock.Invoke;
 			Model.onUnlock += onUnlock.Invoke;
+			Model.onAttacking += onAttacking.Invoke;
+			Model.onAttacked += onAttacked.Invoke;
 		}
 
 		protected virtual CharacterModel BuildModel()
@@ -45,10 +50,7 @@ namespace Characters
 		}
 
 		protected virtual void Update()
-		{
-			Model.Update(Time.deltaTime);
-		}
-
+			=> Model.Update(Time.deltaTime);
 
 		private void OnDrawGizmos()
 		{

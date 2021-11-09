@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.IA
+namespace IA
 {
 	public static class LineOfSight
 	{

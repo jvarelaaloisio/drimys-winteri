@@ -8,6 +8,7 @@ namespace Camera.States
 		protected readonly Transform transform;
 		private Vector3 _nextEulerAngles;
 		protected Vector2 ResetSpeed;
+		private float yawAutoRotationStart;
 
 		public FollowAutomatic(CameraModel model) : base(model)
 		{
@@ -20,6 +21,7 @@ namespace Camera.States
 
 		public override void Awake()
 		{
+			yawAutoRotationStart = 0;
 			_nextEulerAngles = transform.localEulerAngles;
 			base.Awake();
 		}
@@ -42,21 +44,6 @@ namespace Camera.States
 
 			nextEulerAngles.x = GetNextPitch(nextEulerAngles.x, currentEulerAngles.x, deltaTime);
 			nextEulerAngles.y = GetNextYaw(nextEulerAngles.y, currentEulerAngles.y, deltaTime);
-
-			// CalculatePitch(ref nextEulerAngles, deltaTime, ref currentEulerAngles);
-			//
-			// CalculateYaw(ref nextEulerAngles, deltaTime, currentEulerAngles);
-		}
-
-		protected virtual void CalculatePitch(ref Vector3 nextEulerAngles, float deltaTime,
-											ref Vector3 currentEulerAngles)
-		{
-			currentEulerAngles.x -= (currentEulerAngles.x > 180) ? 360 : 0;
-			float targetPitch = Model.Target.localEulerAngles.x;
-			targetPitch -= (targetPitch > 180) ? 360 : 0;
-			float deltaPitch = currentEulerAngles.x - targetPitch;
-			if (Mathf.Abs(deltaPitch) >= .1f)
-				nextEulerAngles.x -= ResetSpeed.x * Mathf.Sign(deltaPitch) * deltaTime;
 		}
 
 		protected virtual float GetNextPitch(float previewedPitch, float currentPitch, float deltaTime)
@@ -70,37 +57,31 @@ namespace Camera.States
 			return previewedPitch - ResetSpeed.x * Mathf.Sign(deltaPitch) * deltaTime;
 		}
 
-		protected virtual void CalculateYaw(ref Vector3 nextEulerAngles, float deltaTime, Vector3 currentEulerAngles)
-		{
-			if (LastMoveInput.x != 0)
-			{
-				nextEulerAngles.y = currentEulerAngles.y
-									+ Model.Properties.AutomaticTurnSpeed.x * LastMoveInput.x * deltaTime;
-			}
-			else
-			{
-				currentEulerAngles.y -= (currentEulerAngles.y > 180) ? 360 : 0;
-				float targetYaw = Model.Target.localEulerAngles.y;
-				targetYaw -= (targetYaw > 180) ? 360 : 0;
-				float deltaYaw = currentEulerAngles.y - targetYaw;
-				if (Mathf.Abs(deltaYaw) >= .1f)
-					nextEulerAngles.y -= ResetSpeed.y * Mathf.Sign(deltaYaw) * deltaTime;
-			}
-		}
-
+		//TODO:Clean this mess without breaking it
 		protected virtual float GetNextYaw(float previewedYaw, float currentYaw, float deltaTime)
 		{
 			if (LastMoveInput.x != 0)
 			{
-				return currentYaw + Model.Properties.AutomaticTurnSpeed.x * LastMoveInput.x * deltaTime;
+				yawAutoRotationStart += deltaTime;
+				if (yawAutoRotationStart >= Properties.YawFollowDelay)
+					return currentYaw + Model.Properties.AutomaticTurnSpeed.x * LastMoveInput.x * deltaTime;
+			}
+			else
+			{
+				yawAutoRotationStart = 0;
 			}
 
+			if (LastMoveInput.y != 0)
+				return previewedYaw;
 			currentYaw -= (currentYaw > 180) ? 360 : 0;
 			float targetYaw = Model.Target.localEulerAngles.y;
 			targetYaw -= (targetYaw > 180) ? 360 : 0;
 			float deltaYaw = currentYaw - targetYaw;
-			if (Mathf.Abs(deltaYaw) < .1f)
+
+			if (Mathf.Abs(deltaYaw) < 1f || Mathf.Abs(deltaYaw) > 179)
+			{
 				return previewedYaw;
+			}
 			return previewedYaw - ResetSpeed.y * Mathf.Sign(deltaYaw) * deltaTime;
 		}
 	}

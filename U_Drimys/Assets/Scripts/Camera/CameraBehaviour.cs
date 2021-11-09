@@ -1,8 +1,10 @@
-﻿using Core.Helpers;
+﻿using System;
+using Core.Helpers;
 using UnityEngine;
 
 namespace Camera
 {
+	[Obsolete]
 	public class CameraBehaviour : MonoBehaviour, ICoroutineRunner
 	{
 		[SerializeField]
@@ -54,7 +56,6 @@ namespace Camera
 									+ automaticTurnSpeed * Time.deltaTime * _lastMoveInput.x;
 			}
 
-			//TODO:Cam should rotate smoothly towards deltaRotation 0 when there's no input.
 			nextEulerAngles.x = GetVerticalRotationFromInput();
 			
 			transform.localEulerAngles = nextEulerAngles;

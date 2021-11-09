@@ -16,8 +16,13 @@ namespace Characters
 		private const string JumpState = "Jump";
 		private const string IdleState = "Idle";
 		private const string FallState = "Fall";
+
 		public StateFlags Flags;
+
 		private LockTarget _lockTarget;
+		private IdleRun<string> _idleRun;
+		private Fall<string> _fall;
+		private Jump<string> _jump;
 
 		public CharacterModel(Transform transform,
 							Rigidbody rigidbody,
@@ -30,33 +35,33 @@ namespace Characters
 			Properties = properties;
 			this.rigidbody = rigidbody;
 			Flags = new StateFlags();
-			var jump = new Jump<string>(this, coroutineRunner);
-			jump.OnAwake += HandleJump;
 
-			var idleRun = new IdleRun<string>(this, coroutineRunner);
-			var fall = new Fall<string>(this, coroutineRunner);
-			jump.OnAwake += HandleFall;
-			fall.OnSleep += HandleLanding;
+			_idleRun = new IdleRun<string>(this, coroutineRunner);
 
-			jump.AddTransition(IdleState, idleRun);
-			jump.AddTransition(FallState, fall);
+			_jump = new Jump<string>(this, coroutineRunner);
+			_jump.OnAwake += HandleJump;
 
-			idleRun.AddTransition(JumpState, jump);
-			idleRun.AddTransition(FallState, fall);
+			_fall = new Fall<string>(this, coroutineRunner);
+			_fall.OnAwake += HandleFall;
+			_fall.OnSleep += HandleLanding;
 
-			fall.AddTransition(IdleState, idleRun);
+			_idleRun.AddTransition(JumpState, _jump);
+			_idleRun.AddTransition(FallState, _fall);
+
+			_jump.AddTransition(IdleState, _idleRun);
+			_jump.AddTransition(FallState, _fall);
+
+			_fall.AddTransition(IdleState, _idleRun);
 
 			StateMachine = FSM<string>
-							.Build(idleRun, nameof(transform.gameObject))
+							.Build(_idleRun, nameof(transform.gameObject))
 							.WithThisLogger(Debug.unityLogger)
 							.ThatLogsTransitions(shouldLogFsmTransitions)
 							.Done();
 		}
 
 		private void HandleFall()
-		{
-			onFall();
-		}
+			=> onFall();
 
 		#region Events
 
@@ -144,7 +149,7 @@ namespace Characters
 		{
 			((CharacterState<string>)StateMachine.CurrentState).MoveTowards(direction);
 			bool willMove = direction.magnitude > 0;
-			if (Flags.IsMoving && !willMove)
+			if (Flags.IsMoving && !willMove && StateMachine.CurrentState == _idleRun)
 				onStop();
 			Flags.IsMoving = willMove;
 		}
@@ -155,20 +160,21 @@ namespace Characters
 		public void Land()
 			=> StateMachine.TransitionTo(IdleState);
 
-		public void OnCollisionEnter(Collision other)
+		public void Melee(IEnumerator behaviour, Transform target)
 		{
+			CoroutineRunner.StartCoroutine(Attack(behaviour, target));
 		}
 
-		public void OnCollisionExit(Collision other)
+		protected IEnumerator Attack(IEnumerator behaviour,
+										[CanBeNull] Transform target)
 		{
-		}
-
-		public IEnumerator Attack(IEnumerator behaviour,
-								[CanBeNull] Transform target)
-		{
+			if(Flags.IsAttacking)
+				yield break;
+			Flags.IsAttacking = true;
 			onAttacking(target);
 			yield return behaviour;
 			onAttacked(target);
+			Flags.IsAttacking = false;
 		}
 
 		public void TryLock(string targetTag)
@@ -209,6 +215,7 @@ namespace Characters
 
 		public struct StateFlags
 		{
+			public bool IsAttacking;
 			public bool IsMoving;
 			public bool IsStunned;
 			public bool IsLocked;

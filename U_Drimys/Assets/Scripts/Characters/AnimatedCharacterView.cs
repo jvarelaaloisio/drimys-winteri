@@ -1,5 +1,7 @@
+using System.Collections;
 using Core.Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Characters
 {
@@ -17,6 +19,20 @@ namespace Characters
 		private string stopParameter = "Stop";
 		[SerializeField]
 		private string attackParameter = "Attack";
+
+		[SerializeField]
+		private int upperBodyLayer = 2;
+
+		[FormerlySerializedAs("layerWeightTransitionDuration")]
+		[SerializeField]
+		private float turnOnUpperLayerDuration = 1;
+		
+		[SerializeField]
+		private float turnOffUpperLayerDuration = 1;
+
+		[SerializeField]
+		[Range(1, 60)]
+		private float layerWeightRefreshFrequency = 20;
 
 		private int _jumpingHash;
 		private int _velocityHash;
@@ -37,6 +53,8 @@ namespace Characters
 			Model.onLand += () => SetJumping(false);
 			Model.onStop += () => animator.SetTrigger( stopParameter);
 			Model.onAttacking += _ => animator.SetTrigger(attackParameter);
+			Model.onAttacking += _ => TurnOnUpperBodyAnimatorLayer();
+			Model.onAttacked += _ => TurnOffUpperBodyAnimatorLayer();
 		}
 
 		protected override void Update()
@@ -55,6 +73,38 @@ namespace Characters
 				animator.SetFloat(_velocityXHash, 0);
 				animator.SetFloat(_velocityZHash, velocity.magnitude);
 			}
+		}
+
+		protected void TurnOnUpperBodyAnimatorLayer()
+		{
+			StopCoroutine(nameof(SmoothLayerWeightTransition));
+			StartCoroutine(SmoothLayerWeightTransition(
+														upperBodyLayer,
+														1,
+														turnOnUpperLayerDuration));
+		}
+
+		protected void TurnOffUpperBodyAnimatorLayer()
+		{
+			StopCoroutine(nameof(SmoothLayerWeightTransition));
+			StartCoroutine(SmoothLayerWeightTransition(
+														upperBodyLayer,
+														0,
+														turnOffUpperLayerDuration));
+		}
+
+		private IEnumerator SmoothLayerWeightTransition(int layer, float newWeight, float duration)
+		{
+			float oldWeight = animator.GetLayerWeight(layer);
+			float layerWeightRefreshPeriod = 1 / layerWeightRefreshFrequency;
+			var waitTillNextPeriod = new WaitForSeconds(layerWeightRefreshPeriod);
+			for (float i = 0; i < duration; i += layerWeightRefreshPeriod)
+			{
+				animator.SetLayerWeight(layer, Mathf.Lerp(oldWeight, newWeight, i / duration));
+				yield return waitTillNextPeriod;
+			}
+
+			animator.SetLayerWeight(layer, newWeight);
 		}
 
 		private void SetJumping(bool value)

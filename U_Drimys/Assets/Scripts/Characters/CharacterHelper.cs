@@ -18,7 +18,6 @@ namespace Characters
 													float maxSpeed)
 		{
 			yield return new WaitForFixedUpdate();
-			//TODO: Raycast to the floor and use the angle to modify the direction so it follows slopes
 			Transform modelTransform = model.transform;
 			Vector3 down = -modelTransform.up;
 			var properties = model.Properties;
