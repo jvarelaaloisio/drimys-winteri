@@ -16,7 +16,7 @@ MonoBehaviour:
   - gameObject: {fileID: 6369626505774799709, guid: 490d855f2ec965f4ead532a0039a1192,
       type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 85.85714
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 352.0879, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -33,7 +33,7 @@ MonoBehaviour:
   - gameObject: {fileID: 6369626505774799709, guid: afd305e74435e26419956f20c7d7b363,
       type: 3}
     settings:
-      m_Strength: 8.403361
+      m_Strength: 15.142862
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -50,7 +50,7 @@ MonoBehaviour:
   - gameObject: {fileID: 478128376007629718, guid: ae36eae0b6ca27f44a597377a921f946,
       type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 10.9831915
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -67,7 +67,7 @@ MonoBehaviour:
   - gameObject: {fileID: 478128376007629718, guid: 504c7833a74d5ac488cd21694e71e30e,
       type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 15.142863
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -84,7 +84,7 @@ MonoBehaviour:
   - gameObject: {fileID: 478128376007629718, guid: 0374d0060d5b56b4ab049d5294a5144e,
       type: 3}
     settings:
-      m_Strength: 100
+      m_Strength: 13.063024
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -101,7 +101,7 @@ MonoBehaviour:
   - gameObject: {fileID: 478128376007629718, guid: f9d10a40a91278742bb3f5dedb0ac617,
       type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 8.903367
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -118,7 +118,7 @@ MonoBehaviour:
   - gameObject: {fileID: 478128376007629718, guid: 02d2137e8e780214d8478303ea0efc29,
       type: 3}
     settings:
-      m_Strength: 77.03782
+      m_Strength: 85.85714
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -149,3 +149,54 @@ MonoBehaviour:
       m_YScaleBool: 0
       m_ZScaleBool: 0
     name: bush_1
+  - gameObject: {fileID: 8632328007018778246, guid: e8b7da508786f9e4b8fbd4d060243220,
+      type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 90, y: 0, z: 0}
+      m_RotationRangeMax: {x: 90, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 1
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: leaf_1
+  - gameObject: {fileID: 767473983091045859, guid: dbe2a7f8b11dd80409f3021403b88722,
+      type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: leaf_2
+  - gameObject: {fileID: 6303540931110975464, guid: 586fcc1098c8321498fc74e2f0772bd0,
+      type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 180, z: 0}
+      m_RotationRangeMax: {x: 0, y: 180, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: leaf_3
