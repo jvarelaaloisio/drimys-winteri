@@ -1,10 +1,14 @@
 ﻿using Core.Helpers;
+using Player;
 using UnityEngine;
 
 namespace Camera
 {
 	public class CameraView : MonoBehaviour, ICoroutineRunner
 	{
+		[SerializeField]
+		private GameplayInputHandler inputHandler;
+		
 		[SerializeField]
 		private CameraProperties properties;
 
@@ -19,6 +23,12 @@ namespace Camera
 
 		private void Awake()
 		{
+			if (!inputHandler)
+				inputHandler = FindObjectOfType<GameplayInputHandler>();
+			inputHandler.onCameraInput.AddListener(HandleCamInput);
+			inputHandler.onMoveInput.AddListener(HandleMoveInput);
+			if (!target)
+				target = GameObject.FindGameObjectWithTag("Player").transform;
 			_model = new CameraModel(transform,
 									properties,
 									target,

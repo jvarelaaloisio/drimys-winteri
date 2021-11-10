@@ -52,7 +52,7 @@ namespace Characters
 		protected virtual void Update()
 			=> Model.Update(Time.deltaTime);
 
-		private void OnDrawGizmos()
+		protected virtual void OnDrawGizmos()
 		{
 			Gizmos.color = new Color(.7f, .1f, .1f, .25f);
 			var position = transform.position;

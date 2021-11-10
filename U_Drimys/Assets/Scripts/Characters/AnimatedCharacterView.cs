@@ -32,7 +32,7 @@ namespace Characters
 
 		[SerializeField]
 		[Range(1, 60)]
-		private float layerWeightRefreshFrequency = 20;
+		private float layerWeightRefreshFrequency = 40;
 
 		private int _jumpingHash;
 		private int _velocityHash;

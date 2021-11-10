@@ -150,7 +150,10 @@ namespace Characters
 			((CharacterState<string>)StateMachine.CurrentState).MoveTowards(direction);
 			bool willMove = direction.magnitude > 0;
 			if (Flags.IsMoving && !willMove && StateMachine.CurrentState == _idleRun)
+			{
+				Debug.Log($"stopped: isMoving: {Flags.IsMoving} ; willMove: {willMove}");
 				onStop();
+			}
 			Flags.IsMoving = willMove;
 		}
 

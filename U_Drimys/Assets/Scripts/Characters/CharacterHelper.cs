@@ -28,20 +28,25 @@ namespace Characters
 								1.25f,
 								properties.FloorLayer))
 			{
-				var slopeAngle = Vector3.Angle(hit.normal, modelTransform.up);
+				float slopeAngle = Vector3.Angle(hit.normal, modelTransform.up);
 				Debug.DrawRay(hit.point, hit.normal, HitColor);
+				float angleDelta = slopeAngle / properties.MaxSlopeAngle;
 				Debug.DrawLine(hit.point + hit.normal,
 								hit.point - down,
-								TriangleColor);
-				var maxSlopeAngle = properties.MaxSlopeAngle;
+								new Color(angleDelta, .2f, 1 - angleDelta));
+				float maxSlopeAngle = properties.MaxSlopeAngle;
 				if (slopeAngle > maxSlopeAngle)
 				{
 					Debug.Log("Angle too steep");
 					onFinish();
 					yield break;
 				}
-			
-				var angleCosine = Mathf.Cos(slopeAngle * Mathf.Deg2Rad);
+
+				float angleCosine = Mathf.Cos(slopeAngle * Mathf.Deg2Rad);
+				float angleSine = Mathf.Sin(slopeAngle * Mathf.Deg2Rad);
+				Debug.DrawRay(modelTransform.position, direction, new Color(.2f, .5f, .2f));
+				if (direction.magnitude > 0 && Physics.Raycast(modelTransform.position, direction))
+					direction.y += properties.SlopeCompensation.Evaluate(angleSine);
 			}
 
 			Debug.DrawRay(modelTransform.position, direction, Color.green);
@@ -64,7 +69,7 @@ namespace Characters
 			yield return new WaitForFixedUpdate();
 			rigidbody.AddForce(force, forceMode);
 		}
-		
+
 		//TODO:Add transform.HasChanged validation when this class is no longer static.
 		public static bool IsGrounded(Vector3 feetPosition,
 									CharacterProperties properties)

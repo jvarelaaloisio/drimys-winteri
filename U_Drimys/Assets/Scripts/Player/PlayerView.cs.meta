@@ -3,7 +3,15 @@ guid: e4af1810e1b4d484d8413391faf76018
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - characterProperties: {fileID: 11400000, guid: a25781dce5c9e0a488a7f3b140efa18e,
+      type: 2}
+  - animator: {instanceID: 0}
+  - throwablePrefab: {instanceID: 0}
+  - hand: {instanceID: 0}
+  - inputHandler: {instanceID: 0}
+  - meleeEffect: {instanceID: 0}
+  - meleeEffectSpawnPoint: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

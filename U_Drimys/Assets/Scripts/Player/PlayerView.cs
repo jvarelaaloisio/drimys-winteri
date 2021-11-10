@@ -26,6 +26,8 @@ namespace Player
 		protected override void Awake()
 		{
 			base.Awake();
+			if (!inputHandler)
+				inputHandler = FindObjectOfType<GameplayInputHandler>();
 			Controller = new PlayerController(Model);
 			inputHandler.onJumpInput.AddListener(Controller.Jump);
 			inputHandler.onLockInput.AddListener(Controller.Lock);

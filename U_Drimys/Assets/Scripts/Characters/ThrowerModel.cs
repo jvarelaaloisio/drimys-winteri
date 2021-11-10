@@ -16,6 +16,8 @@ namespace Characters
 		[Tooltip("Transform from where to spawn throwable prefab")]
 		protected readonly Transform Hand;
 
+		private Coroutine _throwAimingCoroutine;
+
 		public ThrowerModel(Transform transform,
 							Rigidbody rigidbody,
 							ThrowerProperties properties,
@@ -48,14 +50,20 @@ namespace Characters
 		public void Aim([CanBeNull] Transform target)
 		{
 			Flags.IsAiming = true;
-			CoroutineRunner.StartCoroutine(ThrowAiming(ThrowablePrefab,
-														Hand,
-														target,
-														Properties.AimDelay));
+			_throwAimingCoroutine = CoroutineRunner.StartCoroutine(ThrowAiming(ThrowablePrefab,
+																			Hand,
+																			target,
+																			Properties.AimDelay));
 		}
 
 		public void ReleaseAimAndThrow()
 		{
+			if (Flags.IsAiming && !Flags.CanThrow)
+			{
+				CoroutineRunner.StopCoroutine(_throwAimingCoroutine);
+				onAimCanceled();
+				Debug.Log("canceled");
+			}
 			Flags.IsAiming = false;
 		}
 
@@ -73,6 +81,27 @@ namespace Characters
 															duration),
 												throwable.transform));
 		}
+		
+		protected IEnumerator ThrowAiming(Throwable prefab,
+										Transform hand,
+										[CanBeNull] Transform target,
+										float delay)
+		{
+			onAim();
+			Debug.Log("onAim");
+			yield return new WaitForSeconds(delay);
+			Flags.CanThrow = true;
+			if (!Flags.IsAiming)
+				yield break;
+
+			yield return new WaitWhile(() => Flags.IsAiming);
+			Debug.Log("isAiming = false");
+
+			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
+			throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
+			Flags.CanThrow = false;
+			onThrow();
+		}
 
 		protected IEnumerator SimpleThrow(Throwable prefab,
 										Transform hand,
@@ -86,31 +115,12 @@ namespace Characters
 			yield return new WaitForSeconds(duration - spawnDelay);
 		}
 
-		protected IEnumerator ThrowAiming(Throwable prefab,
-										Transform hand,
-										[CanBeNull] Transform target,
-										float delay)
-		{
-			onAim();
-			yield return new WaitForSeconds(delay);
-			if (!Flags.IsAiming)
-			{
-				onAimCanceled();
-				yield break;
-			}
-
-			yield return new WaitWhile(() => Flags.IsAiming);
-
-			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
-			throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
-			onThrow();
-		}
-
 		public new struct StateFlags
 		{
 			public bool IsMoving;
 			public bool IsAttacking;
 			public bool IsAiming;
+			public bool CanThrow;
 			public bool IsStunned;
 			public bool IsLocked;
 		}

@@ -7,7 +7,7 @@ namespace Characters
 	public class ThrowerView : AnimatedCharacterView
 	{
 		[SerializeField]
-		private string aimingParameter = "Aiming";
+		protected string aimingParameter = "Aiming";
 
 		[SerializeField]
 		private Throwable throwablePrefab;
@@ -47,10 +47,23 @@ namespace Characters
 		private void SetAiming(bool value)
 		{
 			animator.SetBool(aimingParameter, value);
-			if(value)
+			if (value)
 				TurnOnUpperBodyAnimatorLayer();
 			else
 				TurnOffUpperBodyAnimatorLayer();
+		}
+
+		protected override void OnDrawGizmos()
+		{
+			base.OnDrawGizmos();
+			if(Model == null)
+				return;
+			Gizmos.color = Model.Flags.IsAiming
+								? Model.Flags.CanThrow
+									? Color.green
+									: Color.red
+								: Color.black;
+			Gizmos.DrawSphere(hand.position, .05f);
 		}
 	}
 }

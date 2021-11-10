@@ -88,6 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8410116461678964800}
+  - component: {fileID: 9011521102111106270}
   - component: {fileID: 6150612487039660060}
   - component: {fileID: 3746660881778619124}
   m_Layer: 0
@@ -113,6 +114,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9011521102111106270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8410116461678964862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fff26627f74e4886b4b18aeb4229fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bezierOffsetStart: {x: -5, y: 2, z: 0}
+  bezierOffsetEnd: {x: -5, y: 5, z: 0}
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4.928514
+      outSlope: 4.928514
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.1923077
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 10.035695
+      outSlope: 10.035695
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.069230795
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  positionUpdatePeriod: 0.05
+  lifeTime: 2
+  damage: 2
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  speedTest: 1
 --- !u!135 &6150612487039660060
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -140,7 +186,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &8410116461686644490
 GameObject:

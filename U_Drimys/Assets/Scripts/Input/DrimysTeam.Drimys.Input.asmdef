@@ -1,7 +1,8 @@
 {
     "name": "DrimysTeam.Drimys.Input",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:ce4ae6fe238879f448b9987d3c1b8c52"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

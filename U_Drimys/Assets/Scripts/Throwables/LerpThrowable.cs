@@ -17,11 +17,13 @@ namespace Throwables
 
 		protected override IEnumerator FlyToPoint(Vector3 objective, float duration)
 		{
+			Debug.Log("fly");
 			WaitForSeconds wait = new WaitForSeconds(positionUpdatePeriod);
 
 			float start = Time.time;
 			Vector3 pointA = _transform.position;
 
+			_transform.rotation= Quaternion.LookRotation(objective - pointA);
 			Vector3 bezierOffsetStartLocal = _transform.TransformDirection(bezierOffsetStart);
 			Vector3 bezierOffsetEndLocal = _transform.TransformDirection(bezierOffsetEnd);
 
