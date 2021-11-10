@@ -1,0 +1,19 @@
+{
+    "name": "DrimysTeam.Drimys.Enemies",
+    "references": [
+        "GUID:2da65d7ec45682a49991d4fc7e6f91f6",
+        "GUID:448d1abb7316b0b448d8bfa72ebdfb5e",
+        "GUID:34413c279956e204484577c4314a3f16",
+        "GUID:20678f5e7c01186419dd65368c626d7c",
+        "GUID:eb1ad2ad70728b24ca831de67d799d28"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

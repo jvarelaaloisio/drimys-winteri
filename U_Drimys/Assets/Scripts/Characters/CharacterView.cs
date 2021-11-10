@@ -54,6 +54,8 @@ namespace Characters
 
 		protected virtual void OnDrawGizmos()
 		{
+			if(!characterProperties)
+				return;
 			Gizmos.color = new Color(.7f, .1f, .1f, .25f);
 			var position = transform.position;
 			var up = transform.up;

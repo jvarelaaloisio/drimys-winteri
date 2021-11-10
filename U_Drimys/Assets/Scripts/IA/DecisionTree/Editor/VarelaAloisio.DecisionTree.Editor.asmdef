@@ -1,0 +1,17 @@
+{
+    "name": "VarelaAloisio.DecisionTree.Editor",
+    "references": [
+        "GUID:34413c279956e204484577c4314a3f16"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

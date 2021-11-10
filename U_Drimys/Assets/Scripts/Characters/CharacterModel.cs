@@ -13,9 +13,9 @@ namespace Characters
 {
 	public class CharacterModel : BaseModel
 	{
-		private const string JumpState = "Jump";
-		private const string IdleState = "Idle";
-		private const string FallState = "Fall";
+		public const string JUMP_STATE = "Jump";
+		public const string IDLE_STATE = "Idle";
+		public const string FALL_STATE = "Fall";
 
 		public StateFlags Flags;
 
@@ -45,16 +45,16 @@ namespace Characters
 			_fall.OnAwake += HandleFall;
 			_fall.OnSleep += HandleLanding;
 
-			_idleRun.AddTransition(JumpState, _jump);
-			_idleRun.AddTransition(FallState, _fall);
+			_idleRun.AddTransition(JUMP_STATE, _jump);
+			_idleRun.AddTransition(FALL_STATE, _fall);
 
-			_jump.AddTransition(IdleState, _idleRun);
-			_jump.AddTransition(FallState, _fall);
+			_jump.AddTransition(IDLE_STATE, _idleRun);
+			_jump.AddTransition(FALL_STATE, _fall);
 
-			_fall.AddTransition(IdleState, _idleRun);
+			_fall.AddTransition(IDLE_STATE, _idleRun);
 
 			StateMachine = FSM<string>
-							.Build(_idleRun, nameof(transform.gameObject))
+							.Build(_idleRun, transform.gameObject.name)
 							.WithThisLogger(Debug.unityLogger)
 							.ThatLogsTransitions(shouldLogFsmTransitions)
 							.Done();
@@ -141,8 +141,8 @@ namespace Characters
 										.IsGrounded(transform.position
 													+ Vector3.down * Properties.GroundDistanceCheck,
 													Properties)
-										? IdleState
-										: FallState);
+										? IDLE_STATE
+										: FALL_STATE);
 		}
 
 		public void MoveTowards(Vector2 direction)
@@ -158,10 +158,10 @@ namespace Characters
 		}
 
 		public void Jump()
-			=> StateMachine.TransitionTo(JumpState);
+			=> StateMachine.TransitionTo(JUMP_STATE);
 
 		public void Land()
-			=> StateMachine.TransitionTo(IdleState);
+			=> StateMachine.TransitionTo(IDLE_STATE);
 
 		public void Melee(IEnumerator behaviour, Transform target)
 		{

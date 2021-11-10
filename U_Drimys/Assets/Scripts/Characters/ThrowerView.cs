@@ -20,6 +20,7 @@ namespace Characters
 
 		protected override void Awake()
 		{
+			//TODO:Make Static method
 			var properties = characterProperties as ThrowerProperties;
 			ThrowerProperties = properties
 									? properties

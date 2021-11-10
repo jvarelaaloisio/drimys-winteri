@@ -19,5 +19,8 @@ namespace MVC
 			CoroutineRunner = coroutineRunner;
 		}
 		public Transform transform { get; }
+
+		public void ForceTransition(string key)
+			=> StateMachine.TransitionTo(key);
 	}
 }
