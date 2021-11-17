@@ -177,8 +177,8 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NoiseScale: 253
-    - _Noisescaleval: 500
-    - _Noseintensityval: 0.6
+    - _Noisescaleval: 9000
+    - _Noseintensityval: 2.7
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
@@ -187,8 +187,8 @@ Material:
     - _Tesellationfactor: 0
     - _Tiling: 100
     - _UVSec: 0
-    - _WhitNoiseLerpTex1: 0
-    - _WhitNoiseLerpTex2: 0
+    - _WhitNoiseLerpTex1: 0.795
+    - _WhitNoiseLerpTex2: 0.493
     - _WhitNoiseLerpTex3: 0.541
     - _WhitNoiseLerpTex4: 0.541
     - _Whitnoiselerp: 0.805

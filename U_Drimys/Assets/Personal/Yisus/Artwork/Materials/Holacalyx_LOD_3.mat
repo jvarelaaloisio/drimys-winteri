@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: small_leafs
-  m_Shader: {fileID: 4800000, guid: 8c9e22ef4c9bf2a418d153e0ea90cac6, type: 3}
+  m_Name: Holacalyx_LOD_3
+  m_Shader: {fileID: 4800000, guid: 937b945b661b4c446baa121cf3e17863, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseColor:
-        m_Texture: {fileID: 2800000, guid: a94c433b4af76994cb7d7b5ceb0ebb47, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4c59884e90d9a344e8f2ccd16ff86d3e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -59,24 +59,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 0ef1f82d9630d044e9bedb996e76b937, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BaseColorHue: 0
-    - _BaseColorSaturation: 0
-    - _BaseColorValue: 0
+    - _BaseColorHue1: 0.27
+    - _BaseColorSaturation1: 0.8
+    - _BaseColorValue1: -0.25
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EdgeLength: 15
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LocalWindMask: 0.1
-    - _MaxOpacityMask: 1.65
+    - _MaxOpacityMask1: 2
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -84,7 +86,6 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TessMaxDisp: 25
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0

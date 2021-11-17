@@ -6,6 +6,7 @@ TagManager:
   tags:
   - paintMask
   - Enemy
+  - smallLeaf
   layers:
   - Default
   - TransparentFX
