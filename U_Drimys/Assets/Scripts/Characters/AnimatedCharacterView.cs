@@ -53,8 +53,8 @@ namespace Characters
 			Model.onLand += () => SetJumping(false);
 			Model.onStop += () => animator.SetTrigger( stopParameter);
 			Model.onAttacking += _ => animator.SetTrigger(attackParameter);
-			Model.onAttacking += _ => TurnOnUpperBodyAnimatorLayer();
-			Model.onAttacked += _ => TurnOffUpperBodyAnimatorLayer();
+			// Model.onAttacking += _ => TurnOnUpperBodyAnimatorLayer();
+			// Model.onAttacked += _ => TurnOffUpperBodyAnimatorLayer();
 		}
 
 		protected override void Update()

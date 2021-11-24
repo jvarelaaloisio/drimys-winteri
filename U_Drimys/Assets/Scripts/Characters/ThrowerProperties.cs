@@ -8,6 +8,10 @@ namespace Characters
 		[SerializeField]
 		private float aimDelay;
 
+		[SerializeField]
+		private float throwableSpeed;
+
 		public float AimDelay => aimDelay;
+		public float ThrowableSpeed => throwableSpeed;
 	}
 }

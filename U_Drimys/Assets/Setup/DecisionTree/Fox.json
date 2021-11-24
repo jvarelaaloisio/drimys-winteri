@@ -1,3 +1,0 @@
-{"Kind":1,"ClassType":"Action_AttackExample","OutcomeClassNames":[],"PositionInEditor":{"x":605.0,"y":43.0}}
-{"Kind":1,"ClassType":"GoIdle","OutcomeClassNames":[],"PositionInEditor":{"x":603.0,"y":235.0}}
-{"Kind":0,"ClassType":"IsEnemyOnSight","OutcomeClassNames":["Action_AttackExample","GoIdle"],"PositionInEditor":{"x":304.0,"y":145.0}}

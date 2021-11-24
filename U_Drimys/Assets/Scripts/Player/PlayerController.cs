@@ -38,7 +38,7 @@ namespace Player
 
 		public void StartAim()
 		{
-			Model.Aim(Model.LockTargetTransform);
+			Model.Aim();
 		}
 
 		public void Shoot()

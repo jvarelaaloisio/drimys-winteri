@@ -154,6 +154,7 @@ namespace Characters
 				Debug.Log($"stopped: isMoving: {Flags.IsMoving} ; willMove: {willMove}");
 				onStop();
 			}
+
 			Flags.IsMoving = willMove;
 		}
 
@@ -169,9 +170,9 @@ namespace Characters
 		}
 
 		protected IEnumerator Attack(IEnumerator behaviour,
-										[CanBeNull] Transform target)
+									[CanBeNull] Transform target)
 		{
-			if(Flags.IsAttacking)
+			if (Flags.IsAttacking)
 				yield break;
 			Flags.IsAttacking = true;
 			onAttacking(target);
@@ -193,7 +194,14 @@ namespace Characters
 									.OrderBy(candidate => Vector3.Distance(
 																			transform.position,
 																			candidate.transform.position))
-									.First(candidate => candidate.CompareTag(targetTag));
+									.FirstOrDefault(candidate => candidate.CompareTag(targetTag));
+			if (!_lockTarget)
+			{
+				Flags.IsLocked = false;
+				Debug.Log($"target with tag {targetTag} not found");
+				return;
+			}
+
 			LockTargetTransform = _lockTarget.transform;
 			_lockTarget.onDisabling.AddListener(HandleTargetDisables);
 			onLock(LockTargetTransform);
@@ -204,6 +212,7 @@ namespace Characters
 			Flags.IsLocked = false;
 			_lockTarget = null;
 			LockTargetTransform = null;
+			onUnlock();
 		}
 
 		private void HandleJump()

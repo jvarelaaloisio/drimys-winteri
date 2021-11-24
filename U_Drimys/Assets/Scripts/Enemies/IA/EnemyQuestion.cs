@@ -7,16 +7,19 @@ namespace Enemies.IA
 	[SkippedInEditor]
 	public abstract class EnemyQuestion : TreeQuestion
 	{
-		protected Transform Player;
-		protected EnemyModel Model;
-
 		public override int CheckCondition()
 		{
-			Model = (EnemyModel)getData();
-			Player = GameObject.FindGameObjectWithTag("Player").transform;
-			return CheckConditionInternal();
+			EnemyModel model = (EnemyModel)getData();
+			Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+			return CheckConditionInternal(model, player);
 		}
 
-		protected abstract int CheckConditionInternal();
+		/// <summary>
+		/// This method should return 0 if the condition is true
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="player"></param>
+		/// <returns></returns>
+		protected abstract int CheckConditionInternal(EnemyModel model, Transform player);
 	}
 }

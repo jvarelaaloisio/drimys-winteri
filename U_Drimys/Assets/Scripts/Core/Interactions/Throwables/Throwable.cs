@@ -24,9 +24,6 @@ namespace Core.Interactions.Throwables
 		protected float lifeTime = 5f;
 
 		[SerializeField]
-		protected int damage;
-
-		[SerializeField]
 		protected UnityEvent onDeath;
 
 

@@ -74,7 +74,7 @@ namespace IA.DecisionTree.Editor
 			EditorGUILayout.EndHorizontal();
 			EditorGUI.EndDisabledGroup();
 
-			_file = (TextAsset) EditorGUILayout.ObjectField("File: ",
+			_file = (TextAsset)EditorGUILayout.ObjectField("File: ",
 															_file,
 															typeof(TextAsset),
 															false);
@@ -248,8 +248,17 @@ namespace IA.DecisionTree.Editor
 			foreach (NodeData n in nodeStructs)
 			{
 				Type type = _allNodes.Find(t => t.Name == n.ClassType);
-				NodeKind kind = type.IsSubclassOf(typeof(TreeQuestion)) ? NodeKind.Question : NodeKind.Action;
-				AddNode(type, kind);
+				try
+				{
+					NodeKind kind = type.IsSubclassOf(typeof(TreeQuestion)) ? NodeKind.Question : NodeKind.Action;
+					AddNode(type, kind);
+				}
+				catch (NullReferenceException exception)
+				{
+					Debug.LogError($"TreeLoader: Type not found ({n.ClassType}) in file {_path + _fileName}");
+					return;
+				}
+
 				BaseNode actualNode = FindNode(_activeNodes, type);
 				actualNode.Outcomes = n.OutcomeClassNames;
 				actualNode.Rect.position = n.PositionInEditor;
@@ -283,7 +292,11 @@ namespace IA.DecisionTree.Editor
 				List<Type> candidates = outcomeCandidates.Where(t => t != node.type).ToList();
 				for (var i = 0; i < node.Outcomes.Length; i++)
 				{
-					node.OutcomeSelection[i] = candidates.IndexOf(enumerable.First(t => t.Name == node.Outcomes[i]));
+					var outcome = enumerable.FirstOrDefault(t => t.Name == node.Outcomes[i]);
+					if (outcome == null)
+						continue;
+
+					node.OutcomeSelection[i] = candidates.IndexOf(outcome);
 				}
 			}
 		}
@@ -297,11 +310,15 @@ namespace IA.DecisionTree.Editor
 			#region Delete Button
 
 			GUIStyle xStyle = new GUIStyle();
-			xStyle.alignment = TextAnchor.UpperLeft;
+			//TODO:This doesn't align it
+			xStyle.alignment = TextAnchor.UpperRight;
 			xStyle.fixedWidth = 10;
-			if (GUILayout.Button("X", xStyle))
+			if (GUILayout.Button("✖", xStyle))
 			{
-				_popUp = PopUp.OpenPopUp(position, new GUIContent("Delete Node"), "Confirm node Deletion", DeleteNode,
+				_popUp = PopUp.OpenPopUp(position,
+										new GUIContent("Delete Node"),
+										"Confirm node Deletion",
+										DeleteNode,
 										"Delete");
 				_idToDelete = id;
 			}

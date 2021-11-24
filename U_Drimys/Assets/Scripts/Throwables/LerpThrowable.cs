@@ -17,7 +17,6 @@ namespace Throwables
 
 		protected override IEnumerator FlyToPoint(Vector3 objective, float duration)
 		{
-			Debug.Log("fly");
 			WaitForSeconds wait = new WaitForSeconds(positionUpdatePeriod);
 
 			float start = Time.time;
@@ -32,10 +31,7 @@ namespace Throwables
 			Vector3 pointD = objective;
 			//TODO: Remove commented lines if DrawLines works
 			LineDebugger.DrawLines(new[] { pointA, pointB, pointC }, Color.red, duration);
-			// Debug.DrawLine(pointA, pointB, Color.red, duration);
-			// Debug.DrawLine(pointB, pointC, Color.red, duration);
-			// Debug.DrawLine(pointC, pointD, Color.red, duration);
-
+			
 			//TODO:Remove commented lines if For works
 			for (float present = start; present < start + duration; present = Time.time)
 			{
@@ -43,15 +39,6 @@ namespace Throwables
 				UpdatePosition(pointA, pointB, pointC, pointD, t);
 				yield return wait;
 			}
-			// float present = Time.time;
-			// while (start + duration > present)
-			// {
-			// 	float t = (present - start) / duration;
-			// 	UpdatePosition(pointA, pointB, pointC, pointD, t);
-			// 	yield return wait;
-			// 	present = Time.time;
-			// }
-
 			UpdatePosition(pointA, pointB, pointC, pointD, 1);
 		}
 
