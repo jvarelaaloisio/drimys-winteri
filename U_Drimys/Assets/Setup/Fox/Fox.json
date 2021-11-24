@@ -1,0 +1,7 @@
+{"Kind":1,"ClassType":"StayIdle","OutcomeClassNames":[],"PositionInEditor":{"x":897.0,"y":402.0}}
+{"Kind":1,"ClassType":"EmptyAction","OutcomeClassNames":[],"PositionInEditor":{"x":594.0,"y":139.0}}
+{"Kind":1,"ClassType":"MeleePlayer","OutcomeClassNames":[],"PositionInEditor":{"x":1172.0,"y":146.0}}
+{"Kind":1,"ClassType":"ChasePlayer","OutcomeClassNames":[],"PositionInEditor":{"x":1173.0,"y":320.0}}
+{"Kind":0,"ClassType":"IsPlayerAtMeleeDistance","OutcomeClassNames":["MeleePlayer","ChasePlayer"],"PositionInEditor":{"x":896.0,"y":228.0}}
+{"Kind":0,"ClassType":"IsPlayerOnSight","OutcomeClassNames":["IsPlayerAtMeleeDistance","StayIdle"],"PositionInEditor":{"x":595.0,"y":311.0}}
+{"Kind":0,"ClassType":"IsStunned","OutcomeClassNames":["EmptyAction","IsPlayerOnSight"],"PositionInEditor":{"x":300.0,"y":225.0}}

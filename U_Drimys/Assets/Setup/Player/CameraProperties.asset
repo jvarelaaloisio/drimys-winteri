@@ -23,4 +23,4 @@ MonoBehaviour:
   lockSpeed: {x: 50, y: 15}
   lockDuration: 0.25
   isInvertedPitch: 1
-  yawFollowDelay: 1
+  yawFollowDelay: 0.25

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3132039522274828676}
   - component: {fileID: 6453610720132621265}
   - component: {fileID: 7114775043751798751}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,10 +88,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8410116461678964800}
+  - component: {fileID: -375810611483879329}
   - component: {fileID: 9011521102111106270}
   - component: {fileID: 6150612487039660060}
   - component: {fileID: 3746660881778619124}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,6 +115,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-375810611483879329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8410116461678964862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93fe551b8ab802438ba4038564ab482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
 --- !u!114 &9011521102111106270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +168,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   positionUpdatePeriod: 0.05
   lifeTime: 2
-  damage: 2
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -198,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8410116461686644491}
   - component: {fileID: 8410116461686644492}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

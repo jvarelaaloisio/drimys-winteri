@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Characters;
+using Core.DataManipulation;
 using IA.DecisionTree.Helpers;
 using UnityEngine;
 using Tree = IA.DecisionTree.Tree;
 
 namespace Enemies
 {
-	public class FoxView : CharacterView
+	public class FoxView : ThrowerView
 	{
 		[SerializeField]
 		private TextAsset decisionTree;
@@ -15,29 +15,20 @@ namespace Enemies
 		protected new EnemyModel Model;
 		protected EnemyProperties EnemyProperties;
 		private Tree _tree;
+
 		[SerializeField]
 		[Range(-1, 2)]
 		private float debugOffset = .95f;
 
 		protected override void Awake()
 		{
-			//TODO:Make Static method
-			TryCastProperties(out var properties);
+			Caster.TryCast(characterProperties, out  EnemyProperties);
 			base.Awake();
 			Model = (EnemyModel)base.Model;
 			_tree = TreeHelper.LoadTree(decisionTree, GetModel);
 			_tree.Callback = HandleTreeCallback;
 		}
-
-		private void TryCastProperties(out EnemyProperties properties)
-		{
-			properties = characterProperties as EnemyProperties;
-			EnemyProperties = properties
-								? properties
-								: throw new ArgumentException("Properties field in a thrower class" +
-															" should be of type ThrowerProperties");
-		}
-
+		
 		private void HandleTreeCallback(object[] args)
 		{
 			Model.ForceTransition((string)args[0]);
@@ -48,6 +39,8 @@ namespace Enemies
 			return new EnemyModel(transform,
 								Rigidbody,
 								EnemyProperties,
+								throwablePrefab,
+								hand,
 								this,
 								shouldLogTransitions);
 		}
@@ -59,17 +52,18 @@ namespace Enemies
 			_tree.RunTree();
 			base.Update();
 		}
-		
-		private void OnDrawGizmos()
+
+		protected override void OnDrawGizmos()
 		{
+			base.OnDrawGizmos();
 			Transform myTransform = transform;
 			Vector3 position = myTransform.position + Vector3.down * debugOffset;
 
 			#region LineOfSight
 
-			TryCastProperties(out var properties);
+			Caster.TryCast(characterProperties, out  EnemyProperties);
 
-			Vector3 forwardScaled = myTransform.forward * properties.ViewDistance;
+			Vector3 forwardScaled = myTransform.forward * EnemyProperties.ViewDistance;
 			int points = 5;
 
 			Mesh viewMesh = new Mesh();
@@ -78,10 +72,10 @@ namespace Enemies
 			for (int i = -points; i <= points; i++)
 			{
 				vertices.Add(position
-							+ Quaternion.AngleAxis(properties.FieldOfView / (points * 2) * i, Vector3.up)
+							+ Quaternion.AngleAxis(EnemyProperties.FieldOfView / (points * 2) * i, Vector3.up)
 							* forwardScaled);
 			}
-			
+
 			viewMesh.SetVertices(vertices);
 
 			int[] triangles = new int[3 * 2 * points];

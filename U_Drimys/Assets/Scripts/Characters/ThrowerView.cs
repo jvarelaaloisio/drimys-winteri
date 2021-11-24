@@ -10,10 +10,10 @@ namespace Characters
 		protected string aimingParameter = "Aiming";
 
 		[SerializeField]
-		private Throwable throwablePrefab;
+		protected Throwable throwablePrefab;
 
 		[SerializeField]
-		private Transform hand;
+		protected Transform hand;
 
 		protected new ThrowerModel Model;
 		protected ThrowerProperties ThrowerProperties;
@@ -57,7 +57,7 @@ namespace Characters
 		protected override void OnDrawGizmos()
 		{
 			base.OnDrawGizmos();
-			if(Model == null)
+			if(Model == null || !hand)
 				return;
 			Gizmos.color = Model.Flags.IsAiming
 								? Model.Flags.CanThrow

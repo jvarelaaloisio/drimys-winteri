@@ -21,7 +21,6 @@ namespace IA.DecisionTree.Helpers
 			#region Generate Tree
 			foreach (var n in nodes)
 			{
-				// Type nodeType = Type.GetType(n.ClassType);
 				Type nodeType = nodeTypes.FirstOrDefault(t => t.Name == n.ClassType);
 				if (nodeType == null)
 					throw new TypeLoadException($"Class not found for node {n.ClassType}");

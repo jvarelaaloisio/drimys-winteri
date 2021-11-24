@@ -71,8 +71,8 @@ namespace Camera.States
 				yawAutoRotationStart = 0;
 			}
 
-			if (LastMoveInput.y != 0)
-				return previewedYaw;
+			// if (LastMoveInput.y != 0)
+			// 	return previewedYaw;
 			currentYaw -= (currentYaw > 180) ? 360 : 0;
 			float targetYaw = Model.Target.localEulerAngles.y;
 			targetYaw -= (targetYaw > 180) ? 360 : 0;

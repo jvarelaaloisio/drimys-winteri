@@ -7,7 +7,7 @@ namespace IA.DecisionTree
 	{
 		public TreeNode[] Outcomes { get; set; }
 
-		public virtual int GetOutcomesQty() { return 2; }
+		public virtual int GetOutcomesQty() => 2;
 		public override void NodeFunction()
 		{
 			int outcomeIndex = CheckCondition();
@@ -15,6 +15,10 @@ namespace IA.DecisionTree
 			ChangeNode?.Invoke(Outcomes[outcomeIndex]);
 		}
 
+		/// <summary>
+		/// This method should return 0 if the condition is true
+		/// </summary>
+		/// <returns></returns>
 		public abstract int CheckCondition();
 	}
 }

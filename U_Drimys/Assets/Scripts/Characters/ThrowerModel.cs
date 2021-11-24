@@ -47,23 +47,22 @@ namespace Characters
 
 		public new ThrowerProperties Properties { get; }
 
-		public void Aim([CanBeNull] Transform target)
+		public void Aim()
 		{
 			Flags.IsAiming = true;
 			_throwAimingCoroutine = CoroutineRunner.StartCoroutine(ThrowAiming(ThrowablePrefab,
-																			Hand,
-																			target,
-																			Properties.AimDelay));
+																				Hand,
+																				Properties.AimDelay));
 		}
 
-		public void ReleaseAimAndThrow()
+		public virtual void ReleaseAimAndThrow()
 		{
 			if (Flags.IsAiming && !Flags.CanThrow)
 			{
 				CoroutineRunner.StopCoroutine(_throwAimingCoroutine);
 				onAimCanceled();
-				Debug.Log("canceled");
 			}
+
 			Flags.IsAiming = false;
 		}
 
@@ -81,24 +80,25 @@ namespace Characters
 															duration),
 												throwable.transform));
 		}
-		
+
 		protected IEnumerator ThrowAiming(Throwable prefab,
 										Transform hand,
-										[CanBeNull] Transform target,
 										float delay)
 		{
 			onAim();
-			Debug.Log("onAim");
 			yield return new WaitForSeconds(delay);
 			Flags.CanThrow = true;
 			if (!Flags.IsAiming)
 				yield break;
 
 			yield return new WaitWhile(() => Flags.IsAiming);
-			Debug.Log("isAiming = false");
 
 			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
-			throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
+			//TODO:ADD throw distance if there is no target
+			if (Flags.IsLocked)
+				throwable.Throw(LockTargetTransform, Properties.ThrowableSpeed);
+			else
+				throwable.Throw(transform.position + transform.forward * 10, Properties.ThrowableSpeed);
 			Flags.CanThrow = false;
 			onThrow();
 		}
@@ -111,7 +111,8 @@ namespace Characters
 		{
 			yield return new WaitForSeconds(spawnDelay);
 			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
-			throwable.Throw(target ? target.position : transform.position + transform.forward * 10, 10);
+			throwable.Throw(target ? target.position : transform.position + transform.forward * 10,
+							Properties.ThrowableSpeed);
 			yield return new WaitForSeconds(duration - spawnDelay);
 		}
 

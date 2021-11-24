@@ -52,7 +52,7 @@ namespace Player
 			_movementInput = _actionMap.FindAction(movementActionName);
 			_actionMap.FindAction(jumpActionName).performed += HandleJump;
 			_actionMap.FindAction(lockActionName).performed += HandleLock;
-			_actionMap.FindAction(meleeActionName).canceled += _ => onMeleeInput.Invoke();
+			_actionMap.FindAction(meleeActionName).started += _ => onMeleeInput.Invoke();
 			_actionMap.FindAction(shootActionName).started += _ => onAimInput.Invoke();
 			_actionMap.FindAction(shootActionName).canceled += _ => onShootInput.Invoke();
 			_actionMap.FindAction(cameraActionName).started += HandleCamera;
