@@ -30,6 +30,7 @@ Transform:
   m_Children:
   - {fileID: 6337528499041548374}
   - {fileID: 4611599855895931625}
+  - {fileID: 4778395124171739301}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -311,6 +312,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Holacalyx_3_wLOD
       objectReference: {fileID: 0}
+    - target: {fileID: 513581537433984346, guid: ec709ff2c87390941b0e2d313a3b12a9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2416847286977466193, guid: ec709ff2c87390941b0e2d313a3b12a9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -373,6 +379,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2416847286977466193, guid: ec709ff2c87390941b0e2d313a3b12a9,
     type: 3}
   m_PrefabInstance: {fileID: 2194920358258402744}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4742200329338319155
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 637201694853622964}
+    m_Modifications:
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8120255249447125683, guid: ddeaf89b96cbd08418c101b94822df3a,
+        type: 3}
+      propertyPath: m_Name
+      value: Holacalyx_3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ddeaf89b96cbd08418c101b94822df3a, type: 3}
+--- !u!4 &4778395124171739301 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 261185823519826326, guid: ddeaf89b96cbd08418c101b94822df3a,
+    type: 3}
+  m_PrefabInstance: {fileID: 4742200329338319155}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9164500566709205981
 PrefabInstance:
