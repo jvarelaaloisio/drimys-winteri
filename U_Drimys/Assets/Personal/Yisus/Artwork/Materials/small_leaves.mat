@@ -64,6 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaMaskValue: 0
     - _BaseColorHue: 0
     - _BaseColorSaturation: -0.26
     - _BaseColorValue: 0.04
