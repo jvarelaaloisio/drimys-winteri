@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using Characters;
+using Characters.Abilities;
 using Core.Extensions;
 using Core.Interactions.Throwables;
 using MVC;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Player
 {
@@ -64,6 +66,11 @@ namespace Player
 		private IEnumerator Attack(float waitTime)
 		{
 			yield return new WaitForSeconds(waitTime);
+		}
+
+		public void RunAbility1(AbilityRunner abilityRunner)
+		{
+			abilityRunner.TryRunAbility(0, Model);
 		}
 	}
 }

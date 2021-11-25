@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 using UnityEngine;
 namespace Throwables
@@ -24,7 +25,9 @@ namespace Throwables
 			StartCoroutine(Scale(lifeTime));
 		}
 
-		public override void Throw(Transform target, float speed)
+		public override void Throw(Transform target,
+									float speed,
+									Action onFinish = null)
 		{
 			Throw(target.position, speed);
 		}

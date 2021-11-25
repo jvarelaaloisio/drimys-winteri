@@ -7,7 +7,7 @@ namespace Enemies.IA.Questions
 	{
 		protected override int CheckConditionInternal(EnemyModel model, Transform player)
 		{
-			return model.Flags.CanThrow.TrueIs0FalseIs1();
+			return model.throwerFlags.CanThrow.TrueIs0FalseIs1();
 		}
 	}
 }

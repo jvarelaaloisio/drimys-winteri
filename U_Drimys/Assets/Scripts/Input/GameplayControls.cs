@@ -67,6 +67,14 @@ namespace Input
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Ability1"",
+                    ""type"": ""Button"",
+                    ""id"": ""8583b4e0-3349-4fca-a409-5fe3cb576f27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -212,6 +220,17 @@ namespace Input
                     ""action"": ""Melee"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8661128-8a92-4c7c-99ec-64f6d240e8b5"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Ability1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,6 +267,7 @@ namespace Input
             m_Player_Lock = m_Player.FindAction("Lock", throwIfNotFound: true);
             m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
             m_Player_Melee = m_Player.FindAction("Melee", throwIfNotFound: true);
+            m_Player_Ability1 = m_Player.FindAction("Ability1", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -303,6 +323,7 @@ namespace Input
         private readonly InputAction m_Player_Lock;
         private readonly InputAction m_Player_Shoot;
         private readonly InputAction m_Player_Melee;
+        private readonly InputAction m_Player_Ability1;
         public struct PlayerActions
         {
             private @GameplayControls m_Wrapper;
@@ -313,6 +334,7 @@ namespace Input
             public InputAction @Lock => m_Wrapper.m_Player_Lock;
             public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
             public InputAction @Melee => m_Wrapper.m_Player_Melee;
+            public InputAction @Ability1 => m_Wrapper.m_Player_Ability1;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -340,6 +362,9 @@ namespace Input
                     @Melee.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMelee;
                     @Melee.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMelee;
                     @Melee.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMelee;
+                    @Ability1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
+                    @Ability1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
+                    @Ability1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -362,6 +387,9 @@ namespace Input
                     @Melee.started += instance.OnMelee;
                     @Melee.performed += instance.OnMelee;
                     @Melee.canceled += instance.OnMelee;
+                    @Ability1.started += instance.OnAbility1;
+                    @Ability1.performed += instance.OnAbility1;
+                    @Ability1.canceled += instance.OnAbility1;
                 }
             }
         }
@@ -383,6 +411,7 @@ namespace Input
             void OnLock(InputAction.CallbackContext context);
             void OnShoot(InputAction.CallbackContext context);
             void OnMelee(InputAction.CallbackContext context);
+            void OnAbility1(InputAction.CallbackContext context);
         }
     }
 }

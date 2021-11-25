@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,11 +27,11 @@ namespace Core.Interactions.Throwables
 		[SerializeField]
 		protected UnityEvent onDeath;
 
-
 		protected Rigidbody Rigidbody;
 
 		public virtual void Throw(Vector3 throwForce)
 		{
+			StopAllCoroutines();
 			Rigidbody.isKinematic = false;
 			Rigidbody.AddForce(transform.TransformDirection(throwForce),
 								ForceMode.Impulse);
@@ -40,17 +41,38 @@ namespace Core.Interactions.Throwables
 		{
 			Vector3 fromMeToObjective = objective - transform.position;
 			float time = fromMeToObjective.magnitude / speed;
+			StopAllCoroutines();
 			StartCoroutine(FlyToPoint(objective, time));
 		}
 
-		public virtual void Throw(Transform target, float duration)
+		public virtual void Throw(Transform target,
+								float speed,
+								Action onFinish = null)
 		{
-			StartCoroutine(FlyToTarget(target, duration));
+			Vector3 thisToTarget = target.position - transform.position;
+			float duration = thisToTarget.magnitude / speed;
+			StopAllCoroutines();
+			StartCoroutine(FlyToTarget(target,
+										duration,
+										onFinish));
+		}
+
+		public void Freeze()
+		{
+			Rigidbody.isKinematic = true;
+		}
+
+		public void StopDeath()
+		{
+			CancelInvoke(nameof(Die));
 		}
 
 		protected abstract IEnumerator FlyToPoint(Vector3 objective, float duration);
-		protected abstract IEnumerator FlyToTarget(Transform target, float duration);
-		
+
+		protected abstract IEnumerator FlyToTarget(Transform target,
+													float duration,
+													Action onFinish = null);
+
 		protected virtual void Awake()
 		{
 			Rigidbody = GetComponent<Rigidbody>();

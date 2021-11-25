@@ -10,7 +10,7 @@ namespace Characters
 {
 	public class ThrowerModel : CharacterModel
 	{
-		public new StateFlags Flags;
+		public ThrowerFlags throwerFlags;
 		protected readonly Throwable ThrowablePrefab;
 
 		[Tooltip("Transform from where to spawn throwable prefab")]
@@ -49,7 +49,7 @@ namespace Characters
 
 		public void Aim()
 		{
-			Flags.IsAiming = true;
+			throwerFlags.IsAiming = true;
 			_throwAimingCoroutine = CoroutineRunner.StartCoroutine(ThrowAiming(ThrowablePrefab,
 																				Hand,
 																				Properties.AimDelay));
@@ -57,13 +57,13 @@ namespace Characters
 
 		public virtual void ReleaseAimAndThrow()
 		{
-			if (Flags.IsAiming && !Flags.CanThrow)
+			if (throwerFlags.IsAiming && !throwerFlags.CanThrow)
 			{
 				CoroutineRunner.StopCoroutine(_throwAimingCoroutine);
 				onAimCanceled();
 			}
 
-			Flags.IsAiming = false;
+			throwerFlags.IsAiming = false;
 		}
 
 		public void ThrowAttack([CanBeNull] Transform target,
@@ -87,11 +87,11 @@ namespace Characters
 		{
 			onAim();
 			yield return new WaitForSeconds(delay);
-			Flags.CanThrow = true;
-			if (!Flags.IsAiming)
+			throwerFlags.CanThrow = true;
+			if (!throwerFlags.IsAiming)
 				yield break;
 
-			yield return new WaitWhile(() => Flags.IsAiming);
+			yield return new WaitWhile(() => throwerFlags.IsAiming);
 
 			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
 			//TODO:ADD throw distance if there is no target
@@ -99,7 +99,7 @@ namespace Characters
 				throwable.Throw(LockTargetTransform, Properties.ThrowableSpeed);
 			else
 				throwable.Throw(transform.position + transform.forward * 10, Properties.ThrowableSpeed);
-			Flags.CanThrow = false;
+			throwerFlags.CanThrow = false;
 			onThrow();
 		}
 
@@ -116,14 +116,10 @@ namespace Characters
 			yield return new WaitForSeconds(duration - spawnDelay);
 		}
 
-		public new struct StateFlags
+		public struct ThrowerFlags
 		{
-			public bool IsMoving;
-			public bool IsAttacking;
 			public bool IsAiming;
 			public bool CanThrow;
-			public bool IsStunned;
-			public bool IsLocked;
 		}
 	}
 }

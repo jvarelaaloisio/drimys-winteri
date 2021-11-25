@@ -59,8 +59,8 @@ namespace Characters
 			base.OnDrawGizmos();
 			if(Model == null || !hand)
 				return;
-			Gizmos.color = Model.Flags.IsAiming
-								? Model.Flags.CanThrow
+			Gizmos.color = Model.throwerFlags.IsAiming
+								? Model.throwerFlags.CanThrow
 									? Color.green
 									: Color.red
 								: Color.black;

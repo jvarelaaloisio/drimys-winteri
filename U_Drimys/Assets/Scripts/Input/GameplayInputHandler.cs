@@ -11,6 +11,7 @@ namespace Player
 		public UnityEvent onJumpInput;
 		public UnityEvent onLockInput;
 		public UnityEvent onMeleeInput;
+		public UnityEvent onAbility1Input;
 		[FormerlySerializedAs("onAim")]
 		public UnityEvent onAimInput;
 		[FormerlySerializedAs("onShoot")]
@@ -35,6 +36,9 @@ namespace Player
 		
 		[SerializeField]
 		private string shootActionName = "Shoot";
+		
+		[SerializeField]
+		private string ability1ActionName = "Ability1";
 
 		[SerializeField]
 		private string movementActionName = "Movement";
@@ -55,6 +59,7 @@ namespace Player
 			_actionMap.FindAction(meleeActionName).started += _ => onMeleeInput.Invoke();
 			_actionMap.FindAction(shootActionName).started += _ => onAimInput.Invoke();
 			_actionMap.FindAction(shootActionName).canceled += _ => onShootInput.Invoke();
+			_actionMap.FindAction(ability1ActionName).started += _ => onAbility1Input.Invoke();
 			_actionMap.FindAction(cameraActionName).started += HandleCamera;
 			_actionMap.FindAction(cameraActionName).performed += HandleCamera;
 			_actionMap.FindAction(cameraActionName).canceled += HandleCamera;

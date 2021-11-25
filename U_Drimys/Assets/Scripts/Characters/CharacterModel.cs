@@ -166,7 +166,8 @@ namespace Characters
 
 		public void Melee(IEnumerator behaviour, Transform target)
 		{
-			CoroutineRunner.StartCoroutine(Attack(behaviour, target));
+			if (!Flags.IsRunningAbility)
+				CoroutineRunner.StartCoroutine(Attack(behaviour, target));
 		}
 
 		protected IEnumerator Attack(IEnumerator behaviour,
@@ -228,6 +229,7 @@ namespace Characters
 		public struct StateFlags
 		{
 			public bool IsAttacking;
+			public bool IsRunningAbility;
 			public bool IsMoving;
 			public bool IsStunned;
 			public bool IsLocked;

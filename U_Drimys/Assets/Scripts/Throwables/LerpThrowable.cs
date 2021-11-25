@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Core.DebugExtras;
 using Core.Interactions.Throwables;
 using UnityEngine;
@@ -22,24 +23,57 @@ namespace Throwables
 			float start = Time.time;
 			Vector3 pointA = _transform.position;
 
-			_transform.rotation= Quaternion.LookRotation(objective - pointA);
+			_transform.rotation = Quaternion.LookRotation(objective - pointA);
 			Vector3 bezierOffsetStartLocal = _transform.TransformDirection(bezierOffsetStart);
 			Vector3 bezierOffsetEndLocal = _transform.TransformDirection(bezierOffsetEnd);
 
 			Vector3 pointB = pointA + bezierOffsetStartLocal;
 			Vector3 pointC = objective + bezierOffsetEndLocal;
 			Vector3 pointD = objective;
-			//TODO: Remove commented lines if DrawLines works
 			LineDebugger.DrawLines(new[] { pointA, pointB, pointC }, Color.red, duration);
-			
-			//TODO:Remove commented lines if For works
+
 			for (float present = start; present < start + duration; present = Time.time)
 			{
 				float t = (present - start) / duration;
 				UpdatePosition(pointA, pointB, pointC, pointD, t);
 				yield return wait;
 			}
+
 			UpdatePosition(pointA, pointB, pointC, pointD, 1);
+		}
+
+		protected override IEnumerator FlyToTarget(Transform target,
+													float duration,
+													Action onFinish = null)
+		{
+			WaitForSeconds wait = new WaitForSeconds(positionUpdatePeriod);
+
+			float start = Time.time;
+
+			Vector3 pointA = _transform.position;
+			
+			_transform.rotation = Quaternion.LookRotation(target.position - pointA);
+			Vector3 bezierOffsetStartLocal = _transform.TransformDirection(bezierOffsetStart);
+			Vector3 bezierOffsetEndLocal = _transform.TransformDirection(bezierOffsetEnd);
+
+			Vector3 pointB = pointA + bezierOffsetStartLocal;
+			Vector3 pointC = new Vector3();
+			Vector3 pointD = new Vector3();
+
+			for (float present = start; present < start + duration; present = Time.time)
+			{
+				Vector3 targetPosition = target.position;
+				pointC = targetPosition + bezierOffsetEndLocal;
+				pointD = targetPosition;
+				LineDebugger.DrawLines(new[] { pointA, pointB, pointC, pointD }, Color.red);
+
+				float t = (present - start) / duration;
+				UpdatePosition(pointA, pointB, pointC, pointD, t);
+				yield return wait;
+			}
+
+			UpdatePosition(pointA, pointB, pointC, pointD, 1);
+			onFinish?.Invoke();
 		}
 
 		private void UpdatePosition(Vector3 pointA,
@@ -65,35 +99,6 @@ namespace Throwables
 			Vector3 newPosition = ABBCtoBCCD;
 
 			_transform.position = newPosition;
-		}
-
-		protected override IEnumerator FlyToTarget(Transform target, float duration)
-		{
-			WaitForSeconds wait = new WaitForSeconds(positionUpdatePeriod);
-
-			float start = Time.time;
-
-			Vector3 bezierOffsetStartLocal = _transform.TransformDirection(bezierOffsetStart);
-			Vector3 bezierOffsetEndLocal = _transform.TransformDirection(bezierOffsetEnd);
-
-			Vector3 pointA = _transform.position;
-			Vector3 pointB = pointA + bezierOffsetStartLocal;
-			Vector3 pointC = new Vector3();
-			Vector3 pointD = new Vector3();
-
-			for (float present = start; present < start + duration; present = Time.time)
-			{
-				Vector3 targetPosition = target.position;
-				pointC = targetPosition + bezierOffsetEndLocal;
-				pointD = targetPosition;
-				LineDebugger.DrawLines(new[] { pointA, pointB, pointC }, Color.red);
-				
-				float t = (present - start) / duration;
-				UpdatePosition(pointA, pointB, pointC, pointD, t);
-				yield return wait;
-			}
-			
-			UpdatePosition(pointA, pointB, pointC, pointD, 1);
 		}
 	}
 }
