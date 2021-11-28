@@ -16,7 +16,7 @@ namespace Core.Interactions.Throwables
 		protected Vector3 bezierOffsetEnd;
 
 		[SerializeField]
-		protected AnimationCurve speedCurve;
+		protected AnimationCurve speedCurve = AnimationCurve.Constant(0, 1, 1);
 
 		[SerializeField]
 		protected float positionUpdatePeriod = .05f;
@@ -51,6 +51,7 @@ namespace Core.Interactions.Throwables
 		{
 			Vector3 thisToTarget = target.position - transform.position;
 			float duration = thisToTarget.magnitude / speed;
+			Debug.Log($"{speed} => {duration}");
 			StopAllCoroutines();
 			StartCoroutine(FlyToTarget(target,
 										duration,

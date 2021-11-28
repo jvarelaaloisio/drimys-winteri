@@ -9,15 +9,16 @@ namespace Characters.States
 					ICoroutineRunner coroutineRunner)
 			: base(model,
 					coroutineRunner)
-		{}
+		{
+		}
 
 		public override string GetName() => "Jump";
 
 		public override void Awake()
 		{
 			CoroutineRunner.StartCoroutine(CharacterHelper.AddForce(Model.rigidbody,
-													Vector3.up * CharacterProperties.JumpForce,
-													ForceMode.Impulse));
+																	Vector3.up * CharacterProperties.JumpForce,
+																	ForceMode.Impulse));
 			base.Awake();
 		}
 	}

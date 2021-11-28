@@ -18,6 +18,7 @@ namespace Events.Channels
 		{
 			voidEvent -= handler;
 		}
+
 		public void RaiseEvent()
 		{
 			voidEvent?.Invoke();

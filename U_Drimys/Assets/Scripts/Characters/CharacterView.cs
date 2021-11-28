@@ -63,6 +63,9 @@ namespace Characters
 			Gizmos.DrawLine(position, groundCheckPosition);
 			var radius = characterProperties.GroundedCheckSphereRadius;
 			Gizmos.DrawSphere(groundCheckPosition, radius);
+			Gizmos.color = new Color(.5f, .5f, .5f, .5f);
+			var landingCheckPosition = position - up * characterProperties.LandDistance;
+			Gizmos.DrawLine(position, landingCheckPosition);
 		}
 	}
 }

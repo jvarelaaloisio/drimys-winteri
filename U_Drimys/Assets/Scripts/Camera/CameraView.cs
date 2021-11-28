@@ -1,5 +1,6 @@
 ﻿using Core.Helpers;
-using Player;
+using Events.Channels;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Camera
@@ -7,33 +8,54 @@ namespace Camera
 	public class CameraView : MonoBehaviour, ICoroutineRunner
 	{
 		[SerializeField]
-		private GameplayInputHandler inputHandler;
-		
-		[SerializeField]
 		private CameraProperties properties;
 
 		[SerializeField]
 		private Transform target;
-		
+
 		private CameraModel _model;
-		
+
 		[Header("Debug")]
 		[SerializeField]
 		private bool shouldLogFsmTransitions;
 
+		[Space, Header("Channels Listened")]
+		[SerializeField, Tooltip("Can Be Null")]
+		private Vector2ChannelSo cameraMovement;
+
+		[SerializeField, Tooltip("Can Be Null")]
+		[CanBeNull]
+		private Vector2ChannelSo playerMovement;
+
+		[SerializeField, Tooltip("Not Null")]
+		private TransformChannelSo playerStarts;
+
 		private void Awake()
 		{
-			if (!inputHandler)
-				inputHandler = FindObjectOfType<GameplayInputHandler>();
-			inputHandler.onCameraInput.AddListener(HandleCamInput);
-			inputHandler.onMoveInput.AddListener(HandleMoveInput);
+			cameraMovement.SubscribeSafely(HandleCamInput);
+			playerMovement.SubscribeSafely(HandleMoveInput);
 			if (!target)
-				target = GameObject.FindGameObjectWithTag("Player").transform;
+			{
+				playerStarts.Subscribe(AssignTarget);
+				return;
+ 			}
+
+			SetupModel();
+		}
+
+		private void SetupModel()
+		{
 			_model = new CameraModel(transform,
 									properties,
 									target,
 									this,
 									shouldLogFsmTransitions);
+		}
+
+		private void AssignTarget(Transform target)
+		{
+			this.target = target;
+			SetupModel();
 		}
 
 		private void LateUpdate()
@@ -48,13 +70,9 @@ namespace Camera
 			=> _model.HandleCamInput(input);
 
 		public void HandleLock()
-		{
-			_model.Lock();
-		}
-		
+			=> _model.Lock();
+
 		public void HandleUnlock()
-		{
-			_model.Unlock();
-		}
+			=> _model.Unlock();
 	}
 }

@@ -36,6 +36,12 @@ namespace Characters
 		[SerializeField]
 		private AnimationCurve slopeCompensation;
 
+		[SerializeField]
+		private float landDistance;
+
+		[SerializeField]
+		private float landingForce;
+
 		public float JumpForce => jumpForce;
 		public float GroundSpeed => groundSpeed;
 		public float AirSpeed => airSpeed;
@@ -46,5 +52,7 @@ namespace Characters
 		public float GroundDistanceCheck => groundDistanceCheck;
 		public float GroundedCheckSphereRadius => groundedCheckSphereRadius;
 		public AnimationCurve SlopeCompensation => slopeCompensation;
+		public float LandDistance => landDistance;
+		public float LandingForce => landingForce;
 	}
 }

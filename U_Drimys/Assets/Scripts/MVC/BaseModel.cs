@@ -22,5 +22,7 @@ namespace MVC
 
 		public void ForceTransition(string key)
 			=> StateMachine.TransitionTo(key);
+
+		public State<string> GetCurrentState => StateMachine.CurrentState;
 	}
 }

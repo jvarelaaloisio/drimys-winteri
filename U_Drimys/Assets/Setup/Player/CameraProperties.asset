@@ -19,7 +19,7 @@ MonoBehaviour:
   maximumPitchAngle: 55
   pitchResetSpeed: 25
   yieldSpeed: {x: 25, y: 15}
-  automaticYieldTime: 2
+  automaticYieldTime: 1
   lockSpeed: {x: 50, y: 15}
   lockDuration: 0.25
   isInvertedPitch: 1

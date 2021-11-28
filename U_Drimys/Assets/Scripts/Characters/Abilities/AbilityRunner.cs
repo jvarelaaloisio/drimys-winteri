@@ -20,7 +20,7 @@ namespace Characters.Abilities
 		public void TryRunAbility(int index, CharacterModel model)
 		{
 			if (abilities.Count - 1< index)
-				throw new IndexOutOfRangeException($"No ability in the index {index} found. Max available index is {abilities.Count - 1}");
+				throw new IndexOutOfRangeException($"No ability at index {index} found. Max available index is {abilities.Count - 1}");
 			var ability = abilities[index];
 			if (ability && ability.CanRun(_cache, model))
 				ability.Run(_cache, model);

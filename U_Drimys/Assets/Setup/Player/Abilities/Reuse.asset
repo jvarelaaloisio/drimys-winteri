@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Reuse
   m_EditorClassIdentifier: 
   id: reuse
-  catchFlyTime: 1
+  flySpeed: 12
   minimumHeight: 0

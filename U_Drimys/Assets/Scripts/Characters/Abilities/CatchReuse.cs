@@ -13,7 +13,7 @@ namespace Characters.Abilities
 
 		// private const string CaughtItemKey = "caughtItem";
 		[SerializeField]
-		private float catchFlyTime;
+		private float flySpeed;
 
 		[SerializeField]
 		private float minimumHeight;
@@ -22,7 +22,7 @@ namespace Characters.Abilities
 		{
 			if (!cache.ContainsKey(_throwableKey))
 				cache.Add(_throwableKey, null);
-
+			Debug.Log(cache[_throwableKey] != null);
 			return !model.Flags.IsRunningAbility || cache[_throwableKey] != null;
 		}
 
@@ -31,28 +31,35 @@ namespace Characters.Abilities
 			var item = (Throwable)cache[_throwableKey];
 			if (item == null)
 			{
-				TryCatch(model, item);
+				Debug.Log("Catch");
+				cache[_throwableKey] = TryCatch(model);
 			}
 			else
 			{
+				Debug.Log("Release");
+				Destroy(item.gameObject);
+				//TODO:This should be handled by the model
+				model.Flags.IsRunningAbility = false;
 				//TODO: Offer reuse menu
 			}
 		}
 
-		private void TryCatch(CharacterModel model, Throwable item)
+		private Throwable TryCatch(CharacterModel model)
 		{
 			if (!FetchItem(model.transform,
 							minimumHeight,
-							out item))
-				return;
+							out var item))
+				return item;
+			//TODO:This should be handled by the model
 			model.Flags.IsRunningAbility = true;
 			item.StopDeath();
 			var catchHelper = model.transform.Find("CatchHelper");
 			//BUG:This is not working
-			item.Freeze();
 			item.Throw(catchHelper,
-						catchFlyTime,
+						flySpeed,
 						() => item.transform.SetParent(catchHelper));
+			item.Freeze();
+			return item;
 		}
 
 		public static bool FetchItem(Transform user,

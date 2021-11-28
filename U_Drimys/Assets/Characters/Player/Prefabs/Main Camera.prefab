@@ -9,7 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3314185730688129184}
+  - component: {fileID: 1808984743901937327}
   - component: {fileID: 3314185730688129189}
+  - component: {fileID: 2653547478497629690}
+  - component: {fileID: 368236777997856816}
   - component: {fileID: 3314185730688129185}
   - component: {fileID: 3314185730688129190}
   - component: {fileID: 3314185730688129191}
@@ -29,12 +32,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3314185730688129179}
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 16.132687, y: -15.479128, z: -111.52494}
+  m_LocalPosition: {x: 16.132687, y: -16.140625, z: -111.52494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!114 &1808984743901937327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3314185730688129179}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a64bbc0ac19e26419d3b87e8cddeca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlPosition: 0
+  yOffset: 1.5
 --- !u!114 &3314185730688129189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,7 +66,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 1a6a10877919b8f47b5fed582dea2444, type: 2}
   target: {fileID: 0}
-  shouldLogFsmTransitions: 1
+  shouldLogFsmTransitions: 0
+  cameraMovement: {fileID: 11400000, guid: 032e848702d85a34f88c8ea3ebac59f0, type: 2}
+  playerMovement: {fileID: 11400000, guid: ed8db3a5203c37342ab746ab9a950774, type: 2}
+  playerStarts: {fileID: 11400000, guid: 917f3699f2cc4d64084a0add6bb1599e, type: 2}
+--- !u!114 &2653547478497629690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3314185730688129179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b30e9638a64b44395edd4dea1f7849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  channel: {fileID: 11400000, guid: 86c03383ea87c784daa491d06e74b114, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3314185730688129189}
+        m_MethodName: HandleUnlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &368236777997856816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3314185730688129179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b30e9638a64b44395edd4dea1f7849, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  channel: {fileID: 11400000, guid: a425b9e55cb957145b01998f8170a6bb, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3314185730688129189}
+        m_MethodName: HandleLock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!20 &3314185730688129185
 Camera:
   m_ObjectHideFlags: 0

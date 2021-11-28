@@ -30,7 +30,7 @@ namespace Throwables
 			Vector3 pointB = pointA + bezierOffsetStartLocal;
 			Vector3 pointC = objective + bezierOffsetEndLocal;
 			Vector3 pointD = objective;
-			LineDebugger.DrawLines(new[] { pointA, pointB, pointC }, Color.red, duration);
+			LineDebugger.DrawLines(new[] { pointA, pointB, pointC, pointD }, Color.red, duration);
 
 			for (float present = start; present < start + duration; present = Time.time)
 			{
@@ -47,25 +47,35 @@ namespace Throwables
 													Action onFinish = null)
 		{
 			WaitForSeconds wait = new WaitForSeconds(positionUpdatePeriod);
-
+			
 			float start = Time.time;
 
 			Vector3 pointA = _transform.position;
-			
+
 			_transform.rotation = Quaternion.LookRotation(target.position - pointA);
 			Vector3 bezierOffsetStartLocal = _transform.TransformDirection(bezierOffsetStart);
 			Vector3 bezierOffsetEndLocal = _transform.TransformDirection(bezierOffsetEnd);
 
 			Vector3 pointB = pointA + bezierOffsetStartLocal;
-			Vector3 pointC = new Vector3();
-			Vector3 pointD = new Vector3();
+			UpdatePointsCandD(target,
+							bezierOffsetEndLocal,
+							out Vector3 pointC,
+							out Vector3 pointD);
 
 			for (float present = start; present < start + duration; present = Time.time)
 			{
-				Vector3 targetPosition = target.position;
-				pointC = targetPosition + bezierOffsetEndLocal;
-				pointD = targetPosition;
-				LineDebugger.DrawLines(new[] { pointA, pointB, pointC, pointD }, Color.red);
+				if (target.hasChanged)
+				{
+					UpdatePointsCandD(target,
+									bezierOffsetEndLocal,
+									out pointC,
+									out pointD);
+				}
+
+				LineDebugger.DrawLines(new[] { pointA, pointB, pointC, pointD },
+										Color.red,
+										positionUpdatePeriod,
+										true);
 
 				float t = (present - start) / duration;
 				UpdatePosition(pointA, pointB, pointC, pointD, t);
@@ -76,6 +86,16 @@ namespace Throwables
 			onFinish?.Invoke();
 		}
 
+		private static void UpdatePointsCandD(Transform target,
+											Vector3 bezierOffsetEndLocal,
+											out Vector3 pointC,
+											out Vector3 pointD)
+		{
+			Vector3 objective = target.position;
+			pointC = objective + bezierOffsetEndLocal;
+			pointD = objective;
+		}
+
 		private void UpdatePosition(Vector3 pointA,
 									Vector3 pointB,
 									Vector3 pointC,
@@ -83,16 +103,15 @@ namespace Throwables
 									float t)
 		{
 			var processedT = speedCurve.Evaluate(t);
-			Vector3 AtoB = Vector3.Lerp(pointA, pointB, processedT);
-			Vector3 BtoC = Vector3.Lerp(pointB, pointC, processedT);
-			Vector3 CtoD = Vector3.Lerp(pointC, pointD, processedT);
-			Vector3 ABtoBC = Vector3.Lerp(AtoB, BtoC, processedT);
-			Vector3 BCtoCD = Vector3.Lerp(BtoC, CtoD, processedT);
+			//NOTE:Points at t
+			Vector3 AB = Vector3.Lerp(pointA, pointB, processedT);
+			Vector3 BC = Vector3.Lerp(pointB, pointC, processedT);
+			Vector3 CD = Vector3.Lerp(pointC, pointD, processedT);
+			Vector3 ABtoBC = Vector3.Lerp(AB, BC, processedT);
+			Vector3 BCtoCD = Vector3.Lerp(BC, CD, processedT);
 			Vector3 ABBCtoBCCD = Vector3.Lerp(ABtoBC, BCtoCD, processedT);
-			LineDebugger.DrawLines(new[] { AtoB, BtoC, CtoD }, Color.blue, positionUpdatePeriod);
-			// Debug.DrawLine(AtoB, BtoC, Color.blue, positionUpdatePeriod);
-			// Debug.DrawLine(BtoC, CtoD, Color.blue, positionUpdatePeriod);
-			Debug.DrawLine(ABtoBC, BCtoCD, Color.black, positionUpdatePeriod);
+			LineDebugger.DrawLines(new[] { AB, BC, CD }, Color.blue, positionUpdatePeriod, true);
+			Debug.DrawLine(ABtoBC, BCtoCD, Color.black, positionUpdatePeriod, true);
 
 			if ((BCtoCD - ABtoBC).magnitude > .1f)
 				_transform.forward = (BCtoCD - ABtoBC).normalized;
