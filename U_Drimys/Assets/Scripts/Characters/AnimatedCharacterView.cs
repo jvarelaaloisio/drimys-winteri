@@ -50,6 +50,7 @@ namespace Characters
 			Rigidbody = GetComponent<Rigidbody>();
 
 			Model.onJump += () => SetJumping(true);
+			Model.onFall += () => SetJumping(true);
 			Model.onLand += () => SetJumping(false);
 			Model.onStop += () => animator.SetTrigger( stopParameter);
 			Model.onAttacking += _ => animator.SetTrigger(attackParameter);

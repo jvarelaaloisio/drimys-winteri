@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Helpers;
+﻿using Core.Helpers;
 using Events.UnityEvents;
 using MVC;
 using UnityEngine;

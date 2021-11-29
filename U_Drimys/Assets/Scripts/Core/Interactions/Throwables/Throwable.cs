@@ -51,7 +51,6 @@ namespace Core.Interactions.Throwables
 		{
 			Vector3 thisToTarget = target.position - transform.position;
 			float duration = thisToTarget.magnitude / speed;
-			Debug.Log($"{speed} => {duration}");
 			StopAllCoroutines();
 			StartCoroutine(FlyToTarget(target,
 										duration,

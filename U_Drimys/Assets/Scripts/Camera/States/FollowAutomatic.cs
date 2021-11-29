@@ -7,14 +7,12 @@ namespace Camera.States
 		protected readonly CameraProperties Properties;
 		protected readonly Transform transform;
 		private Vector3 _nextEulerAngles;
-		protected Vector2 ResetSpeed;
 		private float yawAutoRotationStart;
 
 		public FollowAutomatic(CameraModel model) : base(model)
 		{
 			transform = model.transform;
 			Properties = model.Properties;
-			ResetSpeed = Properties.YieldSpeed;
 		}
 
 		public override string GetName() => "Follow(Automatic)";
@@ -46,6 +44,13 @@ namespace Camera.States
 			nextEulerAngles.y = GetNextYaw(nextEulerAngles.y, currentEulerAngles.y, deltaTime);
 		}
 
+		/// <summary>
+		/// Pitch is in the X axis
+		/// </summary>
+		/// <param name="previewedPitch"></param>
+		/// <param name="currentPitch"></param>
+		/// <param name="deltaTime"></param>
+		/// <returns></returns>
 		protected virtual float GetNextPitch(float previewedPitch, float currentPitch, float deltaTime)
 		{
 			currentPitch -= (currentPitch > 180) ? 360 : 0;
@@ -54,10 +59,17 @@ namespace Camera.States
 			float deltaPitch = currentPitch - targetPitch;
 			if (Mathf.Abs(deltaPitch) < .1f)
 				return previewedPitch;
-			return previewedPitch - ResetSpeed.x * Mathf.Sign(deltaPitch) * deltaTime;
+			return previewedPitch - Properties.YieldSpeed.y * Mathf.Sign(deltaPitch) * deltaTime;
 		}
 
 		//TODO:Clean this mess without breaking it
+		/// <summary>
+		/// Yaw is in the Y axis
+		/// </summary>
+		/// <param name="previewedYaw"></param>
+		/// <param name="currentYaw"></param>
+		/// <param name="deltaTime"></param>
+		/// <returns></returns>
 		protected virtual float GetNextYaw(float previewedYaw, float currentYaw, float deltaTime)
 		{
 			if (LastMoveInput.x != 0)
@@ -78,11 +90,12 @@ namespace Camera.States
 			targetYaw -= (targetYaw > 180) ? 360 : 0;
 			float deltaYaw = currentYaw - targetYaw;
 
-			if (Mathf.Abs(deltaYaw) < 1f || Mathf.Abs(deltaYaw) > 179)
+			//BUG:When the player walks backwards and then stops, the camera doesn't reset.
+			if (Mathf.Abs(deltaYaw) < 2f || Mathf.Abs(deltaYaw) > 178)
 			{
 				return previewedYaw;
 			}
-			return previewedYaw - ResetSpeed.y * Mathf.Sign(deltaYaw) * deltaTime;
+			return previewedYaw - Properties.YieldSpeed.x * Mathf.Sign(deltaYaw) * deltaTime;
 		}
 	}
 }

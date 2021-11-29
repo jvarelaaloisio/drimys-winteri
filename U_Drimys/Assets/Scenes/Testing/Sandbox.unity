@@ -3239,7 +3239,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh132486
+  m_Name: pb_Mesh67334
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4270,16 +4270,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3216067731452298584, guid: 9883e774a87b79440adc1f3388776b87,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 946c9f39feb357d418ac49dfcac6715e, type: 2}
-    - target: {fileID: 3244140479154154730, guid: 9883e774a87b79440adc1f3388776b87,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a4b8d855998dd36408f37f1fb1ea2561, type: 2}
     - target: {fileID: 9064427899253285986, guid: 9883e774a87b79440adc1f3388776b87,
         type: 3}
       propertyPath: m_Name
@@ -23514,7 +23504,7 @@ PrefabInstance:
     - target: {fileID: 3314185730688129189, guid: cbf5c54370c1fe745ab6e0fad6c3fa4e,
         type: 3}
       propertyPath: shouldLogFsmTransitions
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3314185730688129191, guid: cbf5c54370c1fe745ab6e0fad6c3fa4e,
         type: 3}

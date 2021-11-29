@@ -22,7 +22,7 @@ MonoBehaviour:
   maxSlopeAngle: 90
   floorLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2049
   slopeCompensation:
     serializedVersion: 2
     m_Curve:

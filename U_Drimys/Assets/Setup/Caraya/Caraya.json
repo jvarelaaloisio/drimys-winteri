@@ -1,12 +1,14 @@
-{"Kind":1,"ClassType":"StayIdle","OutcomeClassNames":[],"PositionInEditor":{"x":878.0,"y":333.0}}
+{"Kind":1,"ClassType":"StayIdle","OutcomeClassNames":[],"PositionInEditor":{"x":1739.0,"y":583.0}}
 {"Kind":1,"ClassType":"EmptyAction","OutcomeClassNames":[],"PositionInEditor":{"x":1739.0,"y":424.0}}
 {"Kind":1,"ClassType":"AimAtTarget","OutcomeClassNames":[],"PositionInEditor":{"x":1629.0,"y":221.0}}
 {"Kind":1,"ClassType":"ChasePlayer","OutcomeClassNames":[],"PositionInEditor":{"x":1132.0,"y":323.0}}
 {"Kind":1,"ClassType":"ReleaseAim","OutcomeClassNames":[],"PositionInEditor":{"x":1733.0,"y":33.0}}
 {"Kind":1,"ClassType":"RetreatFromPlayer","OutcomeClassNames":[],"PositionInEditor":{"x":1133.0,"y":0.0}}
+{"Kind":1,"ClassType":"LockOnPlayer","OutcomeClassNames":[],"PositionInEditor":{"x":874.0,"y":331.0}}
 {"Kind":0,"ClassType":"CanThrow","OutcomeClassNames":["ReleaseAim","EmptyAction"],"PositionInEditor":{"x":1396.0,"y":60.0}}
 {"Kind":0,"ClassType":"CanAimAgain","OutcomeClassNames":["AimAtTarget","StayIdle"],"PositionInEditor":{"x":1398.0,"y":220.0}}
 {"Kind":0,"ClassType":"IsAiming","OutcomeClassNames":["CanThrow","CanAimAgain"],"PositionInEditor":{"x":1134.0,"y":159.0}}
 {"Kind":0,"ClassType":"IsPlayerAtThrowDistance","OutcomeClassNames":["RetreatFromPlayer","IsAiming","ChasePlayer"],"PositionInEditor":{"x":873.0,"y":165.0}}
-{"Kind":0,"ClassType":"IsPlayerOnSight","OutcomeClassNames":["IsPlayerAtThrowDistance","StayIdle"],"PositionInEditor":{"x":621.0,"y":219.0}}
+{"Kind":0,"ClassType":"IsLocked","OutcomeClassNames":["IsPlayerAtThrowDistance","LockOnPlayer"],"PositionInEditor":{"x":637.0,"y":333.0}}
+{"Kind":0,"ClassType":"IsPlayerOnSight","OutcomeClassNames":["IsLocked","StayIdle"],"PositionInEditor":{"x":494.0,"y":634.0}}
 {"Kind":0,"ClassType":"IsStunned","OutcomeClassNames":["EmptyAction","IsPlayerOnSight"],"PositionInEditor":{"x":325.0,"y":424.0}}

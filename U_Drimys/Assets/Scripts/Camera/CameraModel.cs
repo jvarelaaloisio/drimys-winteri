@@ -52,7 +52,6 @@ namespace Camera
 									.Done();
 		}
 
-
 		private void YieldToAutomatic()
 		{
 			StateMachine.TransitionTo(AutomaticState);

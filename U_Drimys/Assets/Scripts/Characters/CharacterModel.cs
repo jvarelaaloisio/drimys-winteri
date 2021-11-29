@@ -137,12 +137,12 @@ namespace Characters
 		public void Update(float deltaTime)
 		{
 			StateMachine.Update(deltaTime);
-			StateMachine.TransitionTo(CharacterHelper
-										.IsGrounded(transform.position
-													+ Vector3.down * Properties.GroundDistanceCheck,
-													Properties)
-										? IDLE_STATE
-										: FALL_STATE);
+			if (CharacterHelper.IsGrounded(transform.position
+											+ Vector3.down * Properties.GroundDistanceCheck,
+											Properties))
+				Land();
+			else
+				Fall();
 		}
 
 		public void MoveTowards(Vector2 direction)
@@ -160,6 +160,9 @@ namespace Characters
 
 		public void Jump()
 			=> StateMachine.TransitionTo(JUMP_STATE);
+
+		public void Fall()
+			=> StateMachine.TransitionTo(FALL_STATE);
 
 		public void Land()
 			=> StateMachine.TransitionTo(IDLE_STATE);
@@ -208,6 +211,14 @@ namespace Characters
 			onLock(LockTargetTransform);
 		}
 
+		public void Unlock()
+		{
+			if (!Flags.IsLocked)
+				return;
+			onUnlock();
+			Flags.IsLocked = false;
+		}
+
 		private void HandleTargetDisables()
 		{
 			Flags.IsLocked = false;
@@ -216,15 +227,9 @@ namespace Characters
 			onUnlock();
 		}
 
-		private void HandleJump()
-		{
-			onJump();
-		}
+		private void HandleJump() => onJump();
 
-		private void HandleLanding()
-		{
-			onLand();
-		}
+		private void HandleLanding() => onLand();
 
 		public struct StateFlags
 		{
