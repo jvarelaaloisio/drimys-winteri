@@ -11,8 +11,8 @@ namespace Characters.States
 		protected readonly Transform transform;
 		protected float Speed;
 		protected float MaxSpeed;
-		private bool canMove;
-		private bool _isStepping;
+		private bool _canMove;
+		protected bool IsStepping;
 
 		/*TODO:CharacterProperties can be avoided
 		 Implement when the characterHelper is received in constructor.
@@ -25,7 +25,7 @@ namespace Characters.States
 			: base(model,
 					coroutineRunner)
 		{
-			canMove = true;
+			_canMove = true;
 			CharacterProperties = Model.Properties;
 			transform = model.transform;
 			Speed = CharacterProperties.GroundSpeed;
@@ -36,40 +36,66 @@ namespace Characters.States
 
 		public override void MoveTowards(Vector2 direction)
 		{
-			if (_isStepping)
+			if (IsStepping)
 				return;
 
 			MovementDirection = direction.HorizontalPlaneToVector3();
-			if (canMove)
+			if (_canMove)
 			{
-				canMove = false;
+				_canMove = false;
 				CoroutineRunner.StartCoroutine(CharacterHelper.MoveHorizontally(Model,
 																					MovementDirection,
-																					() => canMove = true,
+																					() => _canMove = true,
 																					Speed,
 																					MaxSpeed)
 											);
 			}
 
-			if (!CharacterHelper.IsInFrontOfStep(Model.StepValidationPositionLow,
+			ManageStairSteps();
+		}
+
+		protected virtual void ManageStairSteps()
+		{
+			if (CharacterHelper.IsInFrontOfStepUp(Model.StepValidationPositionLow,
 												Model.StepValidationPositionHigh,
 												transform.forward,
 												CharacterProperties.StepDistanceCheck,
 												CharacterProperties.FloorLayer,
 												out var stepPosition))
-				return;
-			_isStepping = true;
-			Debug.Log("Stepping");
-			CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
-																	stepPosition
-																	+ Vector3.up * CharacterProperties
-																		.GroundDistanceCheck,
-																	CharacterProperties.SteppingTime,
-																	() =>
-																	{
-																		Debug.Log("Stepped");
-																		_isStepping = false;
-																	}));
+			{
+				IsStepping = true;
+				Debug.Log("Stepping1");
+				CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
+																		stepPosition
+																		+ Vector3.up * CharacterProperties
+																			.GroundDistanceCheck,
+																		CharacterProperties.StepUpTime,
+																		() =>
+																		{
+																			Debug.Log("Stepped1");
+																			IsStepping = false;
+																		}));
+			}
+			// else if (CharacterHelper.IsInFrontOfStepDown(Model.StepValidationPositionLow,
+			// 											Model.StepValidationPositionHigh,
+			// 											transform.forward,
+			// 											CharacterProperties.StepDistanceCheck,
+			// 											CharacterProperties.FloorLayer,
+			// 											out stepPosition))
+			// {
+			// 	IsStepping = true;
+			// 	Debug.Log("Stepping2");
+			// 	CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
+			// 															stepPosition
+			// 															+ Vector3.up * CharacterProperties
+			// 																.GroundDistanceCheck,
+			// 															CharacterProperties.StepDownTime,
+			// 															() =>
+			// 															{
+			// 																Debug.Log("Stepped2");
+			// 																IsStepping = false;
+			// 															}));
+			// }
 		}
 
 		public override void Update(float deltaTime)

@@ -100,7 +100,7 @@ namespace Characters
 			onFinish?.Invoke();
 		}
 
-		public static bool IsInFrontOfStep(Vector3 validationPositionLow,
+		public static bool IsInFrontOfStepUp(Vector3 validationPositionLow,
 											Vector3 validationPositionHigh,
 											Vector3 forward,
 											float distance,
@@ -108,21 +108,51 @@ namespace Characters
 											out Vector3 stepPosition)
 		{
 			float downDistance = validationPositionHigh.y - validationPositionLow.y;
-			if (Physics.Raycast(validationPositionLow, forward, distance, floor)
-				&& !Physics.Raycast(validationPositionHigh, forward, distance, floor)
-				&&( Physics.Raycast(validationPositionHigh + forward * distance,
-									Vector3.down,
-									out var hit,
-									downDistance,
-									floor)
-					|| Physics.Raycast(validationPositionLow + forward * distance,
-										Vector3.down,
-										out hit,
-										downDistance,
-										floor)))
+			bool rayForwardLow = Physics.Raycast(validationPositionLow, forward, distance, floor);
+			bool rayForwardHigh = Physics.Raycast(validationPositionHigh, forward, distance, floor);
+			bool rayBetweenHighAndLow = Physics.Raycast(validationPositionHigh + forward * distance,
+														Vector3.down,
+														out var hit,
+														downDistance,
+														floor);
+			if (rayForwardLow
+				&& !rayForwardHigh
+				&& rayBetweenHighAndLow
+			)
 			{
 				stepPosition = hit.point;
 				var angle = Vector3.Angle(hit.normal, Vector3.up);
+				return angle < 2;
+			}
+			stepPosition = Vector3.zero;
+			return false;
+		}
+		public static bool IsInFrontOfStepDown(Vector3 validationPositionLow,
+											Vector3 validationPositionHigh,
+											Vector3 forward,
+											float distance,
+											LayerMask floor,
+											out Vector3 stepPosition)
+		{
+			float downDistance = validationPositionHigh.y - validationPositionLow.y;
+			bool rayForwardLow = Physics.Raycast(validationPositionLow, forward, distance, floor);
+			bool rayForwardHigh = Physics.Raycast(validationPositionHigh, forward, distance, floor);
+			bool rayBetweenHighAndLow = Physics.Raycast(validationPositionHigh + forward * distance,
+														Vector3.down,
+														downDistance,
+														floor);
+			bool rayDownFromLow = Physics.Raycast(validationPositionLow + forward * distance + Vector3.down * .2f,
+												Vector3.down,
+												out var hit2,
+												downDistance,
+												floor);
+			if (!rayForwardHigh
+				&& !rayForwardLow
+				&& !rayBetweenHighAndLow
+				&& rayDownFromLow)
+			{
+				stepPosition = hit2.point;
+				var angle = Vector3.Angle(hit2.normal, Vector3.up);
 				return angle < 2;
 			}
 

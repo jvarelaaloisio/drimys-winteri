@@ -1084,6 +1084,11 @@ PrefabInstance:
       propertyPath: onPlayerStarts.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 219748632652823627, guid: 010c719fee293f54cbb9457e2b413d01,
+        type: 3}
+      propertyPath: shouldLogTransitions
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 219748632652823628, guid: 010c719fee293f54cbb9457e2b413d01,
         type: 3}
       propertyPath: m_Name
@@ -1097,7 +1102,7 @@ PrefabInstance:
     - target: {fileID: 219748632652823636, guid: 010c719fee293f54cbb9457e2b413d01,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.251
+      value: -6.829
       objectReference: {fileID: 0}
     - target: {fileID: 219748632652823636, guid: 010c719fee293f54cbb9457e2b413d01,
         type: 3}

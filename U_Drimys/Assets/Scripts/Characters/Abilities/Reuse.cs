@@ -19,9 +19,12 @@ namespace Characters.Abilities
 		[SerializeField]
 		private float pushForce;
 
+		[SerializeField]
+		private float flySpeed;
+
 		private readonly Type _throwableKey = typeof(Throwable);
 		private readonly Type _modeKey = typeof(Mode);
-		
+
 		[SerializeField]
 		private Vector3UnityEvent onPush;
 
@@ -32,7 +35,7 @@ namespace Characters.Abilities
 		{
 			if (!cache.ContainsKey(_throwableKey))
 				cache.Add(_throwableKey, null);
-			if(!cache.ContainsKey(_modeKey))
+			if (!cache.ContainsKey(_modeKey))
 				cache.Add(_modeKey, Mode.Push);
 			return cache[_throwableKey] != null;
 		}
@@ -54,7 +57,14 @@ namespace Characters.Abilities
 					Debug.Log("Heal");
 					break;
 				case Mode.Stun:
-					//TODO:Stun Logic
+					item.transform.SetParent(null);
+					var target = model.LockTargetTransform;
+					if (model.Flags.IsLocked)
+					{
+						// item.Throw(target, flySpeed, () => item.);
+						//TODO:Stun Logic
+					}
+
 					Debug.Log("Stun");
 					break;
 			}

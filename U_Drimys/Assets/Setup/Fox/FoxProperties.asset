@@ -18,13 +18,14 @@ MonoBehaviour:
   maxSpeed: 5
   turnSpeed: 5
   groundDistanceCheck: 1
-  stepDistanceCheck: 0.25
-  steppingTime: 0.05
+  stepDistanceCheck: 0.65
+  stepUpTime: 0.04
+  stepDownTime: 0.08
   groundedCheckSphereRadius: 0.2
   maxSlopeAngle: 90
   floorLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2049
   slopeCompensation:
     serializedVersion: 2
     m_Curve:

@@ -147,6 +147,11 @@ namespace Characters
 		public void Update(float deltaTime)
 		{
 			StateMachine.Update(deltaTime);
+			CheckIfGrounded();
+		}
+
+		public void CheckIfGrounded()
+		{
 			if (CharacterHelper.IsGrounded(transform.position
 											+ Vector3.down * Properties.GroundDistanceCheck,
 											Properties))

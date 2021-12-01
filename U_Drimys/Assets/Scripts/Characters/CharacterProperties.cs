@@ -27,7 +27,10 @@ namespace Characters
 		private float stepDistanceCheck;
 
 		[SerializeField]
-		private float steppingTime;
+		private float stepUpTime;
+		
+		[SerializeField]
+		private float stepDownTime;
 		
 		[SerializeField]
 		private float groundedCheckSphereRadius;
@@ -60,6 +63,7 @@ namespace Characters
 		public AnimationCurve SlopeCompensation => slopeCompensation;
 		public float LandDistance => landDistance;
 		public float LandingForce => landingForce;
-		public float SteppingTime => steppingTime;
+		public float StepUpTime => stepUpTime;
+		public float StepDownTime => stepDownTime;
 	}
 }

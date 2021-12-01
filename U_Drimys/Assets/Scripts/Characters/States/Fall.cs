@@ -5,7 +5,6 @@ namespace Characters.States
 {
 	public class Fall<T> : IdleRun<T>
 	{
-		private float _start;
 		private bool _landing;
 
 		public Fall(CharacterModel model,
@@ -21,23 +20,32 @@ namespace Characters.States
 		{
 			base.Awake();
 			_landing = false;
-			_start = Time.time;
 		}
 
 		public override void MoveTowards(Vector2 direction)
 		{
 			base.MoveTowards(direction);
 			var down = -transform.up;
+			bool directionMagnitudeIsNotZero = direction.magnitude < .1f;
+			bool velocityYIsPositive = Model.rigidbody.velocity.y > -.05f;
+			bool isAtLandDistance = Physics.Raycast(transform.position,
+										down,
+										CharacterProperties.LandDistance,
+										CharacterProperties.FloorLayer);
 			if (_landing
-				|| direction.magnitude < .1f
-				|| Model.rigidbody.velocity.y > .15f
-				|| !Physics.Raycast(transform.position,
-									down,
-									CharacterProperties.LandDistance,
-									CharacterProperties.FloorLayer))
+				|| velocityYIsPositive
+				|| !isAtLandDistance)
 				return;
+			string dirMagnitudeColor = directionMagnitudeIsNotZero ? "green" : "red";
+			string velocityColor = velocityYIsPositive ? "green" : "red";
+			string landingColor = _landing ? "green" : "red";
+			string isLandDistanceColor = isAtLandDistance ? "green" : "red";
+			Debug.Log($"<color=blue>forcing land" +
+					$"\ndir magnitude < .1f?: <color={dirMagnitudeColor}>{directionMagnitudeIsNotZero}</color>, " +
+					$"vel Y (should be >-.05f): <color={velocityColor}>{velocityYIsPositive}</color>, " +
+					$"landing? (should be true): <color={landingColor}>{_landing}</color>, " +
+					$"isAtLandDistance? (should be false): <color={isLandDistanceColor}>{isAtLandDistance}</color></color>");
 			_landing = true;
-			Debug.Log($"land");
 			CoroutineRunner.StartCoroutine(CharacterHelper.AddForce(Model.rigidbody,
 																	down * CharacterProperties.LandingForce,
 																	ForceMode.Impulse));
