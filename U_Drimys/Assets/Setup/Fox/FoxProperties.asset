@@ -18,6 +18,8 @@ MonoBehaviour:
   maxSpeed: 5
   turnSpeed: 5
   groundDistanceCheck: 1
+  stepDistanceCheck: 0.25
+  steppingTime: 0.05
   groundedCheckSphereRadius: 0.2
   maxSlopeAngle: 90
   floorLayer:
@@ -47,6 +49,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  landDistance: 2
+  landingForce: 3
   aimDelay: 0
   throwableSpeed: 0
   viewDistance: 10

@@ -24,11 +24,15 @@ namespace Characters
 							Throwable throwablePrefab,
 							Transform hand,
 							ICoroutineRunner coroutineRunner,
+							Transform stepPositionLow,
+							Transform stepPositionHigh,
 							bool shouldLogFsmTransitions = false)
 			: base(transform,
 					rigidbody,
 					properties,
 					coroutineRunner,
+					stepPositionLow,
+					stepPositionHigh,
 					shouldLogFsmTransitions)
 		{
 			Flags = new StateFlags();

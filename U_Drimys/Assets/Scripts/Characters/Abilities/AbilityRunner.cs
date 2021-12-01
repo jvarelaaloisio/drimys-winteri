@@ -9,21 +9,21 @@ namespace Characters.Abilities
 	{
 		public List<Ability> abilities;
 
-		private readonly Dictionary<object, object> _cache = new Dictionary<object, object>();
+		public Dictionary<object, object> Cache { get; } = new Dictionary<object, object>();
 
 		public void TryRunAbility(string id, CharacterModel model)
 		{
 			var ability = abilities.FirstOrDefault(ab => ab.ID == id);
-			if (ability && ability.CanRun(_cache, model))
-				ability.Run(_cache, model);
+			if (ability && ability.CanRun(Cache, model))
+				ability.Run(Cache, model);
 		}
 		public void TryRunAbility(int index, CharacterModel model)
 		{
 			if (abilities.Count - 1< index)
 				throw new IndexOutOfRangeException($"No ability at index {index} found. Max available index is {abilities.Count - 1}");
 			var ability = abilities[index];
-			if (ability && ability.CanRun(_cache, model))
-				ability.Run(_cache, model);
+			if (ability && ability.CanRun(Cache, model))
+				ability.Run(Cache, model);
 		}
 	}
 }

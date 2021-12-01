@@ -16,6 +16,8 @@ namespace Enemies
 						Throwable throwablePrefab,
 						Transform hand,
 						ICoroutineRunner coroutineRunner,
+						Transform stepPositionLow,
+						Transform stepPositionHigh,
 						bool shouldLogFsmTransitions = false)
 			: base(transform,
 					rigidbody,
@@ -23,6 +25,8 @@ namespace Enemies
 					throwablePrefab,
 					hand,
 					coroutineRunner,
+					stepPositionLow,
+					stepPositionHigh,
 					shouldLogFsmTransitions)
 		{
 			Properties = properties;

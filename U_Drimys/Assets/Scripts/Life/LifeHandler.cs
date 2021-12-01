@@ -47,6 +47,10 @@ namespace Life
 			damageable.TakeDamage(damagePoints);
 			onHealthPointsChanged.Invoke(damageable.LifePoints);
 		}
+		public void Heal(int healPoints)
+		{
+			TakeDamage(-healPoints);
+		}
 
 		private void Die()
 		{

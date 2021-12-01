@@ -81,5 +81,53 @@ namespace Characters
 			return value
 					> 0;
 		}
+
+		public static IEnumerator GoOverStep(Transform transform,
+											Vector3 newPosition,
+											float duration,
+											Action onFinish = null)
+		{
+			Vector3 origin = transform.position;
+			float start = Time.time;
+			while (Time.time < start + duration)
+			{
+				transform.position = Vector3.Lerp(origin, newPosition, (Time.time - start) / duration);
+				yield return null;
+			}
+
+			transform.position = Vector3.Lerp(origin, newPosition, 1);
+
+			onFinish?.Invoke();
+		}
+
+		public static bool IsInFrontOfStep(Vector3 validationPositionLow,
+											Vector3 validationPositionHigh,
+											Vector3 forward,
+											float distance,
+											LayerMask floor,
+											out Vector3 stepPosition)
+		{
+			float downDistance = validationPositionHigh.y - validationPositionLow.y;
+			if (Physics.Raycast(validationPositionLow, forward, distance, floor)
+				&& !Physics.Raycast(validationPositionHigh, forward, distance, floor)
+				&&( Physics.Raycast(validationPositionHigh + forward * distance,
+									Vector3.down,
+									out var hit,
+									downDistance,
+									floor)
+					|| Physics.Raycast(validationPositionLow + forward * distance,
+										Vector3.down,
+										out hit,
+										downDistance,
+										floor)))
+			{
+				stepPosition = hit.point;
+				var angle = Vector3.Angle(hit.normal, Vector3.up);
+				return angle < 2;
+			}
+
+			stepPosition = Vector3.zero;
+			return false;
+		}
 	}
 }

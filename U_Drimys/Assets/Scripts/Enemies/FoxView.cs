@@ -42,6 +42,8 @@ namespace Enemies
 								throwablePrefab,
 								hand,
 								this,
+								stepValidationLow,
+								stepValidationHigh,
 								shouldLogTransitions);
 		}
 

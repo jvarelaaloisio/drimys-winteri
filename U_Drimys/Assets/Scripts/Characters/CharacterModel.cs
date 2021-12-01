@@ -23,16 +23,22 @@ namespace Characters
 		private IdleRun<string> _idleRun;
 		private Fall<string> _fall;
 		private Jump<string> _jump;
+		private readonly Transform _stepPositionLow;
+		private readonly Transform _stepPositionHigh;
 
 		public CharacterModel(Transform transform,
 							Rigidbody rigidbody,
 							CharacterProperties properties,
 							ICoroutineRunner coroutineRunner,
+							Transform stepPositionLow,
+							Transform stepPositionHigh,
 							bool shouldLogFsmTransitions = false)
 			: base(transform,
 					coroutineRunner)
 		{
 			Properties = properties;
+			_stepPositionLow = stepPositionLow;
+			_stepPositionHigh = stepPositionHigh;
 			this.rigidbody = rigidbody;
 			Flags = new StateFlags();
 
@@ -130,6 +136,10 @@ namespace Characters
 
 		public Transform LockTargetTransform { get; private set; }
 
+		public Vector3 StepValidationPositionLow => _stepPositionLow.position;
+		
+		public Vector3 StepValidationPositionHigh => _stepPositionHigh.position;
+		
 		public Rigidbody rigidbody { get; }
 
 		public CharacterProperties Properties { get; }

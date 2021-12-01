@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Characters
 {
@@ -23,6 +22,12 @@ namespace Characters
 		
 		[SerializeField]
 		private float groundDistanceCheck;
+		
+		[SerializeField]
+		private float stepDistanceCheck;
+
+		[SerializeField]
+		private float steppingTime;
 		
 		[SerializeField]
 		private float groundedCheckSphereRadius;
@@ -50,9 +55,11 @@ namespace Characters
 		public LayerMask FloorLayer => floorLayer;
 		public float MaxSlopeAngle => maxSlopeAngle;
 		public float GroundDistanceCheck => groundDistanceCheck;
+		public float StepDistanceCheck => stepDistanceCheck;
 		public float GroundedCheckSphereRadius => groundedCheckSphereRadius;
 		public AnimationCurve SlopeCompensation => slopeCompensation;
 		public float LandDistance => landDistance;
 		public float LandingForce => landingForce;
+		public float SteppingTime => steppingTime;
 	}
 }

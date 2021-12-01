@@ -252,10 +252,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 451328411778294307, guid: a42586bc1bed97b49a27c3bca3906e19,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807286085638850426, guid: a42586bc1bed97b49a27c3bca3906e19,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9112019329972361809, guid: a42586bc1bed97b49a27c3bca3906e19,
         type: 3}
       propertyPath: m_Name
-      value: Fox Variant
+      value: Fox
       objectReference: {fileID: 0}
     - target: {fileID: 9112019329972361809, guid: a42586bc1bed97b49a27c3bca3906e19,
         type: 3}
@@ -267,6 +277,11 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 5048883832699401604}
+    - target: {fileID: 9112019329972361814, guid: a42586bc1bed97b49a27c3bca3906e19,
+        type: 3}
+      propertyPath: shouldLogTransitions
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9112019329972361815, guid: a42586bc1bed97b49a27c3bca3906e19,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -731,6 +746,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5822821947120931875, guid: 0e6c6508b3973f1499b635512763debd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3c1b5a4aa4927db47b15300acec69d51, type: 2}
     - target: {fileID: 5866666021909216657, guid: 0e6c6508b3973f1499b635512763debd,
         type: 3}
       propertyPath: m_Controller

@@ -12,6 +12,7 @@ namespace Characters.States
 		protected float Speed;
 		protected float MaxSpeed;
 		private bool canMove;
+		private bool _isStepping;
 
 		/*TODO:CharacterProperties can be avoided
 		 Implement when the characterHelper is received in constructor.
@@ -35,16 +36,40 @@ namespace Characters.States
 
 		public override void MoveTowards(Vector2 direction)
 		{
-			MovementDirection = direction.HorizontalPlaneToVector3();
-			if (!canMove)
+			if (_isStepping)
 				return;
-			canMove = false;
-			CoroutineRunner.StartCoroutine(CharacterHelper.MoveHorizontally(Model,
-																			MovementDirection,
-																			() => canMove = true,
-																			Speed,
-																			MaxSpeed)
-										);
+
+			MovementDirection = direction.HorizontalPlaneToVector3();
+			if (canMove)
+			{
+				canMove = false;
+				CoroutineRunner.StartCoroutine(CharacterHelper.MoveHorizontally(Model,
+																					MovementDirection,
+																					() => canMove = true,
+																					Speed,
+																					MaxSpeed)
+											);
+			}
+
+			if (!CharacterHelper.IsInFrontOfStep(Model.StepValidationPositionLow,
+												Model.StepValidationPositionHigh,
+												transform.forward,
+												CharacterProperties.StepDistanceCheck,
+												CharacterProperties.FloorLayer,
+												out var stepPosition))
+				return;
+			_isStepping = true;
+			Debug.Log("Stepping");
+			CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
+																	stepPosition
+																	+ Vector3.up * CharacterProperties
+																		.GroundDistanceCheck,
+																	CharacterProperties.SteppingTime,
+																	() =>
+																	{
+																		Debug.Log("Stepped");
+																		_isStepping = false;
+																	}));
 		}
 
 		public override void Update(float deltaTime)

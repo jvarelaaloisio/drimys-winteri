@@ -20,6 +20,12 @@ namespace Characters
 		protected CharacterProperties characterProperties;
 
 		[SerializeField]
+		protected Transform stepValidationLow;
+
+		[SerializeField]
+		protected Transform stepValidationHigh;
+
+		[SerializeField]
 		protected bool shouldLogTransitions;
 
 		protected BaseController Controller;
@@ -45,6 +51,8 @@ namespace Characters
 									Rigidbody,
 									characterProperties,
 									this,
+									stepValidationLow,
+									stepValidationHigh,
 									shouldLogTransitions);
 		}
 
@@ -65,6 +73,15 @@ namespace Characters
 			Gizmos.color = new Color(.5f, .5f, .5f, .5f);
 			var landingCheckPosition = position - up * characterProperties.LandDistance;
 			Gizmos.DrawLine(position, landingCheckPosition);
+			Gizmos.color = Color.red;
+			Gizmos.DrawRay(stepValidationLow.position,
+							transform.forward * characterProperties.StepDistanceCheck);
+			Gizmos.color = Color.blue;
+			Gizmos.DrawRay(stepValidationHigh.position,
+							transform.forward * characterProperties.StepDistanceCheck);
+			Gizmos.color = new Color(.5f, 0, .5f);
+			Gizmos.DrawLine(stepValidationHigh.position + transform.forward * characterProperties.StepDistanceCheck,
+							stepValidationLow.position + transform.forward * characterProperties.StepDistanceCheck);
 		}
 	}
 }

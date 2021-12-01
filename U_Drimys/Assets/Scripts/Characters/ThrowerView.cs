@@ -20,12 +20,14 @@ namespace Characters
 
 		protected override void Awake()
 		{
-			//TODO:Make Static method
+			//TODO:Solve why the method doesn't work
+			// Caster.TryCast(characterProperties, out  ThrowerProperties);
 			var properties = characterProperties as ThrowerProperties;
 			ThrowerProperties = properties
 									? properties
 									: throw new ArgumentException("Properties field in a thrower class" +
 																" should be of type ThrowerProperties");
+			
 			base.Awake();
 			//NOTE: The new Model hides the original, but doesn't replace it, so it has to be copied to the new one.
 			Model = (ThrowerModel)base.Model;
@@ -42,6 +44,8 @@ namespace Characters
 									throwablePrefab,
 									hand,
 									this,
+									stepValidationLow,
+									stepValidationHigh,
 									shouldLogTransitions);
 		}
 
