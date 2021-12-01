@@ -82,6 +82,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: floor-leaves_1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5521943651274496241, guid: d0117a6170140d64aa60bb935e51d6e4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6683808174854824694, guid: d0117a6170140d64aa60bb935e51d6e4,
         type: 3}
       propertyPath: m_LocalPosition.x
