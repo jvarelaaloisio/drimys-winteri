@@ -21,7 +21,7 @@ namespace Characters.Abilities
 		{
 			if (!cache.ContainsKey(_throwableKey))
 				cache.Add(_throwableKey, null);
-			return !model.Flags.IsRunningAbility;
+			return !model.Flags.IsRunningAbility && cache[_throwableKey] == null;
 		}
 
 		public override void Run(Dictionary<object, object> cache, CharacterModel model)
@@ -39,7 +39,7 @@ namespace Characters.Abilities
 			model.Flags.IsRunningAbility = true;
 			item.StopDeath();
 			var catchHelper = model.transform.Find("CatchHelper");
-			item.Throw(catchHelper,
+			item.FlyTargeted(catchHelper,
 						flySpeed,
 						() => item.transform.SetParent(catchHelper));
 			item.Freeze();

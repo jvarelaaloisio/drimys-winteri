@@ -50,24 +50,37 @@ namespace Characters.Abilities
 				case Mode.Push:
 					model.rigidbody.AddForce(Vector3.up * pushForce, ForceMode.Impulse);
 					onPush.Invoke(item.transform.position);
-					Destroy(item.gameObject);
+					DestroyItem(cache, item);
+					Debug.Log("<color=blue>Push</color>", model.transform);
 					break;
 				case Mode.Heal:
 					model.transform.SendMessage("Heal", healPoints);
-					Debug.Log("Heal");
+					DestroyItem(cache, item);
+					Debug.Log("<color=green>Heal</color>", model.transform);
 					break;
 				case Mode.Stun:
-					item.transform.SetParent(null);
 					var target = model.LockTargetTransform;
 					if (model.Flags.IsLocked)
 					{
-						// item.Throw(target, flySpeed, () => item.);
-						//TODO:Stun Logic
+						item.transform.SetParent(null);
+						item.FlyTargeted(target, flySpeed, () => item.Stun());
+						ResetCacheItem(cache);
+						Debug.Log($"<color=red>Stun</color>", model.transform);
 					}
 
-					Debug.Log("Stun");
 					break;
 			}
+		}
+
+		private void DestroyItem(Dictionary<object, object> cache, Throwable item)
+		{
+			Destroy(item.gameObject);
+			ResetCacheItem(cache);
+		}
+
+		private void ResetCacheItem(Dictionary<object, object> cache)
+		{
+			cache[_throwableKey] = null;
 		}
 	}
 }

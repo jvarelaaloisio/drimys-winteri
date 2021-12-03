@@ -51,12 +51,13 @@ namespace Characters
 
 		public new ThrowerProperties Properties { get; }
 
-		public void Aim()
+		public void Aim(bool throwToTargetIfLocked = true)
 		{
 			throwerFlags.IsAiming = true;
 			_throwAimingCoroutine = CoroutineRunner.StartCoroutine(ThrowAiming(ThrowablePrefab,
 																				Hand,
-																				Properties.AimDelay));
+																				Properties.AimDelay,
+																				throwToTargetIfLocked));
 		}
 
 		public virtual void ReleaseAimAndThrow()
@@ -87,7 +88,8 @@ namespace Characters
 
 		protected IEnumerator ThrowAiming(Throwable prefab,
 										Transform hand,
-										float delay)
+										float delay,
+										bool throwToTargetIfLocked = true)
 		{
 			onAim();
 			yield return new WaitForSeconds(delay);
@@ -99,10 +101,10 @@ namespace Characters
 
 			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
 			//TODO:ADD throw distance if there is no target
-			if (Flags.IsLocked)
-				throwable.Throw(LockTargetTransform, Properties.ThrowableSpeed);
+			if (Flags.IsLocked && throwToTargetIfLocked)
+				throwable.FlyTargeted(LockTargetTransform, Properties.ThrowableSpeed);
 			else
-				throwable.Throw(transform.position + transform.forward * 10, Properties.ThrowableSpeed);
+				throwable.FlyTo(transform.position + transform.forward * 10, Properties.ThrowableSpeed);
 			throwerFlags.CanThrow = false;
 			onThrow();
 		}
@@ -115,7 +117,7 @@ namespace Characters
 		{
 			yield return new WaitForSeconds(spawnDelay);
 			var throwable = Object.Instantiate(prefab, hand.position, hand.rotation);
-			throwable.Throw(target ? target.position : transform.position + transform.forward * 10,
+			throwable.FlyTo(target ? target.position : transform.position + transform.forward * 10,
 							Properties.ThrowableSpeed);
 			yield return new WaitForSeconds(duration - spawnDelay);
 		}

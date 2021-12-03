@@ -56,7 +56,7 @@ namespace Characters.States
 
 		protected virtual void ManageStairSteps()
 		{
-			if (CharacterHelper.IsInFrontOfStepUp(Model.StepValidationPositionLow,
+			if (CharacterHelper.IsInFrontOfStep(Model.StepValidationPositionLow,
 												Model.StepValidationPositionHigh,
 												transform.forward,
 												CharacterProperties.StepDistanceCheck,
@@ -64,17 +64,12 @@ namespace Characters.States
 												out var stepPosition))
 			{
 				IsStepping = true;
-				Debug.Log("Stepping1");
 				CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
 																		stepPosition
 																		+ Vector3.up * CharacterProperties
 																			.GroundDistanceCheck,
 																		CharacterProperties.StepUpTime,
-																		() =>
-																		{
-																			Debug.Log("Stepped1");
-																			IsStepping = false;
-																		}));
+																		() => IsStepping = false));
 			}
 			// else if (CharacterHelper.IsInFrontOfStepDown(Model.StepValidationPositionLow,
 			// 											Model.StepValidationPositionHigh,

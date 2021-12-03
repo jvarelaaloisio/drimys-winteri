@@ -191,6 +191,36 @@ PrefabInstance:
       propertyPath: hand
       value: 
       objectReference: {fileID: 7241504441992791809}
+    - target: {fileID: 768231489083209519, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
+        type: 3}
+      propertyPath: onAttacked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_sharedMaterial
+      objectReference: {fileID: 0}
+    - target: {fileID: 768231489083209519, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
+        type: 3}
+      propertyPath: onStunned.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3244140479154154730}
+    - target: {fileID: 768231489083209519, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
+        type: 3}
+      propertyPath: onStunned.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_sharedMaterial
+      objectReference: {fileID: 0}
+    - target: {fileID: 768231489083209519, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
+        type: 3}
+      propertyPath: onAttacked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3244140479154154730}
+    - target: {fileID: 768231489083209519, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
+        type: 3}
+      propertyPath: onRecovered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3244140479154154730}
+    - target: {fileID: 768231489083209519, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
+        type: 3}
+      propertyPath: onRecovered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_sharedMaterial
+      objectReference: {fileID: 0}
     - target: {fileID: 768231489674841159, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
         type: 3}
       propertyPath: m_IsActive
@@ -204,12 +234,12 @@ PrefabInstance:
     - target: {fileID: 825425701616998321, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7558477298775120789, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7558477298775120789, guid: 65cecc9e09b48dd4f93dd1f7f8e6f53a,
         type: 3}
@@ -695,6 +725,12 @@ PrefabInstance:
 --- !u!95 &3216067731452298584 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 0e6c6508b3973f1499b635512763debd,
+    type: 3}
+  m_PrefabInstance: {fileID: 9064427898815854793}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3244140479154154730 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5822821947120931875, guid: 0e6c6508b3973f1499b635512763debd,
     type: 3}
   m_PrefabInstance: {fileID: 9064427898815854793}
   m_PrefabAsset: {fileID: 0}

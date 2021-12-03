@@ -6,7 +6,7 @@ namespace Enemies.IA.Actions
 	{
 		protected override void DoActionInternal(EnemyModel model, Transform player)
 		{
-			model.Aim();
+			model.Aim(false);
 		}
 	}
 }

@@ -36,15 +36,15 @@ namespace Characters.States
 				|| velocityYIsPositive
 				|| !isAtLandDistance)
 				return;
-			string dirMagnitudeColor = directionMagnitudeIsNotZero ? "green" : "red";
-			string velocityColor = velocityYIsPositive ? "green" : "red";
-			string landingColor = _landing ? "green" : "red";
-			string isLandDistanceColor = isAtLandDistance ? "green" : "red";
-			Debug.Log($"<color=blue>forcing land" +
-					$"\ndir magnitude < .1f?: <color={dirMagnitudeColor}>{directionMagnitudeIsNotZero}</color>, " +
-					$"vel Y (should be >-.05f): <color={velocityColor}>{velocityYIsPositive}</color>, " +
-					$"landing? (should be true): <color={landingColor}>{_landing}</color>, " +
-					$"isAtLandDistance? (should be false): <color={isLandDistanceColor}>{isAtLandDistance}</color></color>");
+			// string dirMagnitudeColor = directionMagnitudeIsNotZero ? "green" : "red";
+			// string velocityColor = velocityYIsPositive ? "green" : "red";
+			// string landingColor = _landing ? "green" : "red";
+			// string isLandDistanceColor = isAtLandDistance ? "green" : "red";
+			// Debug.Log($"<color=blue>forcing land" +
+			// 		$"\ndir magnitude < .1f?: <color={dirMagnitudeColor}>{directionMagnitudeIsNotZero}</color>, " +
+			// 		$"vel Y (should be >-.05f): <color={velocityColor}>{velocityYIsPositive}</color>, " +
+			// 		$"landing? (should be true): <color={landingColor}>{_landing}</color>, " +
+			// 		$"isAtLandDistance? (should be false): <color={isLandDistanceColor}>{isAtLandDistance}</color></color>");
 			_landing = true;
 			CoroutineRunner.StartCoroutine(CharacterHelper.AddForce(Model.rigidbody,
 																	down * CharacterProperties.LandingForce,

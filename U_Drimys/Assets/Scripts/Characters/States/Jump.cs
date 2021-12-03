@@ -22,29 +22,29 @@ namespace Characters.States
 			base.Awake();
 		}
 
-		protected override void ManageStairSteps()
-		{
-			//TODO:This is the same logic as it's father, only skipping an if.
-			if (CharacterHelper.IsInFrontOfStepUp(Model.StepValidationPositionLow,
-												Model.StepValidationPositionHigh,
-												transform.forward,
-												CharacterProperties.StepDistanceCheck,
-												CharacterProperties.FloorLayer,
-												out var stepPosition))
-			{
-				IsStepping = true;
-				Debug.Log("Stepping");
-				CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
-																		stepPosition
-																		+ Vector3.up * CharacterProperties
-																			.GroundDistanceCheck,
-																		CharacterProperties.StepUpTime,
-																		() =>
-																		{
-																			Debug.Log("Stepped");
-																			IsStepping = false;
-																		}));
-			}
-		}
+		// protected override void ManageStairSteps()
+		// {
+		// 	//TODO:This is the same logic as it's father, only skipping an if.
+		// 	if (CharacterHelper.IsInFrontOfStepUp(Model.StepValidationPositionLow,
+		// 										Model.StepValidationPositionHigh,
+		// 										transform.forward,
+		// 										CharacterProperties.StepDistanceCheck,
+		// 										CharacterProperties.FloorLayer,
+		// 										out var stepPosition))
+		// 	{
+		// 		IsStepping = true;
+		// 		Debug.Log("Stepping");
+		// 		CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
+		// 																stepPosition
+		// 																+ Vector3.up * CharacterProperties
+		// 																	.GroundDistanceCheck,
+		// 																CharacterProperties.StepUpTime,
+		// 																() =>
+		// 																{
+		// 																	Debug.Log("Stepped");
+		// 																	IsStepping = false;
+		// 																}));
+		// 	}
+		// }
 	}
 }

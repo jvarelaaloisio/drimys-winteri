@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 87
   m_IsActive: 1
 --- !u!4 &6242110732614958034
 Transform:
@@ -147,15 +147,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5541191232785807331, guid: 5fe90f2b61931fb41bc31881d7f67308,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5fe90f2b61931fb41bc31881d7f67308,
         type: 3}
       propertyPath: m_Name
       value: grass_tall_2.1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5fe90f2b61931fb41bc31881d7f67308,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
+      objectReference: {fileID: 0}
     - target: {fileID: 4615401630457857820, guid: 5fe90f2b61931fb41bc31881d7f67308,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615401630457857820, guid: 5fe90f2b61931fb41bc31881d7f67308,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fe90f2b61931fb41bc31881d7f67308, type: 3}

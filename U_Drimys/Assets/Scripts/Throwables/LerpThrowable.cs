@@ -52,7 +52,7 @@ namespace Throwables
 
 			Vector3 pointA = _transform.position;
 
-			_transform.rotation = Quaternion.LookRotation(target.position - pointA);
+			_transform.forward = target.position - pointA;
 			Vector3 bezierOffsetStartLocal = _transform.TransformDirection(bezierOffsetStart);
 			Vector3 bezierOffsetEndLocal = _transform.TransformDirection(bezierOffsetEnd);
 

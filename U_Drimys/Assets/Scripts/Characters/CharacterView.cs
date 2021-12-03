@@ -1,4 +1,5 @@
 ﻿using Core.Helpers;
+using Core.Interactions;
 using Events.UnityEvents;
 using MVC;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.Events;
 namespace Characters
 {
 	[RequireComponent(typeof(Rigidbody))]
-	public class CharacterView : MonoBehaviour, ICoroutineRunner
+	public class CharacterView : MonoBehaviour, ICoroutineRunner, IStunnable
 	{
 		public UnityEvent onJump;
 		public UnityEvent onLand;
@@ -15,6 +16,8 @@ namespace Characters
 		public UnityEvent onUnlock;
 		public TransformUnityEvent onAttacking;
 		public TransformUnityEvent onAttacked;
+		public UnityEvent onStunned;
+		public UnityEvent onRecovered;
 
 		[SerializeField]
 		protected CharacterProperties characterProperties;
@@ -43,6 +46,8 @@ namespace Characters
 			Model.onUnlock += onUnlock.Invoke;
 			Model.onAttacking += onAttacking.Invoke;
 			Model.onAttacked += onAttacked.Invoke;
+			Model.onStunned += onStunned.Invoke;
+			Model.onRecovered += onRecovered.Invoke;
 		}
 
 		protected virtual CharacterModel BuildModel()
@@ -82,6 +87,11 @@ namespace Characters
 			Gizmos.color = new Color(.5f, 0, .5f);
 			Gizmos.DrawLine(stepValidationHigh.position + transform.forward * characterProperties.StepDistanceCheck,
 							stepValidationLow.position + transform.forward * characterProperties.StepDistanceCheck);
+		}
+
+		public void GetStunned(float seconds)
+		{
+			Model.GetStunned(seconds);
 		}
 	}
 }

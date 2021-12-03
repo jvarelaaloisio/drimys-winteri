@@ -17,7 +17,7 @@ namespace Throwables
 			_originScale = transform.localScale;
 		}
 
-		public override void Throw(Vector3 objective, float speed)
+		public override void FlyTo(Vector3 objective, float speed)
 		{
 			Vector3 fromMeToObjective = objective - transform.position;
 			float time = fromMeToObjective.magnitude / speed;
@@ -25,11 +25,11 @@ namespace Throwables
 			StartCoroutine(Scale(lifeTime));
 		}
 
-		public override void Throw(Transform target,
+		public override void FlyTargeted(Transform target,
 									float speed,
 									Action onFinish = null)
 		{
-			Throw(target.position, speed);
+			FlyTo(target.position, speed);
 		}
 
 		private IEnumerator Scale(float duration)

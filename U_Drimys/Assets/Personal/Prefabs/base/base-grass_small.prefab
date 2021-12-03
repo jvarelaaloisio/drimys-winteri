@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2675778175668139223
 Transform:
   m_ObjectHideFlags: 0
@@ -92,6 +92,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8826558336165481457, guid: 70dd60750d1e022448a70a3c410000ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70dd60750d1e022448a70a3c410000ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -152,15 +157,35 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1829415855138236258, guid: 70dd60750d1e022448a70a3c410000ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 70dd60750d1e022448a70a3c410000ab,
         type: 3}
       propertyPath: m_Name
       value: grass_small_2.1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 70dd60750d1e022448a70a3c410000ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
+      objectReference: {fileID: 0}
     - target: {fileID: 1266572029613583706, guid: 70dd60750d1e022448a70a3c410000ab,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266572029613583706, guid: 70dd60750d1e022448a70a3c410000ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726911960017565548, guid: 70dd60750d1e022448a70a3c410000ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 87
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70dd60750d1e022448a70a3c410000ab, type: 3}

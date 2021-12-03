@@ -16,6 +16,7 @@ namespace Characters
 		public const string JUMP_STATE = "Jump";
 		public const string IDLE_STATE = "Idle";
 		public const string FALL_STATE = "Fall";
+		public const string STUNNED_STATE = "Stunned";
 
 		public StateFlags Flags;
 
@@ -23,6 +24,7 @@ namespace Characters
 		private IdleRun<string> _idleRun;
 		private Fall<string> _fall;
 		private Jump<string> _jump;
+		private Stunned<string> _stunned;
 		private readonly Transform _stepPositionLow;
 		private readonly Transform _stepPositionHigh;
 
@@ -51,13 +53,20 @@ namespace Characters
 			_fall.OnAwake += HandleFall;
 			_fall.OnSleep += HandleLanding;
 
+			_stunned = new Stunned<string>(this, coroutineRunner);
+			_stunned.OnAwake += HandleStun;
+			_stunned.OnSleep += HandleRecover;
+
 			_idleRun.AddTransition(JUMP_STATE, _jump);
 			_idleRun.AddTransition(FALL_STATE, _fall);
+			_idleRun.AddTransition(STUNNED_STATE, _stunned);
 
 			_jump.AddTransition(IDLE_STATE, _idleRun);
 			_jump.AddTransition(FALL_STATE, _fall);
 
 			_fall.AddTransition(IDLE_STATE, _idleRun);
+
+			_stunned.AddTransition(IDLE_STATE, _idleRun);
 
 			StateMachine = FSM<string>
 							.Build(_idleRun, transform.gameObject.name)
@@ -125,21 +134,21 @@ namespace Characters
 		/// <summary>
 		/// Event risen when the character is stunned.
 		/// </summary>
-		public event Action onStunned;
+		public event Action onStunned = delegate { };
 
 		/// <summary>
 		/// Event risen when the character is stunned.
 		/// </summary>
-		public event Action onRecovered;
+		public event Action onRecovered = delegate { };
 
 		#endregion
 
 		public Transform LockTargetTransform { get; private set; }
 
 		public Vector3 StepValidationPositionLow => _stepPositionLow.position;
-		
+
 		public Vector3 StepValidationPositionHigh => _stepPositionHigh.position;
-		
+
 		public Rigidbody rigidbody { get; }
 
 		public CharacterProperties Properties { get; }
@@ -147,7 +156,8 @@ namespace Characters
 		public void Update(float deltaTime)
 		{
 			StateMachine.Update(deltaTime);
-			CheckIfGrounded();
+			if (!Flags.IsStunned)
+				CheckIfGrounded();
 		}
 
 		public void CheckIfGrounded()
@@ -245,6 +255,23 @@ namespace Characters
 		private void HandleJump() => onJump();
 
 		private void HandleLanding() => onLand();
+
+		private void HandleStun() => onStunned();
+
+		private void HandleRecover() => onRecovered();
+
+		public void GetStunned(float duration)
+		{
+			_stunned.Duration = duration;
+			StateMachine.TransitionTo(STUNNED_STATE);
+			Flags.IsStunned = true;
+		}
+
+		public void RecoverFromStun()
+		{
+			StateMachine.TransitionTo(IDLE_STATE);
+			Flags.IsStunned = false;
+		}
 
 		public struct StateFlags
 		{

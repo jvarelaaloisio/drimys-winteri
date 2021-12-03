@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1150890989532406687}
   m_Layer: 0
-  m_Name: grass_combo
+  m_Name: grass_combo_1.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,6 +100,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: grass_small
       objectReference: {fileID: 0}
+    - target: {fileID: 8884763626938832329, guid: 26d74fff30db3064d9ca054f66eaf599,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26d74fff30db3064d9ca054f66eaf599, type: 3}
 --- !u!4 &4287816752462387378 stripped
@@ -175,6 +180,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: grass_small (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8884763626938832329, guid: 26d74fff30db3064d9ca054f66eaf599,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26d74fff30db3064d9ca054f66eaf599, type: 3}
 --- !u!4 &2131949883764456250 stripped
@@ -249,6 +259,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: grass_small (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884763626938832329, guid: 26d74fff30db3064d9ca054f66eaf599,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26d74fff30db3064d9ca054f66eaf599, type: 3}

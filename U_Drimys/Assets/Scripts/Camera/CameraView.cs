@@ -37,14 +37,16 @@ namespace Camera
 			if (!target)
 			{
 				playerStarts.Subscribe(AssignTarget);
+				gameObject.SetActive(false);
 				return;
- 			}
+			}
 
 			SetupModel();
 		}
 
 		private void SetupModel()
 		{
+			transform.SetPositionAndRotation(target.position, target.rotation);
 			_model = new CameraModel(transform,
 									properties,
 									target,
@@ -55,6 +57,7 @@ namespace Camera
 		private void AssignTarget(Transform target)
 		{
 			this.target = target;
+			gameObject.SetActive(true);
 			SetupModel();
 		}
 

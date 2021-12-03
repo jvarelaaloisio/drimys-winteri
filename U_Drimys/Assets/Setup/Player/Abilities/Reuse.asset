@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Reuse
   pushForce: 5
+  flySpeed: 15
+  onPush:
+    m_PersistentCalls:
+      m_Calls: []
+  healPoints: 3

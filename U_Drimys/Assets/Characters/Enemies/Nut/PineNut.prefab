@@ -61,8 +61,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c2db32aec7e60246860a1f65ee038bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bezierOffsetStart: {x: 0, y: 3, z: 0}
-  bezierOffsetEnd: {x: 0, y: 3, z: 0}
+  onStun:
+    m_PersistentCalls:
+      m_Calls: []
+  bezierOffsetStart: {x: 3, y: 3, z: 0}
+  bezierOffsetEnd: {x: 3, y: 3, z: 0}
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -92,8 +95,10 @@ MonoBehaviour:
   onDeath:
     m_PersistentCalls:
       m_Calls: []
+  stunRadius: 5
+  stunDuration: 5
+  damage: 2
   speedTest: 1
-  T: 0
 --- !u!33 &4621941401427505772
 MeshFilter:
   m_ObjectHideFlags: 0

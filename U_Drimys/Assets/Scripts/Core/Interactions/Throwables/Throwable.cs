@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Events.UnityEvents;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ namespace Core.Interactions.Throwables
 	[RequireComponent(typeof(Rigidbody))]
 	public abstract class Throwable : MonoBehaviour
 	{
+		public FloatUnityEvent onStun;
+		
 		[SerializeField]
 		protected Vector3 bezierOffsetStart;
 
@@ -27,6 +30,20 @@ namespace Core.Interactions.Throwables
 		[SerializeField]
 		protected UnityEvent onDeath;
 
+
+		#region Combat
+
+		[SerializeField]
+		private float stunRadius;
+
+		[SerializeField]
+		private float stunDuration;
+
+		[SerializeField]
+		private int damage;
+
+		#endregion
+
 		protected Rigidbody Rigidbody;
 
 		public virtual void Throw(Vector3 throwForce)
@@ -35,20 +52,23 @@ namespace Core.Interactions.Throwables
 			Rigidbody.isKinematic = false;
 			Rigidbody.AddForce(transform.TransformDirection(throwForce),
 								ForceMode.Impulse);
+			Debug.Log($"{name} => thrown with force", gameObject);
 		}
 
-		public virtual void Throw(Vector3 objective, float speed)
+		public virtual void FlyTo(Vector3 objective, float speed)
 		{
+			Debug.Log($"{name} => thrown to objective", gameObject);
 			Vector3 fromMeToObjective = objective - transform.position;
 			float time = fromMeToObjective.magnitude / speed;
 			StopAllCoroutines();
 			StartCoroutine(FlyToPoint(objective, time));
 		}
 
-		public virtual void Throw(Transform target,
+		public virtual void FlyTargeted(Transform target,
 								float speed,
 								Action onFinish = null)
 		{
+			Debug.Log($"{name} => thrown to target", gameObject);
 			Vector3 thisToTarget = target.position - transform.position;
 			float duration = thisToTarget.magnitude / speed;
 			StopAllCoroutines();
@@ -65,6 +85,27 @@ namespace Core.Interactions.Throwables
 		public void StopDeath()
 		{
 			CancelInvoke(nameof(Die));
+		}
+		
+		public void Stun()
+		{
+			var stunVictims = new Collider[10];
+			var victimQty
+				= Physics.OverlapSphereNonAlloc(transform.position, stunRadius, stunVictims,
+												LayerMask.GetMask("Enemy"));
+
+			if (victimQty > 0)
+			{
+				for (int i = 0; i < victimQty; i++)
+					if (stunVictims[i].TryGetComponent(out IStunnable stunnable))
+						stunnable.GetStunned(stunDuration);
+
+				Debug.Log($"stunned {victimQty} enemies");
+				onStun.Invoke(stunRadius);
+			}
+
+			// DieWithEffect(effectSpherePrefab, stunRadius, new Color(1, 0, 0, .5f));
+			Destroy(gameObject);
 		}
 
 		protected abstract IEnumerator FlyToPoint(Vector3 objective, float duration);
@@ -85,6 +126,12 @@ namespace Core.Interactions.Throwables
 			Destroy(gameObject);
 		}
 
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = new Color(1, 0, 0, .25f);
+			Gizmos.DrawWireSphere(transform.position, stunRadius);
+		}
+
 		#region Editor
 
 #if UNITY_EDITOR
@@ -96,7 +143,7 @@ namespace Core.Interactions.Throwables
 		{
 			StopAllCoroutines();
 			transform.position = Vector3.zero;
-			Throw(Vector3.forward * 10, speedTest);
+			FlyTo(Vector3.forward * 10, speedTest);
 		}
 #endif
 
