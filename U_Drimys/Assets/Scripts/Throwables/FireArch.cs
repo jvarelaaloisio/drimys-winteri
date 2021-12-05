@@ -9,6 +9,10 @@ namespace Throwables
 		[SerializeField]
 		private Vector3 endScale;
 
+		[SerializeField]
+		private Transform transform;
+
+		
 		private Vector3 _originScale;
 
 		protected override void Awake()
@@ -21,7 +25,7 @@ namespace Throwables
 		{
 			Vector3 fromMeToObjective = objective - transform.position;
 			float time = fromMeToObjective.magnitude / speed;
-			StartCoroutine(FlyToPoint(objective, time));
+			// StartCoroutine(FlyToPoint(objective, time));
 			StartCoroutine(Scale(lifeTime));
 		}
 

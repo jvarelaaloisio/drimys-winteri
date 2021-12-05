@@ -25,7 +25,7 @@ namespace Characters.States
 		public override void MoveTowards(Vector2 direction)
 		{
 			base.MoveTowards(direction);
-			var down = -transform.up;
+			var down = Vector3.down;
 			bool directionMagnitudeIsNotZero = direction.magnitude < .1f;
 			bool velocityYIsPositive = Model.rigidbody.velocity.y > -.05f;
 			bool isAtLandDistance = Physics.Raycast(transform.position,
@@ -33,6 +33,7 @@ namespace Characters.States
 										CharacterProperties.LandDistance,
 										CharacterProperties.FloorLayer);
 			if (_landing
+				|| IsStepping
 				|| velocityYIsPositive
 				|| !isAtLandDistance)
 				return;

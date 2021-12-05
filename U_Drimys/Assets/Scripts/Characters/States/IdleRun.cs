@@ -64,6 +64,7 @@ namespace Characters.States
 												out var stepPosition))
 			{
 				IsStepping = true;
+				// Model.Step();
 				CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
 																		stepPosition
 																		+ Vector3.up * CharacterProperties

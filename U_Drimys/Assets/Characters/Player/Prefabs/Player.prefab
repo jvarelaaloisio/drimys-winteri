@@ -245,6 +245,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onStunned:
+    m_PersistentCalls:
+      m_Calls: []
+  onRecovered:
+    m_PersistentCalls:
+      m_Calls: []
   characterProperties: {fileID: 11400000, guid: a25781dce5c9e0a488a7f3b140efa18e,
     type: 2}
   stepValidationLow: {fileID: 946631148688935174}
@@ -263,8 +269,8 @@ MonoBehaviour:
   throwablePrefab: {fileID: 9011521102111106270, guid: 86d30e495611a904697da6fda47c46c8,
     type: 3}
   hand: {fileID: 4278214103762934192}
-  meleeAnimationDuration: 1.5
-  meleeEffectDelay: 0.5
+  meleeAnimationDuration: 0.95
+  meleeEffectDelay: 0.25
   meleeEffect: {fileID: 7519109764299799457, guid: e723accd3e8bf574783340a13604e986,
     type: 3}
   meleeEffectSpawnPoint: {fileID: 2150756913607064223}
@@ -301,6 +307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b22e4b5930bc834ebe6e3d0361e77fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onChangedMode:
+    m_PersistentCalls:
+      m_Calls: []
   rotationPeriod: 2
 --- !u!114 &3985722311714120402
 MonoBehaviour:

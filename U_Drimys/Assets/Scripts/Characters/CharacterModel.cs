@@ -15,16 +15,18 @@ namespace Characters
 	{
 		public const string JUMP_STATE = "Jump";
 		public const string IDLE_STATE = "Idle";
+		public const string STEP_STATE = "Step";
 		public const string FALL_STATE = "Fall";
 		public const string STUNNED_STATE = "Stunned";
 
 		public StateFlags Flags;
 
 		private LockTarget _lockTarget;
-		private IdleRun<string> _idleRun;
-		private Fall<string> _fall;
-		private Jump<string> _jump;
-		private Stunned<string> _stunned;
+		private readonly IdleRun<string> _idleRun;
+		private readonly Fall<string> _fall;
+		private readonly Jump<string> _jump;
+		private readonly Stunned<string> _stunned;
+		private readonly Step<string> _step;
 		private readonly Transform _stepPositionLow;
 		private readonly Transform _stepPositionHigh;
 
@@ -57,9 +59,12 @@ namespace Characters
 			_stunned.OnAwake += HandleStun;
 			_stunned.OnSleep += HandleRecover;
 
+			_step = new Step<string>(this, coroutineRunner);
+
 			_idleRun.AddTransition(JUMP_STATE, _jump);
 			_idleRun.AddTransition(FALL_STATE, _fall);
 			_idleRun.AddTransition(STUNNED_STATE, _stunned);
+			_idleRun.AddTransition(STEP_STATE, _step);
 
 			_jump.AddTransition(IDLE_STATE, _idleRun);
 			_jump.AddTransition(FALL_STATE, _fall);
@@ -67,6 +72,8 @@ namespace Characters
 			_fall.AddTransition(IDLE_STATE, _idleRun);
 
 			_stunned.AddTransition(IDLE_STATE, _idleRun);
+			
+			_step.AddTransition(IDLE_STATE, _idleRun);
 
 			StateMachine = FSM<string>
 							.Build(_idleRun, transform.gameObject.name)
@@ -172,6 +179,8 @@ namespace Characters
 
 		public void MoveTowards(Vector2 direction)
 		{
+			if(Flags.IsAttacking)
+				return;
 			((CharacterState<string>)StateMachine.CurrentState).MoveTowards(direction);
 			bool willMove = direction.magnitude > 0;
 			if (Flags.IsMoving && !willMove && StateMachine.CurrentState == _idleRun)
@@ -191,6 +200,9 @@ namespace Characters
 
 		public void Land()
 			=> StateMachine.TransitionTo(IDLE_STATE);
+		
+		public void Step()
+			=> StateMachine.TransitionTo(STEP_STATE);
 
 		public void Melee(IEnumerator behaviour, Transform target)
 		{
