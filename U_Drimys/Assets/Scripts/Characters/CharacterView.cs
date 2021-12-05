@@ -93,5 +93,11 @@ namespace Characters
 		{
 			Model.GetStunned(seconds);
 		}
+
+		public void KnockBack(Vector3 force)
+		{
+			Debug.Log($"knockback: {force}", gameObject);
+			Model.KnockBack(force);
+		}
 	}
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6908179639243838895}
   - component: {fileID: 4286202267908996427}
   - component: {fileID: 6634587973212559501}
+  - component: {fileID: 3955324812079629819}
   m_Layer: 10
   m_Name: Cylinder
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2957936979219546370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 2, y: 0.1, z: 2}
+  m_LocalScale: {x: 2, y: 0.15, z: 2}
   m_Children: []
   m_Father: {fileID: 7519109764299799458}
   m_RootOrder: 1
@@ -46,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f93fe551b8ab802438ba4038564ab482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 2
 --- !u!33 &6908179639243838895
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -108,6 +109,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3955324812079629819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2957936979219546370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf779f2099145d43b6d82906dcd4d36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {x: 0, y: 5, z: -20}
 --- !u!1 &7519109764299799459
 GameObject:
   m_ObjectHideFlags: 0

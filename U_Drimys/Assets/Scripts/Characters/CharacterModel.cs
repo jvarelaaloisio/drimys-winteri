@@ -293,5 +293,10 @@ namespace Characters
 			public bool IsStunned;
 			public bool IsLocked;
 		}
+
+		public void KnockBack(Vector3 force)
+		{
+			rigidbody.AddForce(transform.TransformDirection(force), ForceMode.Impulse);
+		}
 	}
 }
