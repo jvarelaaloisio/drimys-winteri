@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseColor:
-        m_Texture: {fileID: 2800000, guid: 1b809707a40e00848b713afa7b55bbe6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 68ad2d327fea1a14a82cb69b2e0258b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -72,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AlphaMaskValue: 0.2
+    - _AlphaMaskValue: 0
     - _BaseColorHue: 0.14
     - _BaseColorSaturation: 0.38
     - _BaseColorValue: -0.02
