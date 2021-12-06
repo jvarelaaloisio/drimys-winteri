@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-namespace Player
+namespace Input
 {
 	public class GameplayInputHandler : MonoBehaviour
 	{
@@ -18,6 +18,7 @@ namespace Player
 		public UnityEvent onShootInput;
 		public Vector2UnityEvent onMoveInput;
 		public Vector2UnityEvent onCameraInput;
+		public IntUnityEvent onChangeReuseMode;
 
 		[SerializeField]
 		private InputActionAsset input;
@@ -45,6 +46,9 @@ namespace Player
 		
 		[SerializeField]
 		private string cameraActionName = "Camera";
+		
+		[SerializeField]
+		private string reuseModeActionName = "ReuseMode";
 
 
 		private InputActionMap _actionMap;
@@ -63,6 +67,7 @@ namespace Player
 			_actionMap.FindAction(cameraActionName).started += HandleCamera;
 			_actionMap.FindAction(cameraActionName).performed += HandleCamera;
 			_actionMap.FindAction(cameraActionName).canceled += HandleCamera;
+			_actionMap.FindAction(reuseModeActionName).performed += HandleReuseModeChange;
 		}
 
 		private void HandleLock(InputAction.CallbackContext obj)
@@ -71,13 +76,19 @@ namespace Player
 		private void HandleCamera(InputAction.CallbackContext obj)
 			=> onCameraInput.Invoke(obj.ReadValue<Vector2>());
 
+		private void HandleJump(InputAction.CallbackContext context)
+			=> onJumpInput.Invoke();
+
+		private void HandleReuseModeChange(InputAction.CallbackContext context)
+		{
+			float value = context.ReadValue<float>();
+			if (value != 0) onChangeReuseMode.Invoke((int)value / 120);
+		}
+
 		private void Update()
 		{
 			var movementInput = _movementInput.ReadValue<Vector2>();
 			onMoveInput.Invoke(movementInput);
 		}
-
-		private void HandleJump(InputAction.CallbackContext context)
-			=> onJumpInput.Invoke();
 	}
 }

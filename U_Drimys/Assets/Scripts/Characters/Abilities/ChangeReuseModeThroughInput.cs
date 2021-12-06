@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using Events.Channels;
 using Events.UnityEvents;
 using UnityEngine;
 
@@ -9,44 +8,39 @@ namespace Characters.Abilities
 	using Mode = Reuse.Mode;
 
 	[RequireComponent(typeof(AbilityRunner))]
-	public class ReuseModeHandler : MonoBehaviour
+	public class ChangeReuseModeThroughInput : MonoBehaviour
 	{
 		public StringUnityEvent onChangedMode;
 
+		[Header("Events Listened")]
 		[SerializeField]
-		private float rotationPeriod;
+		[Tooltip("Not Null")]
+		private IntChannelSo changeModeIndex;
 
 		private readonly Mode[] _modes = { Mode.Push, Mode.Heal, Mode.Stun };
+		private int _currentIndex;
 		private AbilityRunner _abilityRunner;
 		private readonly Type _modeKey = typeof(Mode);
 
 		private void Awake()
 		{
 			_abilityRunner = GetComponent<AbilityRunner>();
-			if (_abilityRunner.Cache.ContainsKey(_modeKey))
+			if (!_abilityRunner.Cache.ContainsKey(_modeKey))
 				_abilityRunner.Cache.Add(_modeKey, _modes[0]);
-			StartCoroutine(RotateModes(_abilityRunner.Cache,
-										_modeKey,
-										_modes,
-										rotationPeriod,
-										m => onChangedMode.Invoke(m.ToString())));
-			Application.quitting += () => StopCoroutine(nameof(RotateModes));
+			changeModeIndex.Subscribe(ChangeModeIndex);
 		}
 
-		private static IEnumerator RotateModes(Dictionary<object, object> cache,
-												object key,
-												Mode[] modes,
-												float period,
-												Action<Mode> onChanged = null)
+		private void ChangeModeIndex(int i)
 		{
-			var wait = new WaitForSeconds(period);
-			while (true)
-				for (int i = 0; i < 3; i++)
-				{
-					cache[key] = modes[i];
-					onChanged?.Invoke(modes[i]);
-					yield return wait;
-				}
+			_currentIndex += i;
+			int modesQty = _modes.Length;
+			if (_currentIndex < 0)
+				_currentIndex += modesQty;
+			else if (_currentIndex > modesQty - 1)
+				_currentIndex -= modesQty;
+			
+			_abilityRunner.Cache[_modeKey] = _modes[_currentIndex];
+			onChangedMode.Invoke(_modes[_currentIndex].ToString());
 		}
 #if UNITY_EDITOR
 		private void OnGUI()

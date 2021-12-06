@@ -310,7 +310,7 @@ MonoBehaviour:
   onChangedMode:
     m_PersistentCalls:
       m_Calls: []
-  rotationPeriod: 2
+  changeModeIndex: {fileID: 11400000, guid: 95e5f7c9e5a3f6e4085516d488baec3c, type: 2}
 --- !u!114 &3985722311714120402
 MonoBehaviour:
   m_ObjectHideFlags: 0

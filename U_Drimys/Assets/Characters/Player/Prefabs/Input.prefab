@@ -199,6 +199,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onChangeReuseMode:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 95e5f7c9e5a3f6e4085516d488baec3c, type: 2}
+        m_MethodName: RaiseEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   input: {fileID: -944628639613478452, guid: d51ebe9cc347faa45b4a3b572d4a247c, type: 3}
   actionMapName: Player
   jumpActionName: Jump
@@ -208,3 +222,4 @@ MonoBehaviour:
   ability1ActionName: Ability1
   movementActionName: Movement
   cameraActionName: Camera
+  reuseModeActionName: ReuseMode

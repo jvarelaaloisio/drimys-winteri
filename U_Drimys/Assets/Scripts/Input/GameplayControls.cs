@@ -75,6 +75,14 @@ namespace Input
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ReuseMode"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""f61e0ab9-0b0f-43ce-a7e0-2d7d53a603a6"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -231,6 +239,17 @@ namespace Input
                     ""action"": ""Ability1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92a51358-32ad-4654-861b-da94a8d34c21"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ReuseMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -268,6 +287,7 @@ namespace Input
             m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
             m_Player_Melee = m_Player.FindAction("Melee", throwIfNotFound: true);
             m_Player_Ability1 = m_Player.FindAction("Ability1", throwIfNotFound: true);
+            m_Player_ReuseMode = m_Player.FindAction("ReuseMode", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -324,6 +344,7 @@ namespace Input
         private readonly InputAction m_Player_Shoot;
         private readonly InputAction m_Player_Melee;
         private readonly InputAction m_Player_Ability1;
+        private readonly InputAction m_Player_ReuseMode;
         public struct PlayerActions
         {
             private @GameplayControls m_Wrapper;
@@ -335,6 +356,7 @@ namespace Input
             public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
             public InputAction @Melee => m_Wrapper.m_Player_Melee;
             public InputAction @Ability1 => m_Wrapper.m_Player_Ability1;
+            public InputAction @ReuseMode => m_Wrapper.m_Player_ReuseMode;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -365,6 +387,9 @@ namespace Input
                     @Ability1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
                     @Ability1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
                     @Ability1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility1;
+                    @ReuseMode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReuseMode;
+                    @ReuseMode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReuseMode;
+                    @ReuseMode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReuseMode;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -390,6 +415,9 @@ namespace Input
                     @Ability1.started += instance.OnAbility1;
                     @Ability1.performed += instance.OnAbility1;
                     @Ability1.canceled += instance.OnAbility1;
+                    @ReuseMode.started += instance.OnReuseMode;
+                    @ReuseMode.performed += instance.OnReuseMode;
+                    @ReuseMode.canceled += instance.OnReuseMode;
                 }
             }
         }
@@ -412,6 +440,7 @@ namespace Input
             void OnShoot(InputAction.CallbackContext context);
             void OnMelee(InputAction.CallbackContext context);
             void OnAbility1(InputAction.CallbackContext context);
+            void OnReuseMode(InputAction.CallbackContext context);
         }
     }
 }
