@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Characters.Abilities
 {
-	[CreateAssetMenu(menuName = "Characters/Abilities/Catch", fileName = "Catch", order = 0)]
+	[CreateAssetMenu(menuName = "Abilities/Catch", fileName = "Catch", order = 0)]
 	public class Catch : Ability
 	{
 		private readonly Type _throwableKey = typeof(Throwable);

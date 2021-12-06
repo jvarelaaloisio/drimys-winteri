@@ -37,7 +37,7 @@ namespace Camera
 			if (!target)
 			{
 				playerStarts.Subscribe(AssignTarget);
-				gameObject.SetActive(false);
+				enabled = false;
 				return;
 			}
 
@@ -57,7 +57,7 @@ namespace Camera
 		private void AssignTarget(Transform target)
 		{
 			this.target = target;
-			gameObject.SetActive(true);
+			enabled = true;
 			SetupModel();
 		}
 

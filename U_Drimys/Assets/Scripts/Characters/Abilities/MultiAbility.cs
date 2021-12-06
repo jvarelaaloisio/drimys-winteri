@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Characters.Abilities
 {
-	[CreateAssetMenu(menuName = "Characters/Abilities/Multi Ability", fileName = "MultiAbility", order = 99)]
+	[CreateAssetMenu(menuName = "Abilities/Multi Ability", fileName = "MultiAbility", order = 99)]
 	public class MultiAbility : Ability
 	{
 		[SerializeField]

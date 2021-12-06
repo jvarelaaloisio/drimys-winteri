@@ -97,7 +97,7 @@ namespace Characters
 		public void KnockBack(Vector3 force)
 		{
 			Debug.Log($"knockback: {force}", gameObject);
-			Model.KnockBack(force);
+			Model.KnockBack(force, ForceMode.Impulse);
 		}
 	}
 }

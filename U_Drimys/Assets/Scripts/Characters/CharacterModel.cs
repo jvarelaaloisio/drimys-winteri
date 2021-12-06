@@ -72,7 +72,7 @@ namespace Characters
 			_fall.AddTransition(IDLE_STATE, _idleRun);
 
 			_stunned.AddTransition(IDLE_STATE, _idleRun);
-			
+
 			_step.AddTransition(IDLE_STATE, _idleRun);
 
 			StateMachine = FSM<string>
@@ -179,7 +179,7 @@ namespace Characters
 
 		public void MoveTowards(Vector2 direction)
 		{
-			if(Flags.IsAttacking)
+			if (Flags.IsAttacking)
 				return;
 			((CharacterState<string>)StateMachine.CurrentState).MoveTowards(direction);
 			bool willMove = direction.magnitude > 0;
@@ -200,7 +200,7 @@ namespace Characters
 
 		public void Land()
 			=> StateMachine.TransitionTo(IDLE_STATE);
-		
+
 		public void Step()
 			=> StateMachine.TransitionTo(STEP_STATE);
 
@@ -285,6 +285,14 @@ namespace Characters
 			Flags.IsStunned = false;
 		}
 
+		public void KnockBack(Vector3 force, ForceMode forceMode = ForceMode.Impulse)
+		{
+			Debug.Log("knockback");
+			CoroutineRunner.StartCoroutine(CharacterHelper.AddForce(rigidbody,
+																	transform.TransformDirection(force),
+																	forceMode));
+		}
+
 		public struct StateFlags
 		{
 			public bool IsAttacking;
@@ -292,11 +300,6 @@ namespace Characters
 			public bool IsMoving;
 			public bool IsStunned;
 			public bool IsLocked;
-		}
-
-		public void KnockBack(Vector3 force)
-		{
-			rigidbody.AddForce(transform.TransformDirection(force), ForceMode.Impulse);
 		}
 	}
 }

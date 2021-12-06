@@ -310,6 +310,11 @@ MonoBehaviour:
   onChangedMode:
     m_PersistentCalls:
       m_Calls: []
+  modes:
+  - {fileID: 11400000, guid: aa835719fd0cf3345add8cf43eaa5940, type: 2}
+  - {fileID: 11400000, guid: c07b7ca71d996694ab390967429736b2, type: 2}
+  - {fileID: 11400000, guid: 90247f0e705649645b4988caf2cc1707, type: 2}
+  - {fileID: 11400000, guid: 9f4d3a9dbc2843b469bd9b3c60db6ec1, type: 2}
   changeModeIndex: {fileID: 11400000, guid: 95e5f7c9e5a3f6e4085516d488baec3c, type: 2}
 --- !u!114 &3985722311714120402
 MonoBehaviour:
