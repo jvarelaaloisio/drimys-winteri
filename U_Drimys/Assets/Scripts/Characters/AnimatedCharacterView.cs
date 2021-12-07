@@ -15,8 +15,10 @@ namespace Characters
 
 		[SerializeField]
 		private string velocityParameter = "Velocity";
+
 		[SerializeField]
 		private string stopParameter = "Stop";
+
 		[SerializeField]
 		private string attackParameter = "Attack";
 
@@ -26,7 +28,7 @@ namespace Characters
 		[FormerlySerializedAs("layerWeightTransitionDuration")]
 		[SerializeField]
 		private float turnOnUpperLayerDuration = 1;
-		
+
 		[SerializeField]
 		private float turnOffUpperLayerDuration = 1;
 
@@ -38,6 +40,7 @@ namespace Characters
 		private int _velocityHash;
 		private int _velocityXHash;
 		private int _velocityZHash;
+		public bool isStepping;
 
 		protected override void Awake()
 		{
@@ -52,7 +55,7 @@ namespace Characters
 			Model.onJump += () => SetJumping(true);
 			Model.onFall += () => SetJumping(true);
 			Model.onLand += () => SetJumping(false);
-			Model.onStop += () => animator.SetTrigger( stopParameter);
+			Model.onStop += () => animator.SetTrigger(stopParameter);
 			Model.onAttacking += _ => animator.SetTrigger(attackParameter);
 			// Model.onAttacking += _ => TurnOnUpperBodyAnimatorLayer();
 			// Model.onAttacked += _ => TurnOffUpperBodyAnimatorLayer();
@@ -61,7 +64,10 @@ namespace Characters
 		protected override void Update()
 		{
 			base.Update();
-			Vector3 velocity = Rigidbody.velocity.IgnoreY() / characterProperties.MaxSpeed;
+			isStepping = Model.Flags.IsStepping;
+			Vector3 velocity = isStepping
+									? transform.forward.IgnoreY()
+									: Rigidbody.velocity.IgnoreY() / characterProperties.MaxSpeed;
 			animator.SetFloat(_velocityHash, velocity.magnitude);
 			if (Model.Flags.IsLocked)
 			{

@@ -15,6 +15,9 @@ namespace Camera
 
 		private CameraModel _model;
 
+		[SerializeField]
+		private int closeUpFOV;
+
 		[Header("Debug")]
 		[SerializeField]
 		private bool shouldLogFsmTransitions;
@@ -30,8 +33,13 @@ namespace Camera
 		[SerializeField, Tooltip("Not Null")]
 		private TransformChannelSo playerStarts;
 
+		private float _originalFOV;
+		// private UnityEngine.Camera _cameraComponent;
+
 		private void Awake()
 		{
+			// _cameraComponent = GetComponent<UnityEngine.Camera>();
+			// _originalFOV = _cameraComponent.fieldOfView;
 			cameraMovement.SubscribeSafely(HandleCamInput);
 			playerMovement.SubscribeSafely(HandleMoveInput);
 			if (!target)
@@ -64,6 +72,10 @@ namespace Camera
 		private void LateUpdate()
 		{
 			_model.LateUpdate(Time.deltaTime);
+			//TODO:The camera must be a child of this object and it should move closer to the player
+			// _cameraComponent.fieldOfView = Mathf.Lerp(_originalFOV, closeUpFOV,
+			// 										Mathf.Abs(transform.rotation.eulerAngles.x) /
+			// 										properties.MaximumPitchAngle);
 		}
 
 		public void HandleMoveInput(Vector2 input)

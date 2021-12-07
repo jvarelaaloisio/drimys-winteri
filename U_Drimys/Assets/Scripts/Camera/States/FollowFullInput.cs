@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace Camera.States
 {
 	public class FollowFullInput<T> : FollowWithPitchInput<T>

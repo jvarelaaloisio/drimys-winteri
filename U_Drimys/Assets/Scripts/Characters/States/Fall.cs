@@ -25,15 +25,13 @@ namespace Characters.States
 		public override void MoveTowards(Vector2 direction)
 		{
 			base.MoveTowards(direction);
-			var down = Vector3.down;
-			bool directionMagnitudeIsNotZero = direction.magnitude < .1f;
 			bool velocityYIsPositive = Model.rigidbody.velocity.y > -.05f;
 			bool isAtLandDistance = Physics.Raycast(transform.position,
-										down,
-										CharacterProperties.LandDistance,
-										CharacterProperties.FloorLayer);
+													Vector3.down,
+													CharacterProperties.LandDistance,
+													CharacterProperties.FloorLayer);
 			if (_landing
-				|| IsStepping
+				|| Model.Flags.IsStepping
 				|| velocityYIsPositive
 				|| !isAtLandDistance)
 				return;
@@ -46,9 +44,15 @@ namespace Characters.States
 			// 		$"vel Y (should be >-.05f): <color={velocityColor}>{velocityYIsPositive}</color>, " +
 			// 		$"landing? (should be true): <color={landingColor}>{_landing}</color>, " +
 			// 		$"isAtLandDistance? (should be false): <color={isLandDistanceColor}>{isAtLandDistance}</color></color>");
+			ForceLanding();
+		}
+
+		private void ForceLanding()
+		{
+			Debug.Log("Force landing");
 			_landing = true;
 			CoroutineRunner.StartCoroutine(CharacterHelper.AddForce(Model.rigidbody,
-																	down * CharacterProperties.LandingForce,
+																	Vector3.down * CharacterProperties.LandingForce,
 																	ForceMode.Impulse));
 		}
 	}

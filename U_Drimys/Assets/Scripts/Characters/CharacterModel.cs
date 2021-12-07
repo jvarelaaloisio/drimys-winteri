@@ -300,6 +300,7 @@ namespace Characters
 			public bool IsMoving;
 			public bool IsStunned;
 			public bool IsLocked;
+			public bool IsStepping;
 		}
 	}
 }

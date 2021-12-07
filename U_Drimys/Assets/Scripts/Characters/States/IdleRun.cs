@@ -12,7 +12,6 @@ namespace Characters.States
 		protected float Speed;
 		protected float MaxSpeed;
 		private bool _canMove;
-		protected bool IsStepping;
 
 		/*TODO:CharacterProperties can be avoided
 		 Implement when the characterHelper is received in constructor.
@@ -30,13 +29,14 @@ namespace Characters.States
 			transform = model.transform;
 			Speed = CharacterProperties.GroundSpeed;
 			MaxSpeed = CharacterProperties.MaxSpeed;
+			OnSleep += () => model.Flags.IsStepping = false;
 		}
 
 		public override string GetName() => "Idle";
 
 		public override void MoveTowards(Vector2 direction)
 		{
-			if (IsStepping)
+			if (Model.Flags.IsStepping)
 				return;
 
 			MovementDirection = direction.HorizontalPlaneToVector3();
@@ -54,46 +54,6 @@ namespace Characters.States
 			ManageStairSteps();
 		}
 
-		protected virtual void ManageStairSteps()
-		{
-			if (CharacterHelper.IsInFrontOfStep(Model.StepValidationPositionLow,
-												Model.StepValidationPositionHigh,
-												transform.forward,
-												CharacterProperties.StepDistanceCheck,
-												CharacterProperties.FloorLayer,
-												out var stepPosition))
-			{
-				IsStepping = true;
-				// Model.Step();
-				CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
-																		stepPosition
-																		+ Vector3.up * CharacterProperties
-																			.GroundDistanceCheck,
-																		CharacterProperties.StepUpTime,
-																		() => IsStepping = false));
-			}
-			// else if (CharacterHelper.IsInFrontOfStepDown(Model.StepValidationPositionLow,
-			// 											Model.StepValidationPositionHigh,
-			// 											transform.forward,
-			// 											CharacterProperties.StepDistanceCheck,
-			// 											CharacterProperties.FloorLayer,
-			// 											out stepPosition))
-			// {
-			// 	IsStepping = true;
-			// 	Debug.Log("Stepping2");
-			// 	CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
-			// 															stepPosition
-			// 															+ Vector3.up * CharacterProperties
-			// 																.GroundDistanceCheck,
-			// 															CharacterProperties.StepDownTime,
-			// 															() =>
-			// 															{
-			// 																Debug.Log("Stepped2");
-			// 																IsStepping = false;
-			// 															}));
-			// }
-		}
-
 		public override void Update(float deltaTime)
 		{
 			Debug.DrawRay(transform.position,
@@ -106,6 +66,26 @@ namespace Characters.States
 													Quaternion.LookRotation(MovementDirection),
 													CharacterProperties.TurnSpeed * deltaTime);
 			base.Update(deltaTime);
+		}
+
+		protected virtual void ManageStairSteps()
+		{
+			if (MovementDirection.magnitude < .1f
+				|| !CharacterHelper.IsInFrontOfStepUp(Model.StepValidationPositionLow,
+													Model.StepValidationPositionHigh,
+													transform.forward,
+													CharacterProperties.StepDistanceCheck,
+													CharacterProperties.FloorLayer,
+													out var stepPosition))
+				return;
+			Model.Flags.IsStepping = true;
+			// Model.Step();
+			CoroutineRunner.StartCoroutine(CharacterHelper.GoOverStep(transform,
+																	stepPosition
+																	+ Vector3.up * CharacterProperties
+																		.GroundDistanceCheck,
+																	CharacterProperties.StepUpTime,
+																	() => Model.Flags.IsStepping = false));
 		}
 	}
 }

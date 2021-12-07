@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce05604fdc0482b9eeb9a79e8bdd385, type: 3}
   m_Name: PushForth
   m_EditorClassIdentifier: 
-  force: {x: 0, y: 3, z: 75}
+  force: {x: 0, y: 5, z: 45}
   forceMode: 1
