@@ -141,13 +141,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.83326817, y: 1, z: 0.9201496, w: 0}
+    value: {x: 0.6770631, y: 0.7839695, z: 1, w: 0}
   gamma:
     overrideState: 1
-    value: {x: 0.8085748, y: 1, z: 0.8997266, w: 0}
+    value: {x: 0.946224, y: 0.9947912, z: 1, w: 0}
   gain:
     overrideState: 1
-    value: {x: 0.851862, y: 0.9324742, z: 1, w: 0}
+    value: {x: 0.90318096, y: 0.81291837, z: 1, w: 0}
   masterCurve:
     overrideState: 1
     value:
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
@@ -1397,7 +1397,7 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 1
+    value: 0.36
   color:
     overrideState: 1
     value: {r: 0.1512994, g: 0.23365386, b: 0.3773585, a: 1}
@@ -1461,7 +1461,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2
+    value: 3
   threshold:
     overrideState: 1
     value: 1
