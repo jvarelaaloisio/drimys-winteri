@@ -52,5 +52,5 @@ MonoBehaviour:
     m_RotationOrder: 4
   landDistance: 2
   landingForce: 3
-  aimDelay: 0.8
+  aimDelay: 0.4
   throwableSpeed: 15
