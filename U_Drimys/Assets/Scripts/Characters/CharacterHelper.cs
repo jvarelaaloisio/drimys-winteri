@@ -88,8 +88,6 @@ namespace Characters
 											float duration,
 											Action onFinish = null)
 		{
-			var rigidbody = transform.GetComponent<Rigidbody>();
-			rigidbody.isKinematic = true;
 			Vector3 origin = transform.position;
 			float start = Time.time;
 			while (Time.time < start + duration)
@@ -100,7 +98,6 @@ namespace Characters
 
 			transform.position = Vector3.Lerp(origin, newPosition, 1);
 
-			rigidbody.isKinematic = false;
 			onFinish?.Invoke();
 		}
 
