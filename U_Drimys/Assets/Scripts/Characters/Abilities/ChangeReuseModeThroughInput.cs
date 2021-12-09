@@ -33,9 +33,13 @@ namespace Characters.Abilities
 			if (!_abilityRunner.Cache.ContainsKey(_modeKey))
 				_abilityRunner.Cache.Add(_modeKey, modes[0]);
 			changeModeIndex.Subscribe(ChangeModeIndex);
+		}
+
+		private void Start()
+		{
 			ChangeModeIndex(0);
 		}
-		
+
 		private void ChangeModeIndex(int i)
 		{
 			_currentIndex += i;

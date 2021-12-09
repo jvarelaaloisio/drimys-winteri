@@ -38,7 +38,7 @@ namespace Camera.States
 
 			if (Model.Target.hasChanged)
 				_transform.position
-					= Model.Target.position + _transform.TransformDirection(Model.Properties.OffsetFromPlayer);
+					= Model.Target.position + _transform.TransformDirection(Model.GetPositioning());
 			base.Update(deltaTime);
 		}
 

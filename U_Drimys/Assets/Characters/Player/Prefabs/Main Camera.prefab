@@ -63,7 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properties: {fileID: 11400000, guid: 1a6a10877919b8f47b5fed582dea2444, type: 2}
+  positioning: {fileID: 11400000, guid: 7fa9eab1ec02a8d4ab6f5322c074b888, type: 2}
   target: {fileID: 0}
+  closeUpFOV: 0
   shouldLogFsmTransitions: 0
   cameraMovement: {fileID: 11400000, guid: 032e848702d85a34f88c8ea3ebac59f0, type: 2}
   playerMovement: {fileID: 11400000, guid: ed8db3a5203c37342ab746ab9a950774, type: 2}
@@ -153,7 +155,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1847
+    m_Bits: 10039
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -3,13 +3,9 @@ using UnityEngine.Serialization;
 
 namespace Camera
 {
-	[CreateAssetMenu(menuName = "Properties/Camera", fileName = "CameraProperties", order = 0)]
+	[CreateAssetMenu(menuName = "Properties/Camera/Properties", fileName = "CameraProperties", order = 0)]
 	public class CameraProperties : ScriptableObject
 	{
-		[Header("Positioning")]
-		[SerializeField]
-		private Vector3 offsetFromPlayer;
-
 		[Header("Turning")]
 		[SerializeField]
 		private Vector2 inputTurnSpeed;
@@ -44,8 +40,6 @@ namespace Camera
 
 		[SerializeField]
 		private float yawFollowDelay;
-
-		public Vector3 OffsetFromPlayer => offsetFromPlayer;
 
 		public Vector2 InputTurnSpeed => inputTurnSpeed;
 

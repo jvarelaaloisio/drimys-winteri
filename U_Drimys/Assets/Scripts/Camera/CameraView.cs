@@ -2,6 +2,7 @@
 using Events.Channels;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Camera
 {
@@ -9,6 +10,9 @@ namespace Camera
 	{
 		[SerializeField]
 		private CameraProperties properties;
+		
+		[SerializeField]
+		private CameraPositioning positioning;
 
 		[SerializeField]
 		private Transform target;
@@ -34,6 +38,8 @@ namespace Camera
 		private TransformChannelSo playerStarts;
 
 		private float _originalFOV;
+
+		public CameraPositioning Positioning => positioning;
 		// private UnityEngine.Camera _cameraComponent;
 
 		private void Awake()
@@ -57,6 +63,7 @@ namespace Camera
 			transform.SetPositionAndRotation(target.position, target.rotation);
 			_model = new CameraModel(transform,
 									properties,
+									Positioning,
 									target,
 									this,
 									shouldLogFsmTransitions);
@@ -89,5 +96,10 @@ namespace Camera
 
 		public void HandleUnlock()
 			=> _model.Unlock();
+
+		public void ChangePositioning(CameraPositioning newPositioning,
+									float duration,
+									AnimationCurve curve)
+			=> _model.ChangePositioning(newPositioning, duration, curve.Evaluate);
 	}
 }

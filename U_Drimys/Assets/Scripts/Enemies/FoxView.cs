@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Characters;
 using Core.DataManipulation;
 using IA.DecisionTree.Helpers;
@@ -22,13 +23,13 @@ namespace Enemies
 
 		protected override void Awake()
 		{
-			Caster.TryCast(characterProperties, out  EnemyProperties);
+			Caster.TryCast(characterProperties, out EnemyProperties);
 			base.Awake();
 			Model = (EnemyModel)base.Model;
 			_tree = TreeHelper.LoadTree(decisionTree, GetModel);
 			_tree.Callback = HandleTreeCallback;
 		}
-		
+
 		private void HandleTreeCallback(object[] args)
 		{
 			Model.ForceTransition((string)args[0]);
@@ -63,12 +64,36 @@ namespace Enemies
 
 			#region LineOfSight
 
-			Caster.TryCast(characterProperties, out  EnemyProperties);
+			Caster.TryCast(characterProperties, out EnemyProperties);
 
 			Vector3 forwardScaled = myTransform.forward * EnemyProperties.ViewDistance;
 			int points = 5;
 
-			Mesh viewMesh = new Mesh();
+			var viewMesh = CreateViewMesh(position, points, forwardScaled);
+			Gizmos.color = new Color(0, 1, .75f, .5f);
+			Gizmos.DrawWireMesh(viewMesh);
+
+			#endregion
+		}
+
+		private void OnDrawGizmosSelected()
+		{
+			Transform myTransform = transform;
+			Vector3 position = myTransform.position + Vector3.down * debugOffset;
+
+			Caster.TryCast(characterProperties, out EnemyProperties);
+
+			Vector3 forwardScaled = myTransform.forward * EnemyProperties.ViewDistance;
+			int points = 5;
+
+			var viewMesh = CreateViewMesh(position, points, forwardScaled);
+			Gizmos.color = new Color(0, 1, .75f, .5f);
+			Gizmos.DrawMesh(viewMesh);
+		}
+
+		private Mesh CreateViewMesh(Vector3 position, int points, Vector3 forwardScaled)
+		{
+			var viewMesh = new Mesh();
 
 			List<Vector3> vertices = new List<Vector3> { position };
 			for (int i = -points; i <= points; i++)
@@ -93,10 +118,7 @@ namespace Enemies
 			viewMesh.triangles = triangles;
 
 			viewMesh.RecalculateNormals();
-			Gizmos.color = new Color(0, 1, .75f, .5f);
-			Gizmos.DrawMesh(viewMesh);
-
-			#endregion
+			return viewMesh;
 		}
 	}
 }

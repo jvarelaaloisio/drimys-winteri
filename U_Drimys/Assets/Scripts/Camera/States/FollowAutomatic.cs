@@ -31,7 +31,7 @@ namespace Camera.States
 			if (!Model.Target.hasChanged)
 				return;
 			transform.position
-				= Model.Target.position + transform.TransformDirection(Model.Properties.OffsetFromPlayer);
+				= Model.Target.position + transform.TransformDirection(Model.GetPositioning());
 		}
 
 		protected virtual void CalculateNextEulerAngles(ref Vector3 nextEulerAngles, float deltaTime)
@@ -89,7 +89,8 @@ namespace Camera.States
 			float deltaYaw = currentYaw - targetYaw;
 
 			//BUG:When the player walks backwards and then stops, the camera doesn't reset.
-			if (Mathf.Abs(deltaYaw) < 2f || Mathf.Abs(deltaYaw) > 178)
+			// if (Mathf.Abs(deltaYaw) < 2f || Mathf.Abs(deltaYaw) > 178)
+			if (Mathf.Abs(deltaYaw) < 2f)
 			{
 				return previewedYaw;
 			}
