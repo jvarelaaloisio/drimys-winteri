@@ -4,22 +4,20 @@ namespace Camera.States
 {
 	public class FollowAutomatic<T> : CameraState<T>
 	{
-		protected readonly CameraProperties Properties;
 		protected readonly Transform transform;
 		private Vector3 _nextEulerAngles;
-		private float yawAutoRotationStart;
+		private float _yawAutoRotationStart;
 
 		public FollowAutomatic(CameraModel model) : base(model)
 		{
 			transform = model.transform;
-			Properties = model.Properties;
 		}
 
 		public override string GetName() => "Follow(Automatic)";
 
 		public override void Awake()
 		{
-			yawAutoRotationStart = 0;
+			_yawAutoRotationStart = 0;
 			_nextEulerAngles = transform.localEulerAngles;
 			base.Awake();
 		}
@@ -59,7 +57,7 @@ namespace Camera.States
 			float deltaPitch = currentPitch - targetPitch;
 			if (Mathf.Abs(deltaPitch) < .1f)
 				return previewedPitch;
-			return previewedPitch - Properties.YieldSpeed.y * Mathf.Sign(deltaPitch) * deltaTime;
+			return previewedPitch - Model.Properties.YieldSpeed.y * Mathf.Sign(deltaPitch) * deltaTime;
 		}
 
 		//TODO:Clean this mess without breaking it
@@ -74,13 +72,13 @@ namespace Camera.States
 		{
 			if (LastMoveInput.x != 0)
 			{
-				yawAutoRotationStart += deltaTime;
-				if (yawAutoRotationStart >= Properties.YawFollowDelay)
+				_yawAutoRotationStart += deltaTime;
+				if (_yawAutoRotationStart >= Model.Properties.YawFollowDelay)
 					return currentYaw + Model.Properties.AutomaticTurnSpeed.x * LastMoveInput.x * deltaTime;
 			}
 			else
 			{
-				yawAutoRotationStart = 0;
+				_yawAutoRotationStart = 0;
 			}
 
 			// if (LastMoveInput.y != 0)
@@ -95,7 +93,7 @@ namespace Camera.States
 			{
 				return previewedYaw;
 			}
-			return previewedYaw - Properties.YieldSpeed.x * Mathf.Sign(deltaYaw) * deltaTime;
+			return previewedYaw - Model.Properties.YieldSpeed.x * Mathf.Sign(deltaYaw) * deltaTime;
 		}
 	}
 }

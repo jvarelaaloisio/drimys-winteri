@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c315bd54747c2f45b8ffd9df2791fc3, type: 3}
   m_Name: CameraProperties
   m_EditorClassIdentifier: 
-  offsetFromPlayer: {x: 0, y: 1.5, z: -5}
+  offsetFromPlayer: {x: 1, y: 1.5, z: -3.5}
   inputTurnSpeed: {x: 2.5, y: 2}
   automaticTurnSpeed: {x: 100, y: 0}
   minimumPitchAngle: -45

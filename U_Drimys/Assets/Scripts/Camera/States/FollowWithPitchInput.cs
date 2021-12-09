@@ -31,7 +31,7 @@ namespace Camera.States
 			base.Update(deltaTime);
 			if (LastCamInput.magnitude != 0)
 				_lastCamInputTime = Time.time;
-			else if (_lastCamInputTime + Properties.AutomaticYieldTime <= Time.time)
+			else if (_lastCamInputTime + Model.Properties.AutomaticYieldTime <= Time.time)
 				onYield();
 		}
 
@@ -43,10 +43,10 @@ namespace Camera.States
 
 		protected float GetPitchFromInput(float deltaTime)
 		{
-			int direction = Properties.IsInvertedPitch ? -1 : 1;
-			var rotationAngle = LastCamInput.y * Properties.InputTurnSpeed.y * direction * deltaTime;
-			if (rotationAngle > 0 && DeltaPitch >= Properties.MaximumPitchAngle
-				|| rotationAngle < 0 && DeltaPitch <= Properties.MinimumPitchAngle)
+			int direction = Model.Properties.IsInvertedPitch ? -1 : 1;
+			var rotationAngle = LastCamInput.y * Model.Properties.InputTurnSpeed.y * direction * deltaTime;
+			if (rotationAngle > 0 && DeltaPitch >= Model.Properties.MaximumPitchAngle
+				|| rotationAngle < 0 && DeltaPitch <= Model.Properties.MinimumPitchAngle)
 				return DeltaPitch;
 			DeltaPitch += rotationAngle;
 			return DeltaPitch;

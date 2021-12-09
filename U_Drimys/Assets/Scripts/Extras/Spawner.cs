@@ -77,5 +77,15 @@ namespace Extras
 			Gizmos.DrawSphere(gizmoPosition, .25f);
 			Gizmos.DrawWireSphere(gizmoPosition, activeRadius);
 		}
+
+		private void OnDrawGizmosSelected()
+		{
+			Vector3 gizmoPosition = transform.position;
+			if (Physics.Raycast(transform.position, Vector3.down, out var hit, 50))
+				gizmoPosition = hit.point + Vector3.up * activeRadius / 2;
+			Gizmos.color = new Color(1, .5f, .5f);
+			Gizmos.DrawSphere(gizmoPosition, .25f);
+			Gizmos.DrawWireSphere(gizmoPosition, activeRadius);
+		}
 	}
 }

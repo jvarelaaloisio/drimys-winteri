@@ -23,7 +23,7 @@ namespace Camera.States
 
 		protected override float GetNextYaw(float previewedYaw, float currentYaw, float deltaTime)
 		{
-			return transform.localEulerAngles.y + Properties.InputTurnSpeed.x * LastCamInput.x * deltaTime;
+			return transform.localEulerAngles.y + Model.Properties.InputTurnSpeed.x * LastCamInput.x * deltaTime;
 		}
 	}
 }
