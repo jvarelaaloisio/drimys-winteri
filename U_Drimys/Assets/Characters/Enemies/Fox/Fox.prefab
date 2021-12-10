@@ -267,6 +267,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 9112019329972361801, guid: a42586bc1bed97b49a27c3bca3906e19,
+        type: 3}
+      propertyPath: totalLifePoints
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9112019329972361809, guid: a42586bc1bed97b49a27c3bca3906e19,
         type: 3}
       propertyPath: m_Name

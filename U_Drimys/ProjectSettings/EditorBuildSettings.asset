@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/GrayBox_.unity
     guid: 57ad68ca02e4dd2418213fd1163fc967
   - enabled: 0
     path: Assets/Scenes/BaseGameplayScene.unity
     guid: 5ab9722f2d04ef74781b0ec29e598e5d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testing/Sandbox.unity
     guid: ae64e8a188087a846aae5a46dfc06d84
   - enabled: 0
