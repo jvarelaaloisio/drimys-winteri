@@ -22,11 +22,13 @@ namespace EditorExtensions
 			GetFolderFromSelection(selection, $"/{newClassName}.cs", out string newPath);
 
 			ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
-				0,
-				ScriptableObject.CreateInstance<EndNameActionForScript>(),
-				newPath,
-				AssetPreview.GetMiniTypeThumbnail(typeof(MonoScript)),
-				$"{nameSpace}|{baseClassName}");
+																	0,
+																	ScriptableObject
+																		.CreateInstance<EndNameActionForScript>(),
+																	newPath,
+																	AssetPreview
+																		.GetMiniTypeThumbnail(typeof(MonoScript)),
+																	$"{nameSpace}|{baseClassName}");
 		}
 
 		private static void GetFolderFromSelection(Object selection, string pathSuffix, out string newPath)
@@ -44,9 +46,10 @@ namespace EditorExtensions
 		public static bool CreateSubclass()
 		{
 			var objects = Selection.objects;
-			return objects.Length < 2
-			       && objects[0] is MonoScript
-			       && !(objects[0] as MonoScript).GetClass().IsSealed;
+			return objects.Length > 0
+					&& objects.Length < 2
+					&& objects[0] is MonoScript
+					&& !(objects[0] as MonoScript).GetClass().IsSealed;
 		}
 
 		internal class EndNameActionForScript : EndNameEditAction

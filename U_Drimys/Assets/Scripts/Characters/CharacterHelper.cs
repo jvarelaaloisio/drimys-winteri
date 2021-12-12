@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Characters
 {
-	//TODO:Make this class non static and add LUTs to optimize it.
+	//TODO:Make this class non static and add LUTs to optimize it. (This will be a component)
 	public static class CharacterHelper
 	{
 		private const float SafeDistance = .1f;
