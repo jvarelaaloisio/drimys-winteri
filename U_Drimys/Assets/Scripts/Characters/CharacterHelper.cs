@@ -9,7 +9,7 @@ namespace Characters
 	public static class CharacterHelper
 	{
 		private const float SafeDistance = .1f;
-		private static readonly Color HitColor = new Color(.5f, .2f, .2f);
+		// private static readonly Color HitColor = new Color(.5f, .2f, .2f);
 		private static readonly Color TriangleColor = new Color(.2f, .2f, .5f);
 
 		public static IEnumerator MoveHorizontally(CharacterModel model,
@@ -22,44 +22,48 @@ namespace Characters
 			Transform modelTransform = model.transform;
 			Vector3 down = -modelTransform.up;
 			var properties = model.Properties;
-			//TODO:Remove if not needed by 1/12
 			if (Physics.Raycast(modelTransform.position + down * .5f,
 								down,
-								out RaycastHit hit,
+								out RaycastHit floorHit,
 								1.25f,
 								properties.FloorLayer))
 			{
-				float slopeAngle = Vector3.Angle(hit.normal, modelTransform.up);
-				Debug.DrawRay(hit.point, hit.normal, HitColor);
-				float angleDelta = slopeAngle / properties.MaxSlopeAngle;
-				Debug.DrawLine(hit.point + hit.normal,
-								hit.point - down,
-								new Color(angleDelta, .2f, 1 - angleDelta));
+				float slopeAngle = Vector3.Angle(floorHit.normal, modelTransform.up);
+				float angleLerp = slopeAngle / properties.MaxSlopeAngle;
+				float sin = Mathf.Asin(2 * angleLerp - 1) / Mathf.PI + .5f;
+				Color angleDeltaColor = new Color(sin, 0, 1 - sin);
+				Debug.DrawRay(floorHit.point, floorHit.normal * .5f, angleDeltaColor);
+				Debug.DrawLine(floorHit.point + floorHit.normal * .5f,
+								floorHit.point - down * .5f,
+								angleDeltaColor);
 				float maxSlopeAngle = properties.MaxSlopeAngle;
-				if (slopeAngle > maxSlopeAngle)
+				if (slopeAngle > maxSlopeAngle && Vector3.Dot(floorHit.normal, direction) < 0)
 				{
 					Debug.Log("Angle too steep");
 					onFinish();
 					yield break;
 				}
 
-				float angleCosine = Mathf.Cos(slopeAngle * Mathf.Deg2Rad);
 				float angleSine = Mathf.Sin(slopeAngle * Mathf.Deg2Rad);
-				Debug.DrawRay(modelTransform.position, direction, new Color(.2f, .5f, .2f));
-				if (direction.magnitude > 0 && Physics.Raycast(modelTransform.position, direction))
+				Debug.DrawRay(modelTransform.position, direction, new Color(.2f, .5f, .2f, .5f));
+				bool goingUp = Physics.Raycast(floorHit.point + Vector3.up * .1f, direction);
+				if (direction.magnitude > 0 && goingUp)
 					direction.y += properties.SlopeCompensation.Evaluate(angleSine);
 			}
 
-			Debug.DrawRay(modelTransform.position, direction, Color.green);
+			Debug.DrawRay(modelTransform.position, direction, new Color(0, 1, 0, .5f));
 
 			var modelRigidbody = model.rigidbody;
-			modelRigidbody.AddForce(direction * speed, ForceMode.Force);
-
-			Vector3 currentVelocity = modelRigidbody.velocity;
-			Vector3 horVelocity
-				= Vector3.ClampMagnitude(currentVelocity.IgnoreY(),
-										maxSpeed);
-			modelRigidbody.velocity = horVelocity.ReplaceY(currentVelocity.y);
+			Vector3 velocity = modelRigidbody.velocity.IgnoreY();
+			float clampedForce = Mathf.Lerp(0, speed, 1 - velocity.magnitude / maxSpeed);
+			Debug.Log($"direction {modelTransform.TransformDirection(direction)} force {clampedForce}");
+			modelRigidbody.AddForce(direction * clampedForce, ForceMode.Force);
+			// modelRigidbody.AddForce(direction * speed, ForceMode.Force);
+			// Vector3 currentVelocity = modelRigidbody.velocity;
+			// Vector3 horVelocity
+			// 	= Vector3.ClampMagnitude(currentVelocity.IgnoreY(),
+			// 							maxSpeed);
+			// modelRigidbody.velocity = horVelocity.ReplaceY(currentVelocity.y);
 			onFinish();
 		}
 

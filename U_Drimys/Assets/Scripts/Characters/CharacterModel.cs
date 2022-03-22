@@ -66,7 +66,7 @@ namespace Characters
 			_idleRun.AddTransition(STUNNED_STATE, _stunned);
 			_idleRun.AddTransition(STEP_STATE, _step);
 
-			_jump.AddTransition(IDLE_STATE, _idleRun);
+			// _jump.AddTransition(IDLE_STATE, _idleRun);
 			_jump.AddTransition(FALL_STATE, _fall);
 
 			_fall.AddTransition(IDLE_STATE, _idleRun);

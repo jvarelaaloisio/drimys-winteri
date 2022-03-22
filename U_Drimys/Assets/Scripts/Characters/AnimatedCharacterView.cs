@@ -7,6 +7,8 @@ namespace Characters
 {
 	public class AnimatedCharacterView : CharacterView
 	{
+		public bool isStepping;
+		
 		[SerializeField]
 		protected Animator animator;
 
@@ -40,7 +42,6 @@ namespace Characters
 		private int _velocityHash;
 		private int _velocityXHash;
 		private int _velocityZHash;
-		public bool isStepping;
 
 		protected override void Awake()
 		{

@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: PlayerProperties
   m_EditorClassIdentifier: 
   jumpForce: 7
-  groundSpeed: 45
-  airSpeed: 15
-  maxSpeed: 5
+  groundSpeed: 50
+  airSpeed: 35
+  maxSpeed: 7
   turnSpeed: 5
   groundDistanceCheck: 1
   stepDistanceCheck: 0.75
-  stepUpTime: 0.1
+  stepUpTime: 0.15
   stepDownTime: 0.08
-  groundedCheckSphereRadius: 0.5
-  maxSlopeAngle: 90
+  groundedCheckSphereRadius: 0.35
+  maxSlopeAngle: 45
   floorLayer:
     serializedVersion: 2
     m_Bits: 2049
@@ -41,11 +41,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2.3493977
-      outSlope: 2.3493977
+      inSlope: 1.5385588
+      outSlope: 1.5385588
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.07692307
+      inWeight: 0.109411776
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
