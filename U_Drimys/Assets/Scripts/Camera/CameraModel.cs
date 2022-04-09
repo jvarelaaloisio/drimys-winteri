@@ -53,7 +53,7 @@ namespace Camera
 
 			locked.AddTransition(AutomaticState, followAutomatic);
 
-			StateMachine = FSM<string>.Build(followAutomatic, transform.name)
+			StateMachine = FiniteStateMachine<string>.Build(followAutomatic, transform.name)
 									.WithThisLogger(Debug.unityLogger)
 									.ThatLogsTransitions(shouldLogFsmTransitions)
 									.Done();

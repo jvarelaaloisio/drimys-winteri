@@ -9,7 +9,7 @@ namespace MVC
 		/// <summary>
 		/// Build in the constructor
 		/// </summary>
-		protected FSM<string> StateMachine;
+		protected FiniteStateMachine<string> StateMachine;
 		protected readonly ICoroutineRunner CoroutineRunner;
 
 		public BaseModel(Transform transform,

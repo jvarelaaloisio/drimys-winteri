@@ -75,7 +75,7 @@ namespace Characters
 
 			_step.AddTransition(IDLE_STATE, _idleRun);
 
-			StateMachine = FSM<string>
+			StateMachine = FiniteStateMachine<string>
 							.Build(_idleRun, transform.gameObject.name)
 							.WithThisLogger(Debug.unityLogger)
 							.ThatLogsTransitions(shouldLogFsmTransitions)

@@ -7,13 +7,13 @@ namespace IA.FSM
 	/// Finite state machine
 	/// </summary>
 	/// <typeparam name="T">The key Type to access the different states</typeparam>
-	public class FSM<T>
+	public class FiniteStateMachine<T>
 	{
 		private readonly string _tag;
-		private bool _isLoggingTransitions = false;
+		private bool _shouldLogTransitions = false;
 
-		private FSM(State<T> initialState,
-					string ownerTag = "")
+		private FiniteStateMachine(State<T> initialState,
+									string ownerTag = "")
 		{
 			CurrentState = initialState;
 			CurrentState.Awake();
@@ -43,9 +43,10 @@ namespace IA.FSM
 
 			if (transition == CurrentState)
 				return;
+
 			CurrentState?.Sleep();
 
-			if (_isLoggingTransitions)
+			if (_shouldLogTransitions)
 				_logger.Log(_tag, $"changed state: {CurrentState.GetName()} -> {transition.GetName()}");
 
 			CurrentState = transition;
@@ -54,37 +55,42 @@ namespace IA.FSM
 		}
 
 		/// <summary>
-		/// Update method that runs the current state's OnUpdate.
+		/// Update method that runs the current state's Update.
 		/// </summary>
 		public void Update(float deltaTime)
 			=> CurrentState.Update(deltaTime);
 
+		/// <summary>
+		/// Builder method to simplify code.
+		/// </summary>
+		/// <param name="initialState">Base state for the FSM</param>
+		/// <param name="ownerTag">Used for logging</param>
+		/// <returns>Builder class (Use method Done to get the desired state machine once the setup is completed).</returns>
 		public static Builder Build(State<T> initialState,
 									string ownerTag = "")
 			=> new Builder(initialState,
 							ownerTag);
 
-		public static Builder Build(FSM<T> fsm)
-			=> new Builder(fsm);
-
 		public class Builder
 		{
-			private readonly FSM<T> _fsm;
+			private readonly FiniteStateMachine<T> _finiteStateMachine;
 
+			/// <summary>
+			/// Constructor
+			/// </summary>
+			/// <param name="initialState">Base state for the FSM</param>
+			/// <param name="ownerTag">Used for logging</param>
 			internal Builder(State<T> initialState,
 							string ownerTag = "")
-				=> _fsm = new FSM<T>(initialState,
-									ownerTag);
+				=> _finiteStateMachine = new FiniteStateMachine<T>(initialState,
+																	ownerTag);
 
-			internal Builder(FSM<T> fsm)
-				=> _fsm = fsm;
-
-			public FSM<T> Done()
-				=> _fsm;
+			public FiniteStateMachine<T> Done()
+				=> _finiteStateMachine;
 
 			public Builder WithThisLogger(ILogger logger)
 			{
-				_fsm._logger = logger;
+				_finiteStateMachine._logger = logger;
 				return this;
 			}
 
@@ -92,23 +98,23 @@ namespace IA.FSM
 			{
 				if (value)
 				{
-					if (_fsm._logger == null)
+					if (_finiteStateMachine._logger == null)
 					{
 						throw new
 							ArgumentException("FSM should have a logger set." +
 											" Please use the method <b>WithThisLogger(<i>Logger</i>)</b> before calling this one");
 					}
 
-					_fsm._logger.Log(_fsm._tag, "Now this FSM logs transitions");
+					_finiteStateMachine._logger.Log(_finiteStateMachine._tag, "Now this FSM logs transitions");
 				}
 
-				_fsm._isLoggingTransitions = value;
+				_finiteStateMachine._shouldLogTransitions = value;
 				return this;
 			}
 
 			public Builder ThatTriggersOnTransition(Action<State<T>, State<T>> eventHandler)
 			{
-				_fsm.OnTransition += eventHandler;
+				_finiteStateMachine.OnTransition += eventHandler;
 				return this;
 			}
 		}
